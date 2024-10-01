@@ -8,7 +8,7 @@
 
 # Basic Site Settings
 locale                   : "en-US"
-title                    : "Zexin Feng / Personal Page"
+title                    : "Zexin Feng / Profile"
 title_separator          : "-"
 name                     : &name "Zexin Feng"
 description              : &description "Infinite Progress"
@@ -22,11 +22,11 @@ repository               : "academicpages/academicpages.github.io"
 author:
   # Biographic information
   avatar           : "profile.JPG"
-  name             : "Zexin Feng (Mark)"
+  name             : "Zexin Feng (Mark, 冯泽欣)"
   pronouns         : # example: "she/her"  
-  bio              : "Short biography for the left-hand sidebar"
-  location         : "Shenzhen, China"
-  employer         : "SUSTech CSE"
+  bio              : "CSE Undergraduate Student @ SUSTech 🇨🇳\nASAP Visiting Student @ UCI 🇺🇸"
+  location         : "Irvine, CA, USA 🇺🇸"
+  employer         : # URL
   uri              : # URL
   email            : "fengzx2021@mail.sustech.edu.cn" 
 

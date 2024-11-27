@@ -16,13 +16,16 @@ main:
     url: "/#-educations"
 
   - title: "Projects"
-    url: "/#-projects"
+    url: "/#-competition-&-projects"
   
+  - title: "Fundings"
+    url: "/#-fundings"
+
   - title: "Teaching"
     url: "/#-teaching"
 
-  - title: "Student Works"
-    url: "/#-student-works"
+  # - title: "Student Works"
+  #   url: "/#-student-works"
 
   - title: "Internships"
     url: "/#-internships"

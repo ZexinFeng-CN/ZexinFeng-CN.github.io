@@ -19,11 +19,13 @@ redirect_from:
 
 I am **Zexin Feng**. I am a senior undergraduate student at **Southern University of Science and Technology (SUSTech), Shenzhen, China**. I am majoring in Computer Science and expected to graduate in June 2025. My research interests include Computer Vision, Medical Image Processing, Robotics, and Machine Learning. I am currently working in Xiaohui Xie's Lab at the **University of California, Irvine**. I am also a member of the iMED Intelligent Medical Imaging research group at SUSTech, where I have been worked for 2 years. 
 
-I am actively looking for Ph.D. positions in Computer Science, Robotics, and related fields. If you are interested in my research, please feel free to contact me via [fengzx2021@mail.sustech.edu.cn](mailto:fengzx2021@mail.sustech.edu.cn)
+I am actively looking for Ph.D. positions in Computer Vision, Medical Image Processing, Robotics, and related fields. If you are interested in my research, please feel free to contact me via [fengzx2021@mail.sustech.edu.cn](mailto:fengzx2021@mail.sustech.edu.cn)
+
+
 # 🔥 News
 - *2024.11*: &nbsp;🎉🎉 Received the **China National Scholarship**, awarded to the top 0.2% of students.  
+- *2024.10*: &nbsp;🎉🎉 Received the **School Motto Scholarship: Truth (求是) Special Award**.
 - *2024.04*: &nbsp;🎉 Published a paper on **Flattening Singular Values of Factorized Convolution for Medical Images** at **ICASSP 2024**.  
-- *2023.12*: &nbsp;🎉 Developed **RRA-Net** for retinal vessel segmentation in OCTA images, to be submitted to ICME 2025.  
 
 # 📝 Publications 
 
@@ -48,11 +50,11 @@ I am actively looking for Ph.D. positions in Computer Science, Robotics, and rel
 
 # 📖 Education
 - **Southern University of Science and Technology (SUSTech)**  
-  *B.Eng. in Computer Science*, 09/2022 - 06/2025 (expected)  
-  Major GPA: 3.85/4.0  
+  * B.Eng. in Computer Science*, 09/2022 - 06/2025 (expected)  
+  * GPA: 3.66/4.0 (Major: 3.85/4.0)
 
-# 💬 Invited Talks
-- *2023.12*, Presented on **Efficient Medical Image Segmentation** at iMED Lab Seminar.  
+<!-- # 💬 Invited Talks
+- *2023.12*, Presented on **Efficient Medical Image Segmentation** at iMED Lab Seminar.   -->
 
 # 💻 Research Experience
 - **iMED Intelligent Medical Imaging**, Shenzhen, China  
@@ -65,5 +67,5 @@ I am actively looking for Ph.D. positions in Computer Science, Robotics, and rel
   - Proposed a novel workflow for OCT-to-OCTA translation using diffusion models.  
 
 # 💻 Internships
-- *2023.05 - 2023.09*, **iMED Lab**, Shenzhen, China  
+- *2022.05 - 2024.09*, **iMED Lab**, Shenzhen, China  
 - *2024.09 - Present*, **Xiaohui Xie's Lab**, UC Irvine, USA  

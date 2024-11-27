@@ -58,7 +58,7 @@ I am actively looking for Ph.D. positions in Computer Vision, Medical Image Proc
 - **Best Progress Award (2022)**, recognizing significant academic improvement.  
 
 
-# 🛠️ COMPETITION & PROJECTS
+# 🛠️ PROJECTS
 - ``CS205 Cpp Program Design`` <a href='https://github.com/YupengSu/CppProject-libtensor'> Libtensor Designed with C/C++ and CUDA</a>, **Zexin Feng**, Yupeng Su, Xiaoqun Liu.
 
  ``CS301 Embedded System`` <a href='https://github.com/Mark4551124015/SUSTech_CS301_Project'>5-Stage Pipelined MIPS CPU</a>, **Zexin Feng**, Zongqi Yang, Chunhui Xu, Haoxian Liu.

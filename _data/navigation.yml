@@ -16,7 +16,7 @@ main:
     url: "/#-educations"
 
   - title: "Projects"
-    url: "/#-competition-&-projects"
+    url: "/#-projects"
   
   - title: "Fundings"
     url: "/#-fundings"

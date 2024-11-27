@@ -15,8 +15,9 @@ redirect_from:
 {% endif %}
 {% assign url = gsDataBaseUrl | append: "google-scholar-stats/gs_data_shieldsio.json" %}
 
-<span class='anchor' id='about-me'></span>
+<!-- <span class='anchor' id='about-me'></span> -->
 
+# 👋 About Me
 I am **Zexin Feng**. I am a senior undergraduate student at **Southern University of Science and Technology (SUSTech), Shenzhen, China**. I am majoring in Computer Science and expected to graduate in June 2025. My research interests include Computer Vision, Medical Image Processing, Robotics, and Machine Learning. I am currently working in Xiaohui Xie's Lab at the **University of California, Irvine**. I am also a member of the iMED Intelligent Medical Imaging research group at SUSTech, where I have been worked for 2 years. 
 
 I am actively looking for Ph.D. positions in Computer Vision, Medical Image Processing, Robotics, and related fields. If you are interested in my research, please feel free to contact me at [fengzx2021@mail.sustech.edu.cn](mailto:fengzx2021@mail.sustech.edu.cn) or [mark4551124015@outlook.com](mailto:mark4551124015@outlook.com)

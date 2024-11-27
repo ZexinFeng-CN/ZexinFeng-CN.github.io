@@ -19,7 +19,7 @@ redirect_from:
 
 I am **Zexin Feng**. I am a senior undergraduate student at **Southern University of Science and Technology (SUSTech), Shenzhen, China**. I am majoring in Computer Science and expected to graduate in June 2025. My research interests include Computer Vision, Medical Image Processing, Robotics, and Machine Learning. I am currently working in Xiaohui Xie's Lab at the **University of California, Irvine**. I am also a member of the iMED Intelligent Medical Imaging research group at SUSTech, where I have been worked for 2 years. 
 
-I am actively looking for Ph.D. positions in Computer Vision, Medical Image Processing, Robotics, and related fields. If you are interested in my research, please feel free to contact me via [fengzx2021@mail.sustech.edu.cn](mailto:fengzx2021@mail.sustech.edu.cn)
+I am actively looking for Ph.D. positions in Computer Vision, Medical Image Processing, Robotics, and related fields. If you are interested in my research, please feel free to contact me at [fengzx2021@mail.sustech.edu.cn](mailto:fengzx2021@mail.sustech.edu.cn) or [mark4551124015@outlook.com](mailto:mark4551124015@outlook.com)
 
 # 📖 Educations
 - **Southern University of Science and Technology (SUSTech)**  
@@ -33,7 +33,7 @@ I am actively looking for Ph.D. positions in Computer Vision, Medical Image Proc
 - *2024.10*: &nbsp;🎉🎉 Received the **School Motto Scholarship "Truth" Special Award**.
 - *2024.09*: &nbsp;🎉 Started my internship at **Xiaohui Xie's Lab**, UC Irvine, USA🇺🇸.
 - *2024.04*: &nbsp;🎉 Published a paper on **Flattening Singular Values of Factorized Convolution for Medical Images** at **ICASSP 2024**.  
-- *2023.12*: &nbsp;🎉 Visited **NUS School of Computing**, Singapore🇸🇬.
+- *2023.09*: &nbsp;🎉 Visited **NUS School of Computing**, Singapore🇸🇬.
 - *2022.09*: &nbsp;🎉 Started my internship at **iMED Lab**, Shenzhen, China🇨🇳.
 
 # 📝 Publications 
@@ -59,26 +59,14 @@ I am actively looking for Ph.D. positions in Computer Vision, Medical Image Proc
 
 
 # 🛠️ COMPETITION & PROJECTS
+- ``CS205 Cpp Program Design`` <a href='https://github.com/YupengSu/CppProject-libtensor'> Libtensor Designed with C/C++ and CUDA</a>, **Zexin Feng**, Yupeng Su, Xiaoqun Liu.
 
-- **Climbing Plan**  
-  *10/2024 - Present*  
-  - Funded by Guangdong Provincial Science and Technology Innovation Strategic.  
-  - Utilizing temporal eye movement medical knowledge to improve the diagnosis algorithm of diabetic retinopathy.  
-  - Designing a Time-Series Model to combine experts’ eye movement data with CFP images.  
-  - Collected over 100,000 CFP images with diabetic retinopathy labels.  
+ ``CS301 Embedded System`` <a href='https://github.com/Mark4551124015/SUSTech_CS301_Project'>5-Stage Pipelined MIPS CPU</a>, **Zexin Feng**, Zongqi Yang, Chunhui Xu, Haoxian Liu.
 
-- **Ophthalmology Diagnosing Platform**  
-  *04/2024 - Present*  
-  - Funded by the National College Students' Innovation and Entrepreneurship Training Program.  
-  - Designing an ophthalmology diagnosing platform website.  
-  - Improving segmentation algorithms for CFP and OCTA.  
-  - Assisting clinic doctors and enhancing the speed of diagnosis by providing multiple model results.  
+- ``CS202 Computer Organization`` <a href='https://github.com/Mark4551124015/CS202_Project_CPU'>5-Stage Pipelined MIPS CPU</a>, **Zexin Feng**, Beiye Gou, Xiaoqun Liu.
 
-- **3rd Prize, China Collegiate Computing Contest - AI Innovation Contest**  
-  *05/2023 - 06/2023*  
-  - Developed an eye disease consultation system using Baidu Paddle, creating a dataset fine-tuned for medical diagnosing language models.  
-  - Built a medical record system to track the timeline of patient medical histories.  
-  - Designed a framework integrating a Multi-Modal Language Model with LLMs to provide natural language output for disease analysis and diagnosis.  
+- ``CS102 Java Programming`` <a href='https://github.com/Mark4551124015/CS102A_Othello'>JavaFX Game Engine - Reversi Game</a>, **Zexin Feng**, Rui Ji
+
 
 
 # 🧑‍🏫 Teaching
@@ -106,6 +94,13 @@ I am actively looking for Ph.D. positions in Computer Vision, Medical Image Proc
 - **Xiaohui Xie's Lab**, UC Irvine, USA  
   *Research Assistant (09/2024-Present)*  
   - Proposed a novel workflow for OCT-to-OCTA translation using diffusion models.  
+
+# 🎓 Fundings
+- **Guangdong Provincial Science and Technology Innovation Fund** (2024)  
+  Funded the "Climbing Plan" for advancing diabetic retinopathy diagnosis algorithms.  
+
+- **National College Students' Innovation and Entrepreneurship Training Program** (2024)  
+  Supported the "Ophthalmology Diagnosing Platform" development project.  
 
 # 💻 Internships
 - *2022.05 - 2024.09*, **iMED Lab**, Shenzhen, China  

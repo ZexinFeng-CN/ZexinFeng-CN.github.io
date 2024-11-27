@@ -15,8 +15,8 @@ main:
   - title: "Educations"
     url: "/#-educations"
 
-  - title: "Projects"
-    url: "/#-projects"
+  # - title: "Projects"
+  #   url: "/#-projects"
   
   - title: "Fundings"
     url: "/#-fundings"
@@ -27,5 +27,5 @@ main:
   # - title: "Student Works"
   #   url: "/#-student-works"
 
-  - title: "Internships"
-    url: "/#-internships"
+  # - title: "Internships"
+  #   url: "/#-internships"

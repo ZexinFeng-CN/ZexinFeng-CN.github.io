@@ -62,7 +62,7 @@ I am actively looking for Ph.D. positions in Computer Vision, Medical Image Proc
 # 🛠️ PROJECTS
 - ``CS205 Cpp Program Design`` <a href='https://github.com/YupengSu/CppProject-libtensor'> Libtensor Designed with C/C++ and CUDA</a>, **Zexin Feng**, Yupeng Su, Xiaoqun Liu.
 
-- ``CS301 Embedded System`` <a href='https://github.com/Mark4551124015/SUSTech_CS301_Project'>5-Stage Pipelined MIPS CPU</a>, **Zexin Feng**, Zongqi Yang, Chunhui Xu, Haoxian Liu.
+- ``CS301 Embedded System`` <a href='https://github.com/Mark4551124015/SUSTech_CS301_Project'>Touchscreen Framework STM32F103</a>, **Zexin Feng**, Zongqi Yang, Chunhui Xu, Haoxian Liu.
 
 - ``CS202 Computer Organization`` <a href='https://github.com/Mark4551124015/CS202_Project_CPU'>5-Stage Pipelined MIPS CPU</a>, **Zexin Feng**, Beiye Gou, Xiaoqun Liu.
 

@@ -25,7 +25,7 @@ I am actively looking for Ph.D. positions in Computer Vision, Medical Image Proc
 # 📖 Educations
 - **Southern University of Science and Technology (SUSTech)**  
   * B.Eng. in Computer Science*, 09/2022 - 06/2025 (expected)  
-  * GPA: 3.66/4.0 (Major: 3.85/4.0)
+  <!-- * GPA: 3.66/4.0 (Major: 3.85/4.0) -->
 
 # 📚 Research Interests
 - **Computer Vision**: Medical Image Processing, Robotics, Networks and AI Infrastructure.

@@ -74,15 +74,15 @@ I am actively looking for Ph.D. positions in Computer Vision, Medical Image Proc
 - **Student Lecturer for C Programming Assisting Course**  
   *SUSTech, CSE, Spring 2024*  
   *Shenzhen, China*  
-  - Prepared and delivered lectures on C programming for freshman students.  
-  - Held office hours to assist students with their assignments and projects.  
+  <!-- - Prepared and delivered lectures on C programming for freshman students.  
+  - Held office hours to assist students with their assignments and projects.   -->
 
 - **Student Assistant for CS305 Computer Networks**  
   *SUSTech, CSE, Fall 2023*  
   *Shenzhen, China*  
-  - Worked with Prof. Ming Tang on the CS305 Computer Networks course.  
+  <!-- - Worked with Prof. Ming Tang on the CS305 Computer Networks course.  
   - Responsibilities included grading assignments, holding office hours, and course project design.  
-  - Provided support for students' assignments and projects.  
+  - Provided support for students' assignments and projects.   -->
 
 
 

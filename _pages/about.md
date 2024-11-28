@@ -88,13 +88,10 @@ I am actively looking for Ph.D. positions in Computer Vision, Medical Image Proc
 
 # 💻 Research Experience
 - **iMED Intelligent Medical Imaging**, Shenzhen, China  
-  *Research Assistant, supervised by Prof. Jiang Liu (05/2023-09/2023)*  
-  - Developed **SFConv** for efficient CNN optimization in medical imaging.  
-  - Published at ICASSP 2024.  
+  *Undergraduate Research Assistant, supervised by Prof. Jimmy Liu (05/2023-09/2023)*  
 
 - **Xiaohui Xie's Lab**, UC Irvine, USA  
-  *Research Assistant (09/2024-Present)*  
-  - Proposed a novel workflow for OCT-to-OCTA translation using diffusion models.  
+  *Undergraduate Research Assistant, supervised by Prof. Xiaohui Xie (09/2024-Present)*  
 
 # 🎓 Fundings
 - **Guangdong Provincial Science and Technology Innovation Fund** (2024)  

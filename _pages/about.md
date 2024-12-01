@@ -32,10 +32,10 @@ I am actively looking for Ph.D. positions in Computer Vision, Medical Image Proc
 # 🔥 News
 - *2024.11*: &nbsp;🎉🎉 Received the **China National Scholarship**, awarded to the top 0.2% of students.  
 - *2024.10*: &nbsp;🎉🎉 Received the **School Motto Scholarship "Truth" Special Award**.
-- *2024.09*: &nbsp;🎉 Started my internship at **Xiaohui Xie's Lab**, UC Irvine, USA🇺🇸.
+- *2024.09*: &nbsp;🎉 Joined **Xiaohui Xie's Lab**, UC Irvine, USA🇺🇸.
 - *2024.04*: &nbsp;🎉 Published a paper on **Flattening Singular Values of Factorized Convolution for Medical Images** at **ICASSP 2024**.  
 - *2023.09*: &nbsp;🎉 Visited **NUS School of Computing**, Singapore🇸🇬.
-- *2022.09*: &nbsp;🎉 Started my internship at **iMED Lab**, Shenzhen, China🇨🇳.
+- *2022.09*: &nbsp;🎉 Joined **iMED Lab**, Shenzhen, China🇨🇳.
 
 # 📝 Publications 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICASSP 2024</div><img src='images/SFConv.png' alt="ICASSP 2024" width="100%"></div></div>

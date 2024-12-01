@@ -95,6 +95,6 @@ I am actively looking for Ph.D. positions in Computer Vision, Medical Image Proc
 - **National College Students' Innovation and Entrepreneurship Training Program** (2024)  
   Supported the "Ophthalmology Diagnosing Platform" development project.  
 
-# 💻 Internships
+<!-- # 💻 Internships
 - *2022.05 - 2024.09*, **iMED Lab**, Shenzhen, China  
-- *2024.09 - Present*, **Xiaohui Xie's Lab**, UC Irvine, USA  
+- *2024.09 - Present*, **Xiaohui Xie's Lab**, UC Irvine, USA   -->

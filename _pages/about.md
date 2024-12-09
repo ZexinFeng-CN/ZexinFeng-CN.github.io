@@ -18,17 +18,16 @@ redirect_from:
 <!-- <span class='anchor' id='about-me'></span> -->
 
 # 👋 About Me
-I am **Zexin Feng**. I am a senior undergraduate student at **Southern University of Science and Technology (SUSTech), Shenzhen, China**. I am majoring in Computer Science and expected to graduate in June 2025. My research interests include Computer Vision, Medical Image Processing, Robotics, and Machine Learning. I am currently working in Xiaohui Xie's Lab at the **University of California, Irvine**. I am also a member of the iMED Intelligent Medical Imaging research group at SUSTech, where I have been worked for 2 years. 
+I am **Zexin Feng**. I am a senior undergraduate student at **Southern University of Science and Technology (SUSTech), Shenzhen, China**. I am majoring in Computer Science and expected to graduate in June 2025. My research interests include AI4Med, AIoT, Networking, and Machine Learning. I am currently working in Xiaohui Xie's Lab at the **University of California, Irvine**. I am also a member of the iMED Intelligent Medical Imaging research group at SUSTech, where I have been worked for 2 years. 
 
-I am actively looking for Ph.D. positions in Computer Vision, Medical Image Processing, Robotics, and related fields. If you are interested in my research, please feel free to contact me at [fengzx2021@mail.sustech.edu.cn](mailto:fengzx2021@mail.sustech.edu.cn) or [mark4551124015@outlook.com](mailto:mark4551124015@outlook.com)
+I am actively looking for Ph.D. positions in Computer Vision, Medical Image Processing, Networking, and related fields. If you are interested in my research, please feel free to contact me at [fengzx2021@mail.sustech.edu.cn](mailto:fengzx2021@mail.sustech.edu.cn) or [mark4551124015@outlook.com](mailto:mark4551124015@outlook.com)
 
 # 📖 Educations
 - **Southern University of Science and Technology (SUSTech)**  
   * B.Eng. in Computer Science*, 09/2022 - 06/2025 (expected)  
-  <!-- * GPA: 3.66/4.0 (Major: 3.85/4.0) -->
 
 # 📚 Research Interests
-- **Computer Vision**: Medical Image Processing, Robotics, Networks and AI Infrastructure.
+- Computer Vision, AI4Med, AIoT, Networking, and Machine Learning. 
 # 🔥 News
 - *2024.11*: &nbsp;🎉🎉 Received the **China National Scholarship**, awarded to the top 0.2% of students.  
 - *2024.10*: &nbsp;🎉🎉 Received the **School Motto Scholarship "Truth" Special Award**.

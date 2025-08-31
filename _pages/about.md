@@ -20,15 +20,18 @@ redirect_from:
 # 👋 About Me
 I am **Zexin Feng**. I am a senior undergraduate student at **Southern University of Science and Technology (SUSTech), Shenzhen, China**. I am majoring in Computer Science and expected to graduate in June 2025. My research interests include AI4Med, AIoT, Networking, and Machine Learning. I am currently working in Xiaohui Xie's Lab at the **University of California, Irvine**. I am also a member of the iMED Intelligent Medical Imaging research group at SUSTech, where I have been worked for 2 years. 
 
-I am actively looking for Ph.D. positions in Computer Vision, Medical Image Processing, Networking, and related fields. If you are interested in my research, please feel free to contact me at [fengzx2021@mail.sustech.edu.cn](mailto:fengzx2021@mail.sustech.edu.cn) or [mark4551124015@outlook.com](mailto:mark4551124015@outlook.com)
+I am actively looking for Ph.D. positions in Computer Vision, Medical Image Processing, Networking, and related fields. If you are interested in my research, please feel free to contact me at [zexinfeng@connect.hku.hk](mailto:zexinfeng@connect.hku.hk) or [mark4551124015@outlook.com](mailto:mark4551124015@outlook.com)
 
 # 📖 Educations
 - **Southern University of Science and Technology (SUSTech)**  
-  * B.Eng. in Computer Science*, 09/2022 - 06/2025 (expected)  
+  * B.Eng. in Computer Science*, 09/2022 - 06/2025 
+- **The University of HongKong (HKU)**  
+  * PhD Student, 09/2025 - Present
 
 # 📚 Research Interests
-- Computer Vision, AI4Med, AIoT, Networking, and Machine Learning. 
+- Autonomous Vehicle, Embodied AI, Computer Vision. 
 # 🔥 News
+- *2025.09*: &nbsp;🎉🎉 Started my PhD journey at Mobility Transformation Lab, **The University of Hong Kong (HKU)**.
 - *2024.11*: &nbsp;🎉🎉 Received the **China National Scholarship**, awarded to the top 0.2% of students.  
 - *2024.10*: &nbsp;🎉🎉 Received the **School Motto Scholarship "Truth" Special Award**.
 - *2024.09*: &nbsp;🎉 Joined **Xiaohui Xie's Lab**, UC Irvine, USA🇺🇸.
@@ -80,7 +83,10 @@ I am actively looking for Ph.D. positions in Computer Vision, Medical Image Proc
 
 
 
-# 💻 Research Experience
+# 💻 Experience
+- **Mobility Transformation Lab**, The University of Hong Kong, Hong Kong SAR, China  
+  *PhD Student, supervised by Prof. Xintao Yan. (09/2025-Present)*
+
 - **iMED Intelligent Medical Imaging**, Shenzhen, China  
   *Undergraduate Research Assistant, supervised by Prof. Jimmy Liu (05/2023-09/2023)*  
 

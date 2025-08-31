@@ -23,12 +23,12 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 author:
   name             : "Zexin Feng (冯泽欣)"
   avatar           : "images/better-profile.jpg"
-  bio              : "CSE Student @ SUSTech; Visiting Student @ UCI"
-  location         : "Irvine, CA, USA"
+  bio              : "BEng @ SUSTech; PhD Student @ HKU"
+  location         : "Hong Kong SAR, China"
   employer         :
   pubmed           : 
   googlescholar    : "https://scholar.google.com/citations?user=iY22x5EAAAAJ&hl=zh-CN"
-  email            : "fengzx2021@mail.sustech.edu.cn" 
+  email            : "zexinfeng@connect.hku.hk" 
   researchgate     :  # e.g., "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :

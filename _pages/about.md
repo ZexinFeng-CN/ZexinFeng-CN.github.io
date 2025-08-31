@@ -18,20 +18,24 @@ redirect_from:
 <!-- <span class='anchor' id='about-me'></span> -->
 
 # 👋 About Me
-I am **Zexin Feng**. I am a senior undergraduate student at **Southern University of Science and Technology (SUSTech), Shenzhen, China**. I am majoring in Computer Science and expected to graduate in June 2025. My research interests include AI4Med, AIoT, Networking, and Machine Learning. I am currently working in Xiaohui Xie's Lab at the **University of California, Irvine**. I am also a member of the iMED Intelligent Medical Imaging research group at SUSTech, where I have been worked for 2 years. 
+I am **Zexin Feng**, a **Ph.D. student** at the **Mobility Transformation Lab, The University of Hong Kong (HKU), Hong Kong SAR, China**, supervised by **Prof. Xintao Yan**. My research focuses on **city-scale traffic simulation, autonomous driving, computer vision, and machine learning**.
 
-I am actively looking for Ph.D. positions in Computer Vision, Medical Image Processing, Networking, and related fields. If you are interested in my research, please feel free to contact me at [zexinfeng@connect.hku.hk](mailto:zexinfeng@connect.hku.hk) or [mark4551124015@outlook.com](mailto:mark4551124015@outlook.com)
+Previously, I earned my **B.Eng. in Computer Science** from the **Southern University of Science and Technology (SUSTech), Shenzhen, China** (expected June 2025). During my undergraduate studies, I was a long-term member of the **iMED Intelligent Medical Imaging Lab** led by **Prof. Jiang Liu**, and I also worked with **Prof. Xiaohui Xie** at the **University of California, Irvine** on AI for healthcare.
+
+If you are interested in my work, please contact me at [zexinfeng@connect.hku.hk](mailto:zexinfeng@connect.hku.hk) or [mark4551124015@outlook.com](mailto:mark4551124015@outlook.com).
 
 # 📖 Educations
 - **Southern University of Science and Technology (SUSTech)**  
   * B.Eng. in Computer Science*, 09/2022 - 06/2025 
-- **The University of HongKong (HKU)**  
+- **The University of Hong Kong (HKU)**  
   * PhD Student, 09/2025 - Present
 
 # 📚 Research Interests
-- Autonomous Vehicle, Embodied AI, Computer Vision. 
+- Autonomous Vehicles, Embodied AI, Computer Vision. 
 # 🔥 News
-- *2025.09*: &nbsp;🎉🎉 Started my PhD journey at Mobility Transformation Lab, **The University of Hong Kong (HKU)**.
+- *2025.09*: &nbsp;🎉🎉 Started my PhD journey at **Mobility Transformation Lab @ HKU**,  Hong Kong SAR, China🇨🇳.
+- *2024.07*: &nbsp;🎉🎉 Received **Best Thesis Award**.
+- *2024.07*: &nbsp;🎉🎉 Received **Best Graduate Student Award**.
 - *2024.11*: &nbsp;🎉🎉 Received the **China National Scholarship**, awarded to the top 0.2% of students.  
 - *2024.10*: &nbsp;🎉🎉 Received the **School Motto Scholarship "Truth" Special Award**.
 - *2024.09*: &nbsp;🎉 Joined **Xiaohui Xie's Lab**, UC Irvine, USA🇺🇸.

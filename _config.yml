@@ -7,7 +7,7 @@
 
 # Site Settings
 title                    : "Zexin Feng"
-description              : "Infinite Progress"
+description              : ""
 repository               : "ZexinFeng-CN/ZexinFeng-CN.github.io"
 google_scholar_stats_use_cdn : true
 
@@ -22,7 +22,7 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 # Site Author
 author:
   name             : "Zexin Feng (冯泽欣)"
-  avatar           : "images/better-profile.jpg"
+  avatar           : "https://github.com/Mark4551124015.png"
   bio              : "BEng @ SUSTech;    \n PhD Student @ HKU"
   location         : "Hong Kong SAR, China"
   employer         :

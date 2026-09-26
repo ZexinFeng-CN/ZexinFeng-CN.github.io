@@ -85,8 +85,16 @@ sup{font-size:.68em;line-height:0}
 .brand-logo{display:block;width:26px;height:26px;flex:0 0 26px;object-fit:contain;cursor:pointer}
 .brand span{flex:0 0 auto}
 .topnav{display:flex;gap:22px;margin-left:auto}
-.topnav a{font-size:13.5px;color:var(--muted)}
+.topnav a{position:relative;font-size:13.5px;color:var(--muted);padding:4px 0;transition:color .2s}
+.topnav a::after{
+  content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;border-radius:2px;
+  background:var(--accent);transform:scaleX(0);transform-origin:center;
+  transition:transform .2s ease;
+}
 .topnav a:hover{color:var(--ink)}
+.topnav a:hover::after{transform:scaleX(.35)}
+.topnav a.is-current{color:var(--accent)}
+.topnav a.is-current::after{transform:scaleX(1)}
 .topbar .pdf-link{
   font-size:13px;font-weight:600;color:var(--brand);
   border:1px solid var(--line-strong);border-radius:999px;
@@ -137,6 +145,8 @@ sup{font-size:.68em;line-height:0}
 .authors-break{display:block}
 .affiliations{font-size:13.5px;color:var(--muted);line-height:1.9;margin-bottom:28px}
 .affiliations span{display:inline-block;margin:0 8px;white-space:nowrap}
+.affiliations a{color:inherit;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.affiliations a:hover{color:var(--accent);border-bottom-color:var(--accent)}
 .info-tip{position:relative;outline:none}
 .info-tip::after{
   content:attr(data-tooltip);position:absolute;z-index:100;left:50%;bottom:calc(100% + 8px);
@@ -197,6 +207,7 @@ sup{font-size:.68em;line-height:0}
 .btn--primary{background:var(--brand);border-color:var(--brand);color:#fff}
 .btn--primary:hover{background:var(--brand-dark);border-color:var(--brand-dark);color:#fff}
 @media (prefers-reduced-motion:reduce){.btn{transition:none}}
+@media (prefers-reduced-motion:reduce){.topnav a,.topnav a::after{transition:none}}
 
 /* ---------- sections ---------- */
 
@@ -326,6 +337,8 @@ figcaption b{color:var(--ink);font-weight:600}
   border-left:1px solid transparent;
 }
 .method-ablation__table tbody td{font-weight:600;color:var(--ink)}
+.method-ablation__table tbody td b{font-weight:800}
+.method-ablation__table tbody td u{text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:2px}
 .method-ablation__table tbody td:last-child{border-radius:0 5px 5px 0;border-right:1px solid transparent}
 .method-ablation__table tbody tr.is-active{
   transform:translateY(-3px);filter:drop-shadow(0 3px 5px rgba(15,23,42,.16));
@@ -751,7 +764,15 @@ table.data--wide thead th{padding-top:8px;padding-bottom:8px}
 }
 
 @media (max-width:900px){
-  .topnav{display:none}
+  /* Six items no longer fit beside the wordmark; let the nav scroll sideways
+     instead of disappearing. */
+  .topnav{
+    display:flex;flex-wrap:nowrap;gap:16px;margin-left:14px;
+    flex:1 1 auto;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .topnav::-webkit-scrollbar{display:none}
+  .topnav a{flex:none;white-space:nowrap}
   .stats{grid-template-columns:repeat(2,1fr)}
   .points{grid-template-columns:1fr}
   .task{grid-template-columns:1fr}

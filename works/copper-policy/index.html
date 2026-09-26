@@ -57,9 +57,9 @@
         <span>Xintao Yan<sup class="info-tip" data-tooltip="The University of Hong Kong" tabindex="0">1</sup><sup class="info-tip corresponding-marker" data-tooltip="Corresponding author" tabindex="0" aria-label="Corresponding author">&#9993;</sup></span>
       </p>
       <p class="affiliations">
-        <span><sup>1</sup>The University of Hong Kong</span>
-        <span><sup>2</sup>The University of Sydney</span>
-        <span><sup>3</sup>Tsinghua University</span>
+        <span><sup>1</sup><a href="https://www.hku.hk/" target="_blank" rel="noopener noreferrer">The University of Hong Kong</a></span>
+        <span><sup>2</sup><a href="https://www.sydney.edu.au/" target="_blank" rel="noopener noreferrer">The University of Sydney</a></span>
+        <span><sup>3</sup><a href="https://www.tsinghua.edu.cn/en/" target="_blank" rel="noopener noreferrer">Tsinghua University</a></span>
         <span><sup>4</sup>DenseAI Inc.</span>
       </p>
 
@@ -199,10 +199,10 @@
             <table class="method-ablation__table">
               <thead><tr><th scope="col">Configuration</th><th scope="col">LIBERO ↑</th><th scope="col">LIBERO-Plus ↑</th><th scope="col">RoboTwin ↑</th><th scope="col">Real robot ↑</th></tr></thead>
               <tbody>
-                <tr class="is-active" data-method-result="0" aria-current="true" tabindex="0"><th scope="row">Copper-Policy</th><td>97.25</td><td>80.85</td><td>41.91</td><td>96.3</td></tr>
-                <tr data-method-result="1" tabindex="0"><th scope="row">w/o Joint-Embedding Prediction</th><td>95.90</td><td>79.11</td><td>28.77</td><td>43.3</td></tr>
-                <tr data-method-result="3" tabindex="0"><th scope="row">w/o Current-Frame Visual Features</th><td>95.45</td><td>74.11</td><td>39.02</td><td>20.7</td></tr>
-                <tr data-method-result="2" tabindex="0"><th scope="row">w/o World Input &amp; Future Expert</th><td>94.80</td><td>74.56</td><td>32.74</td><td>84.7</td></tr>
+                <tr class="is-active" data-method-result="0" aria-current="true" tabindex="0"><th scope="row">Copper-Policy</th><td><b>97.25</b></td><td><b>80.85</b></td><td><b>41.91</b></td><td><b>96.3</b></td></tr>
+                <tr data-method-result="1" tabindex="0"><th scope="row">w/o Joint-Embedding Prediction</th><td><u>95.90</u></td><td><u>79.11</u></td><td>28.77</td><td>43.3</td></tr>
+                <tr data-method-result="3" tabindex="0"><th scope="row">w/o Current-Frame Visual Features</th><td>95.45</td><td>74.11</td><td><u>39.02</u></td><td>20.7</td></tr>
+                <tr data-method-result="2" tabindex="0"><th scope="row">w/o World Input &amp; Future Expert</th><td>94.80</td><td>74.56</td><td>32.74</td><td><u>84.7</u></td></tr>
                 <tr data-method-result="4" tabindex="0"><th scope="row">w/o JE Pred. &amp; Visual Features</th><td>85.00</td><td>58.81</td><td>30.54</td><td>1.3</td></tr>
               </tbody>
             </table>
@@ -868,8 +868,7 @@
   <div class="wrap row">
     <span>Copper-Policy — Focus on the Representation for Robust Robot Manipulation.</span>
     <span>
-      <a href="#results">Results</a>
-      &nbsp;·&nbsp; <a href="#top">Back to top ↑</a>
+      <a href="#top">Back to top ↑</a>
     </span>
   </div>
 </footer>
@@ -1450,38 +1449,44 @@
     });
   });
 
-  // ---------- BibTeX copy ----------
+  // ---------- top-nav scrollspy ----------
 
-  document.querySelectorAll('[data-copy]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var text = document.getElementById('bibtex-text').textContent;
-      var label = btn.querySelector('[data-copy-label]');
-      var done = function () {
-        btn.classList.add('is-copied');
-        label.textContent = 'Copied';
-        btn.setAttribute('aria-label', 'BibTeX copied');
-        clearTimeout(btn._copyResetTimer);
-        btn._copyResetTimer = setTimeout(function () {
-          btn.classList.remove('is-copied');
-          label.textContent = 'BibTeX';
-          btn.setAttribute('aria-label', 'Copy BibTeX citation');
-        }, 1800);
-      };
-      var fallback = function () {
-        var ta = document.createElement('textarea');
-        ta.value = text; document.body.appendChild(ta); ta.select();
-        var copied = false;
-        try { copied = document.execCommand('copy'); } catch (e) {}
-        document.body.removeChild(ta);
-        if (copied) done();
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done, fallback);
-      } else {
-        fallback();
-      }
-    });
+  // Highlight the nav item for the section currently in view. Sections vary a
+  // lot in height, so pick the last one whose top has crossed the reading line
+  // instead of trusting a single IntersectionObserver threshold.
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.topnav a[href^="#"]'));
+  var navSections = navLinks.map(function (link) {
+    return document.getElementById(link.getAttribute('href').slice(1));
   });
+
+  var navTicking = false;
+  function updateNav() {
+    navTicking = false;
+    var line = window.scrollY + 90;
+    var currentId = null;
+    navSections.forEach(function (section) {
+      if (section && section.offsetTop <= line) currentId = section.id;
+    });
+    // At the very bottom the last section may be too short to reach the line;
+    // force it so the final nav item can light up.
+    if (navSections.length && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+      currentId = navSections[navSections.length - 1].id;
+    }
+    navLinks.forEach(function (link) {
+      link.classList.toggle('is-current', link.getAttribute('href') === '#' + currentId);
+    });
+  }
+  function requestNavUpdate() {
+    if (navTicking) return;
+    navTicking = true;
+    requestAnimationFrame(updateNav);
+  }
+
+  if (navLinks.length) {
+    updateNav();
+    window.addEventListener('scroll', requestNavUpdate, { passive: true });
+    window.addEventListener('resize', requestNavUpdate);
+  }
 })();
 </script>
 

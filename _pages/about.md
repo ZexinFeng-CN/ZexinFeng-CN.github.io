@@ -56,7 +56,6 @@ If you are interested in my work, please contact me at [zexinfeng@connect.hku.hk
 </div>
 </div>
 
-- [Enhancing Retinal Vessel Segmentation in OCTA Images](#), **To be submitted to ICME 2025**  
 
 # 🎖 Honors and Awards
 - **Best Undergraduate Thesis Award (2025)**, for outstanding research performance.

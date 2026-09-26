@@ -1,0 +1,1343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="Copper-Policy learns a compact World representation jointly with the policy for robust robot manipulation. 97.25% on LIBERO, 41.91% on RoboTwin, 96.3% on three real-robot tasks.">
+<title>Copper-Policy — Focus on the Representation for Robust Robot Manipulation</title>
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png?v=22">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=22">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=24">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">
+      <img class="brand-logo" src="assets/copper.png" alt="" width="26" height="26" decoding="async">
+      <span>Copper-Policy</span>
+    </a>
+    <nav class="topnav" aria-label="Sections">
+      <a href="#main-result">Main result</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#real">Real robot</a>
+      <a href="#analysis">Analysis</a>
+      <a href="#bibtex">BibTeX</a>
+    </nav>
+    <a class="pdf-link" href="assets/copper-policy-paper.pdf" target="_blank" rel="noopener">Paper PDF ↗</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="venue">arXiv preprint · 2026</span>
+      <h1 class="wordmark">
+        <img class="wordmark-logo" src="assets/copper.png" alt="" width="54" height="54" decoding="async">
+        <span>Copper-Policy</span>
+      </h1>
+      <p class="paper-title">Focus on the Representation for Robust Robot Manipulation</p>
+
+      <p class="authors">
+        <span>Zexin Feng<sup class="info-tip" data-tooltip="The University of Hong Kong" tabindex="0">1</sup></span>
+        <span>Yixu Feng<sup class="info-tip" data-tooltip="The University of Sydney" tabindex="0">2</sup></span>
+        <span>Lingyu Xiao<sup class="info-tip" data-tooltip="The University of Hong Kong" tabindex="0">1</sup></span>
+        <span>Shang Su<sup class="info-tip" data-tooltip="Tsinghua University" tabindex="0">3,</sup><sup class="info-tip" data-tooltip="DenseAI Inc." tabindex="0">4</sup></span>
+        <span>Kexin Zheng<sup class="info-tip" data-tooltip="The University of Hong Kong" tabindex="0">1</sup></span>
+        <br class="authors-break">
+        <span>Chang Xu<sup class="info-tip" data-tooltip="The University of Sydney" tabindex="0">2</sup></span>
+        <span>Mengkai Shi<sup class="info-tip" data-tooltip="DenseAI Inc." tabindex="0">4</sup></span>
+        <span>Shuo Feng<sup class="info-tip" data-tooltip="Tsinghua University" tabindex="0">3</sup></span>
+        <span>Xintao Yan<sup class="info-tip" data-tooltip="The University of Hong Kong" tabindex="0">1</sup><sup class="info-tip corresponding-marker" data-tooltip="Corresponding author" tabindex="0" aria-label="Corresponding author">&#9993;</sup></span>
+      </p>
+      <p class="affiliations">
+        <span><sup>1</sup>The University of Hong Kong</span>
+        <span><sup>2</sup>The University of Sydney</span>
+        <span><sup>3</sup>Tsinghua University</span>
+        <span><sup>4</sup>DenseAI Inc.</span>
+      </p>
+
+      <p class="punchline">Cheap Training, Strong Control.</p>
+
+      <div class="actions">
+        <a class="btn btn--primary" href="#main-result">Main result ↓</a>
+        <a class="btn" href="assets/copper-policy-paper.pdf" target="_blank" rel="noopener">Full paper (PDF) ↗</a>
+        <a class="btn" href="#bibtex">BibTeX</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OVERVIEW + ABSTRACT ============ -->
+  <section class="section section--soft" id="overview">
+    <div class="wrap">
+      <figure class="figure figure--tight">
+        <img src="assets/teaser.png" alt="Core idea: a compact World representation evolves under task intention and stays decodable into actions.">
+        <figcaption><b>Core idea.</b> Prior work predicts pixels, video latents, pretrained features, or future-informed policy states. Copper-Policy jointly learns one compact representation shared by future prediction and action generation.</figcaption>
+      </figure>
+    </div>
+
+    <div class="wrap--narrow" style="margin-top:44px">
+      <div class="section-head section-head--center">
+        <span class="kicker">Abstract</span>
+      </div>
+      <p>
+        World Action Models (WAMs) acquire behavioral priors by modeling future scene evolution, but predicting
+        detailed futures in pixel or latent space incurs substantial cost. Recent evidence that co-training gains
+        persist without test-time generation raises a question: <strong>what must a WAM learn to improve control?</strong>
+        We introduce <strong>Copper-Policy</strong>, which learns a compact World representation <em>with</em> the policy
+        rather than relying on a predefined target space. Through temporal joint-embedding prediction, it predicts
+        future observation embeddings conditioned on task intention without reconstructing pixels.
+      </p>
+      <p>
+        This prediction and action decoding shape the representation jointly, while the policy retains access to
+        current-frame spatial detail for execution. Representation analyses show that the learned features better
+        separate task-driven change from perturbations and provide complementary information for control. Compact
+        prediction targets reduce training tokens per sample, enabling a 2B-parameter model trained in
+        <strong>9.67 hours on 8&times; RTX 5090 GPUs</strong>, about <strong>6&times; faster than Fast-WAM</strong>.
+        Copper-Policy leads all compared methods without embodied pretraining on RoboTwin and outperforms several
+        embodied-pretrained VLAs on LIBERO-Plus (80.85%). On three real-robot tasks, its 96.3% average is comparable
+        to &pi;<sub>0.5</sub>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+    <!-- ============ METHOD ============ -->
+  <!-- ============ MAIN RESULT ============ -->
+  <section class="section" id="main-result">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Main result</span>
+        <h2>Broad success, no embodied pretraining.</h2>
+        <p class="lede">All 40 LIBERO tasks and all seven LIBERO-Plus perturbation categories, over 10,030 perturbed tasks, against every method we could evaluate from a public checkpoint.</p>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="label">LIBERO</div>
+          <div class="value">97.25<small>%</small></div>
+          <div class="note">Average over 4 suites</div>
+        </div>
+        <div class="stat">
+          <div class="label">LIBERO-Plus</div>
+          <div class="value">80.85<small>%</small></div>
+          <div class="note">10,030 perturbed tasks</div>
+        </div>
+        <div class="stat">
+          <div class="label">RoboTwin</div>
+          <div class="value value--pair">
+            <span><b>70.84<small>%</small></b><i>Clean</i></span>
+            <span><b>12.98<small>%</small></b><i>Random</i></span>
+          </div>
+        </div>
+        <div class="stat">
+          <div class="label">Real robot</div>
+          <div class="value">96.3<small>%</small></div>
+          <div class="note">3 real-robot tasks</div>
+        </div>
+        <div class="stat">
+          <div class="label">Parameters</div>
+          <div class="value">2B</div>
+          <div class="note">No embodied pretraining</div>
+        </div>
+        <div class="stat stat--accent">
+          <div class="label">Training</div>
+          <div class="value">9.67<small>h</small></div>
+          <div class="note">30K steps, 8&times; RTX 5090</div>
+        </div>
+      </div>
+
+      
+    </div>
+  </section>
+
+<section class="section section--soft" id="method">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Method</span>
+        <h2>Learn the space, predict in it, act with detail.</h2>
+        <p class="lede">At time <em>t</em> the policy observes <em>o<sub>t</sub></em>, robot state <em>q<sub>t</sub></em> and instruction <em>s</em>, and predicts an action chunk <em>a<sub>t:t+H<sub>a</sub>−1</sub></em>. A frozen V-JEPA encoder feeds a trainable compactor that writes the World representation <em>z<sub>t</sub></em>; a separate spatial encoder feeds a differentiable grid sampler that produces <em>v<sub>t</sub></em>. Two expert streams share one attention transformer.</p>
+      </div>
+
+      <figure class="figure">
+        <img src="assets/method.png" alt="Copper-Policy architecture: online and EMA compactors, a Future Expert, and an Action Expert sharing a joint self-attention transformer.">
+        <figcaption><b>Implementation architecture.</b> The Future Expert operates only on the compact World representation; the Action Expert additionally reads current-frame tokens <em>v<sub>t</sub></em> and the robot state. No future is generated at deployment — the Future Expert runs once as a context encoder.</figcaption>
+      </figure>
+
+      <div class="points">
+        <article class="point">
+          <span class="idx">01</span>
+          <h3>Policy-learned target space</h3>
+          <p>The predictive target space is learned jointly with the policy, not prescribed by a pretrained encoder or a staged representation. An EMA copy of the compactor provides future-view targets under stop-gradient, so the space co-evolves with the policy that consumes it.</p>
+        </article>
+        <article class="point">
+          <span class="idx">02</span>
+          <h3>Predict in the compact space</h3>
+          <p>The Future Expert predicts future-view embeddings from <em>z<sub>t</sub></em> with conditional flow matching, conditioned on task intention and never reconstructing pixels or video. A structured attention mask keeps it off the current-frame tokens.</p>
+        </article>
+        <article class="point">
+          <span class="idx">03</span>
+          <h3>Act with current-frame detail</h3>
+          <p>Action tokens attend to <em>z<sub>t</sub></em>, <em>v<sub>t</sub></em> and the state — but never to predicted futures. Prediction therefore shapes control only through the representation it trains, while execution keeps the sub-patch spatial detail it needs.</p>
+        </article>
+      </div>
+
+      <div class="wrap--narrow" style="margin-top:38px">
+        <p style="font-size:15px">
+          The asymmetry is deliberate. Because <em>z<sub>t</sub></em> and <em>v<sub>t</sub></em> attend to each other within the
+          current-step prefix, detail reaches future queries only after passing through <em>K</em> compact tokens
+          (28 for LIBERO's multi-view layout, 36 for the T-shaped RoboTwin and real-robot layout), while action decoding
+          reads <em>v<sub>t</sub></em> directly. Action loss still presses on <em>z<sub>t</sub></em>, so the World representation
+          is shaped toward what the action decoder actually reads — but it is never asked to duplicate execution-level detail.
+        </p>
+      </div>
+    </div>
+  </section>
+  <!-- ============ RESULTS ============ -->
+<section class="section" id="results">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Results</span>
+        <h2>Full comparison, ablations, and training cost.</h2>
+        <p class="lede">One protocol throughout — same data, same rollouts, same checkpoints. The first table places Copper-Policy against other methods; the rest isolate what each component buys, and what it costs.</p>
+      </div>
+
+      
+
+      
+
+      <div class="table-block">
+        <h3>LIBERO &amp; LIBERO-Plus — full comparison</h3>
+        <p class="table-note">All 40 standard LIBERO tasks and all seven LIBERO-Plus perturbation categories, over 10,030 perturbed tasks. Copper-Policy needs no embodied pretraining and still beats several embodied-pretrained VLAs on the LIBERO-Plus total. Only &pi;<sub>0.5</sub> (85.7%) and Cosmos-Policy (82.2%) score higher overall, and Cosmos-Policy's lead sits entirely in Language — Copper-Policy has the higher pooled rate over the other six categories.</p>
+        <div class="table-scroll">
+          <table class="data data--wide">
+            <thead>
+              <tr>
+                <th rowspan="2">Method</th>
+                <th rowspan="2" class="ctr">Pretrain</th>
+                <th rowspan="2" class="ctr">WAM</th>
+                <th colspan="5">LIBERO</th>
+                <th class="grp" colspan="8">LIBERO-Plus</th>
+              </tr>
+              <tr>
+                <th>Long</th><th>Goal</th><th>Object</th><th>Spatial</th><th>Avg.</th>
+                <th class="grp hl">Camera</th><th class="hl">Robot</th><th>Language</th><th class="hl">Light</th><th>Background</th><th class="hl">Noise</th><th>Layout</th><th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="ours">
+                <td>Copper-Policy (ours)</td>
+                <td class="ctr dim">×</td><td class="ctr dim">✓<sup>‡</sup></td>
+                <td>95.2</td><td>95.6</td><td>99.4</td><td class="best">98.8</td><td>97.25</td><td class="best grp">78.67</td><td>73.74</td><td>67.34</td><td>95.27</td><td>84.20</td><td class="best">94.44</td><td>76.52</td><td>80.85</td>
+              </tr>
+              <tr>
+                <td>&pi;<sub>0.5</sub></td>
+                <td class="ctr dim">✓</td><td class="ctr dim">×</td>
+                <td>92.4</td><td>98.0</td><td>98.2</td><td class="best">98.8</td><td>96.9</td><td class="grp">75.4</td><td class="second">77.5</td><td>85.6</td><td class="best">96.9</td><td class="second">94.6</td><td>89.7</td><td class="best">85.7</td><td class="best">85.7</td>
+              </tr>
+              <tr>
+                <td>Cosmos-Policy</td>
+                <td class="ctr dim">×</td><td class="ctr dim">✓</td>
+                <td class="best">97.6</td><td class="second">98.2</td><td class="best">100.0</td><td>98.1</td><td class="second">98.5</td><td class="second grp">75.8</td><td>63.3</td><td>81.7</td><td class="second">96.5</td><td>88.9</td><td class="second">92.7</td><td>82.2</td><td class="second">82.2</td>
+              </tr>
+              <tr>
+                <td>ABot-M0</td>
+                <td class="ctr dim">✓</td><td class="ctr dim">×</td>
+                <td class="second">96.6</td><td class="best">99.0</td><td class="second">99.8</td><td class="best">98.8</td><td class="best">98.6</td><td class="grp">60.4</td><td>67.9</td><td class="second">86.4</td><td>96.2</td><td>91.6</td><td>86.4</td><td>82.6</td><td>80.5</td>
+              </tr>
+              <tr>
+                <td>VLA-JEPA</td>
+                <td class="ctr dim">✓</td><td class="ctr dim">✓<sup>‡</sup></td>
+                <td>95.8</td><td>97.2</td><td>99.6</td><td>96.2</td><td>97.2</td><td class="grp">64.2</td><td>67.7</td><td class="best">88.1</td><td>91.8</td><td>93.4</td><td>65.8</td><td class="second">83.9</td><td>77.9</td>
+              </tr>
+              <tr>
+                <td>X-VLA</td>
+                <td class="ctr dim">✓</td><td class="ctr dim">×</td>
+                <td class="best">97.6</td><td>97.8</td><td>98.6</td><td class="second">98.2</td><td>98.1</td><td class="grp">23.4</td><td class="best">89.7</td><td>75.7</td><td>88.2</td><td class="best">96.0</td><td>62.7</td><td>71.8</td><td>71.4</td>
+              </tr>
+              <tr>
+                <td>Fast-WAM</td>
+                <td class="ctr dim">×</td><td class="ctr dim">✓<sup>‡</sup></td>
+                <td>95.2</td><td>97.0</td><td class="best">100.0</td><td class="second">98.2</td><td>97.6</td><td class="grp">16.4</td><td>44.5</td><td>68.9</td><td>78.2</td><td>53.7</td><td>37.7</td><td>60.7</td><td>51.5</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-caption">Success rate (%). <b>Pretrain</b>: uses an embodied-pretrained component. <b>WAM</b>: explicit future modeling; <sup>‡</sup> marks methods that generate no future at deployment. Bold and underlined mark best and second-best within the comparison block, ties included. LIBERO follows the standard protocol with 50 rollouts per task and identical closed-loop replanning for every entry; LIBERO-Plus is task-weighted.</p>
+      </div>
+
+      <div class="table-block">
+        <h3>Ablation across all four benchmarks</h3>
+        <p class="table-note">
+          Four configurations isolate the World input and Future Expert (<em>z<sub>t</sub></em>), joint-embedding
+          prediction (JE pred.) and current-frame visual features (<em>v<sub>t</sub></em>). Everything else — data,
+          optimizer, schedules, rollout protocol — is identical.
+        </p>
+        <div class="table-scroll">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Configuration</th>
+                <th class="ctr"><em>z<sub>t</sub></em></th><th class="ctr">JE pred.</th><th class="ctr"><em>v<sub>t</sub></em></th>
+                <th>LIBERO ↑</th><th>LIBERO-Plus ↑</th><th>RoboTwin ↑</th><th>Real robot ↑</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="ours">
+                <td>Copper-Policy</td>
+                <td class="ctr mark">✓</td><td class="ctr mark">✓</td><td class="ctr mark">✓</td>
+                <td class="best">97.25</td><td class="best">80.85</td><td class="best">41.91</td><td class="best">96.3</td>
+              </tr>
+              <tr>
+                <td>w/o Joint-Embedding Prediction</td>
+                <td class="ctr mark">✓</td><td class="ctr dim">×</td><td class="ctr mark">✓</td>
+                <td>95.90</td><td>79.11</td><td>28.77</td><td>43.3</td>
+              </tr>
+              <tr>
+                <td>w/o Current-Frame Visual Features</td>
+                <td class="ctr mark">✓</td><td class="ctr mark">✓</td><td class="ctr dim">×</td>
+                <td>95.45</td><td>74.11</td><td>39.02</td><td>20.7</td>
+              </tr>
+              <tr>
+                <td>w/o World Input &amp; Future Expert</td>
+                <td class="ctr dim">×</td><td class="ctr dim">×</td><td class="ctr mark">✓</td>
+                <td>94.80</td><td>74.56</td><td>32.74</td><td>84.7</td>
+              </tr>
+              <tr>
+                <td>w/o JE Pred. &amp; Visual Features</td>
+                <td class="ctr mark">✓</td><td class="ctr dim">×</td><td class="ctr dim">×</td>
+                <td>85.00</td><td>58.81</td><td>30.54</td><td>1.3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-caption">
+          Removing joint-embedding prediction barely moves LIBERO-Plus but costs 13.1 points on RoboTwin and 53 points
+          on the real robot — the average drops from 96.3 to 43.3 — <em>worse than removing the World pathway entirely</em>
+          (84.7). An unshaped World input supplies the Action Expert with a signal that drifts quickly and lacks a stable
+          task-relevant focus, which is worse for control than supplying no such signal at all. Symmetrically, current-frame
+          detail matters little in simulation but is essential in contact-rich execution: removing <em>v<sub>t</sub></em>
+          costs at most 6.74 points on LIBERO-Plus yet drops the real-robot average to 20.7.
+        </p>
+      </div>
+
+      <div class="table-block">
+        <h3>RoboTwin: clean versus randomized, per ablation</h3>
+        <p class="table-note">
+          <em>Clean2Clean</em> trains and evaluates on the clean set; <em>Clean2Rand</em> evaluates clean-trained policies
+          under joint randomization of layout, distractors, background and lighting. All 50 official tasks, 100 rollouts
+          per task in each setting.
+        </p>
+        <div class="table-scroll">
+          <table class="data">
+            <thead>
+              <tr><th>Configuration</th><th>Clean ↑</th><th>Random ↑</th><th>Avg. ↑</th></tr>
+            </thead>
+            <tbody>
+              <tr class="ours">
+                <td>Copper-Policy</td>
+                <td class="best">70.84</td><td class="best">12.98</td><td class="best">41.91</td>
+              </tr>
+              <tr>
+                <td>w/o Joint-Embedding Prediction</td>
+                <td>48.16</td><td>9.38</td><td>28.77</td>
+              </tr>
+              <tr>
+                <td>w/o Current-Frame Visual Features</td>
+                <td class="second">67.82</td><td class="second">10.22</td><td class="second">39.02</td>
+              </tr>
+              <tr>
+                <td>w/o World Input &amp; Future Expert</td>
+                <td>55.26</td><td class="second">10.22</td><td>32.74</td>
+              </tr>
+              <tr>
+                <td>w/o JE Pred. &amp; Visual Features</td>
+                <td>51.66</td><td>9.42</td><td>30.54</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-caption">
+          Randomization is the hard setting for every variant, including ours — 12.98% under <em>Clean2Rand</em> is the
+          weakest number on this page, and we report it as such. The ranking is unchanged between settings:
+          joint-embedding prediction is worth 22.7 points on the clean set, current-frame features 3.0.
+        </p>
+      </div>
+
+      <div class="table-block">
+        <h3>Training efficiency</h3>
+        <p class="table-note">
+          Compact prediction targets cut the tokens each expert attends over — 244 per sample in the real-robot
+          setting against 392 for a dense video target — and self-attention is quadratic in sequence length.
+          Every row uses a global batch of 128, normalized to Copper-Policy under DDP on 8&times; A100
+          (1.454&nbsp;s/step).
+        </p>
+        <div class="table-scroll">
+          <table class="data data--wide">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Trainable params</th>
+                <th>Hardware</th>
+                <th>Parallelism</th>
+                <th>Peak mem / GPU ↓</th>
+                <th>Relative time ↓</th>
+                <th>Samples / s ↑</th>
+                <th>Est. time, 30K steps ↓</th>
+                <th>Inference ↓</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fast-WAM</td><td>6B</td><td>8&times; A100 80GB</td><td>FSDP Fully Shard</td>
+                <td>62.42 GB</td><td>6.13&times;</td><td>14.36</td><td>74.3 h</td><td>~80 ms</td>
+              </tr>
+              <tr>
+                <td>&pi;<sub>0.5</sub></td><td>3.3B</td><td>8&times; A100 80GB</td><td>FSDP Fully Shard</td>
+                <td>38.65 GB</td><td>1.96&times;</td><td>44.91</td><td>23.7 h</td><td class="best">~75 ms</td>
+              </tr>
+              <tr class="group"><td colspan="9">Copper-Policy on 8&times; A100 80GB — sharding strategies</td></tr>
+              <tr>
+                <td>Copper-Policy</td><td>2B</td><td>8&times; A100 80GB</td><td>DDP</td>
+                <td>31.83 GB</td><td class="second">1.00&times;</td><td class="second">88.0</td><td class="second">12.1 h</td><td>~85 ms</td>
+              </tr>
+              <tr>
+                <td>Copper-Policy</td><td>2B</td><td>8&times; A100 80GB</td><td>DDP + Optimizer Shard</td>
+                <td class="second">24.53 GB</td><td>1.08&times;</td><td>81.8</td><td>13.0 h</td><td>~85 ms</td>
+              </tr>
+              <tr>
+                <td>Copper-Policy</td><td>2B</td><td>8&times; A100 80GB</td><td>FSDP Fully Shard</td>
+                <td class="best">21.24 GB</td><td>1.50&times;</td><td>58.56</td><td>18.2 h</td><td>~85 ms</td>
+              </tr>
+              <tr class="group"><td colspan="9">Copper-Policy on 8&times; RTX 5090 32GB</td></tr>
+              <tr class="ours">
+                <td>Copper-Policy (ours)</td><td class="best">2B</td><td class="best">8&times; RTX 5090 32GB</td><td>DDP</td>
+                <td>31.83 GB</td><td class="best">0.80&times;</td><td class="best">110.34</td><td class="best">9.67 h</td><td>~85 ms</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-caption">
+          Global batch 128, normalized to Copper-Policy under DDP on 8&times; A100 (1.454&nbsp;s/step) — the first row
+          of the lower block, and the only place that configuration appears. Within each block only the parallelism or
+          the hardware changes, at fixed model, so the sharding sweep isolates a clean trade-off: 21.24&nbsp;GB at
+          1.50&times; the baseline time. Peak memory is reserved memory per GPU; estimated time assumes 30K steps;
+          inference is end-to-end. Copper-Policy reaches <strong>9.67 hours</strong> on 8&times; RTX 5090 — the only
+          configuration faster than the A100 baseline — training 2B parameters about
+          <strong>6&times; faster than Fast-WAM</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REAL ROBOT ============ -->
+  <section class="section section--soft" id="real">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Real robot</span>
+        <h2>Three manipulation tasks, 50 seeded configurations each.</h2>
+        <p class="lede">A dual-arm platform with standard grippers and three RGB cameras; no depth input. Actions are 14-D absolute joint positions; 300 teleoperated demonstrations per task at 30&nbsp;Hz (~4.3&nbsp;h total). Scores assign 1, 0.5 and 0 to full, half and no success. Switch tabs to watch one seeded rollout per task.</p>
+      </div>
+
+      <div class="mediabox mediabox--wide" data-tabs>
+        <div class="tablist" role="tablist" aria-label="Real-robot tasks">
+          <button role="tab" data-tab="towel" aria-selected="true" id="tab-towel" aria-controls="panel-towel">Fold the towel <span class="pill">93</span></button>
+          <button role="tab" data-tab="banana" aria-selected="false" id="tab-banana" aria-controls="panel-banana" tabindex="-1">Put banana <span class="pill">96</span></button>
+          <button role="tab" data-tab="bowls" aria-selected="false" id="tab-bowls" aria-controls="panel-bowls" tabindex="-1">Stack three bowls <span class="pill">100</span></button>
+        </div>
+
+        <div class="tabpanel is-active" data-panel="towel" id="panel-towel" role="tabpanel" aria-labelledby="tab-towel">
+          <figure class="mediafig">
+            <div class="vp" data-vp>
+              <div class="vp-stage">
+                <video muted loop playsinline preload="metadata" poster="assets/video/realbot_fold.jpg" aria-label="Multi-view rollout of Copper-Policy folding the towel.">
+                  <source src="assets/video/realbot_fold.mp4" type="video/mp4">
+                </video>
+                <button class="vp-overlay" type="button" data-act="toggle" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.14v13.72L19 12z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></button>
+              </div>
+              <div class="vp-bar">
+                <button class="vp-btn vp-icon" type="button" data-act="toggle" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.14v13.72L19 12z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></button>
+                <div class="vp-track" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <span class="vp-fill"></span><span class="vp-knob"></span>
+                </div>
+                <span class="vp-time">0:00 / 0:00</span>
+                <label class="vp-speed">
+                  <span class="vp-sr">Playback speed</span>
+                  <select data-act="speed" aria-label="Playback speed">
+                    <option value="0.25">0.25&times;</option>
+                    <option value="0.5">0.5&times;</option>
+                    <option value="1" selected>1.0&times;</option>
+                    <option value="2">2.0&times;</option>
+                  </select>
+                </label>
+                <button class="vp-btn" type="button" data-act="full" aria-label="Fullscreen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5v2H6v3H4zm11-5h5v5h-2V6h-3V4zM4 15h2v3h3v2H4v-5zm14 0h2v5h-5v-2h3v-3z"/></svg></button>
+              </div>
+            </div>
+            <figcaption class="mediacap"><b>Fold the towel</b> — long-horizon deformable-object manipulation. 30 s, 30 fps, three camera views. Copper-Policy scores 93; the score reflects partial successes on 5 of 50 seeds.</figcaption>
+          </figure>
+        </div>
+
+        <div class="tabpanel" data-panel="banana" id="panel-banana" role="tabpanel" aria-labelledby="tab-banana">
+          <figure class="mediafig">
+            <div class="vp" data-vp>
+              <div class="vp-stage">
+                <video muted loop playsinline preload="metadata" poster="assets/video/realbot_banana.jpg" aria-label="Multi-view rollout of Copper-Policy placing a banana.">
+                  <source src="assets/video/realbot_banana.mp4" type="video/mp4">
+                </video>
+                <button class="vp-overlay" type="button" data-act="toggle" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.14v13.72L19 12z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></button>
+              </div>
+              <div class="vp-bar">
+                <button class="vp-btn vp-icon" type="button" data-act="toggle" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.14v13.72L19 12z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></button>
+                <div class="vp-track" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <span class="vp-fill"></span><span class="vp-knob"></span>
+                </div>
+                <span class="vp-time">0:00 / 0:00</span>
+                <label class="vp-speed">
+                  <span class="vp-sr">Playback speed</span>
+                  <select data-act="speed" aria-label="Playback speed">
+                    <option value="0.25">0.25&times;</option>
+                    <option value="0.5">0.5&times;</option>
+                    <option value="1" selected>1.0&times;</option>
+                    <option value="2">2.0&times;</option>
+                  </select>
+                </label>
+                <button class="vp-btn" type="button" data-act="full" aria-label="Fullscreen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5v2H6v3H4zm11-5h5v5h-2V6h-3V4zM4 15h2v3h3v2H4v-5zm14 0h2v5h-5v-2h3v-3z"/></svg></button>
+              </div>
+            </div>
+            <figcaption class="mediacap"><b>Put banana</b> — pick-and-place under adversarial object placements. Copper-Policy scores 96 here, where a dense-video-target baseline frequently never attempts the grasp.</figcaption>
+          </figure>
+        </div>
+
+        <div class="tabpanel" data-panel="bowls" id="panel-bowls" role="tabpanel" aria-labelledby="tab-bowls">
+          <figure class="mediafig">
+            <div class="vp" data-vp>
+              <div class="vp-stage">
+                <video muted loop playsinline preload="metadata" poster="assets/video/realbot_bowls.jpg" aria-label="Multi-view rollout of Copper-Policy stacking three bowls.">
+                  <source src="assets/video/realbot_bowls.mp4" type="video/mp4">
+                </video>
+                <button class="vp-overlay" type="button" data-act="toggle" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.14v13.72L19 12z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></button>
+              </div>
+              <div class="vp-bar">
+                <button class="vp-btn vp-icon" type="button" data-act="toggle" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.14v13.72L19 12z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></button>
+                <div class="vp-track" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <span class="vp-fill"></span><span class="vp-knob"></span>
+                </div>
+                <span class="vp-time">0:00 / 0:00</span>
+                <label class="vp-speed">
+                  <span class="vp-sr">Playback speed</span>
+                  <select data-act="speed" aria-label="Playback speed">
+                    <option value="0.25">0.25&times;</option>
+                    <option value="0.5">0.5&times;</option>
+                    <option value="1" selected>1.0&times;</option>
+                    <option value="2">2.0&times;</option>
+                  </select>
+                </label>
+                <button class="vp-btn" type="button" data-act="full" aria-label="Fullscreen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5v2H6v3H4zm11-5h5v5h-2V6h-3V4zM4 15h2v3h3v2H4v-5zm14 0h2v5h-5v-2h3v-3z"/></svg></button>
+              </div>
+            </div>
+            <figcaption class="mediacap"><b>Stack three bowls</b> — multi-stage rigid-object manipulation. 50 of 50 seeds succeed with no partial credit.</figcaption>
+          </figure>
+        </div>
+
+        <div class="meta">
+          <span><b>Rollout</b> one seeded configuration, rendered as a multi-view grid</span>
+          <span><b>Protocol</b> 50 seeds per task, real-time chunking</span>
+        </div>
+      </div>
+
+      <div class="table-block">
+        <h3>Real-robot results</h3>
+        <p class="table-note">Comparison methods and Copper-Policy ablations, evaluated on the same physical platform and 50 seeded configurations per task. Scores assign 1, 0.5 (towel folding only) and 0 to full, partial and failed trials; π<sub>0.5</sub> uses embodied pretraining.</p>
+        <div class="table-scroll">
+          <table class="data">
+            <thead>
+              <tr><th>Configuration</th><th>Fold the towel</th><th>Put banana</th><th>Stack three bowls</th><th>Avg. ↑</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>π<sub>0.5</sub></td>
+                <td class="second">95</td><td class="second">94</td><td class="second">94</td><td class="second">94.3</td>
+              </tr>
+              <tr>
+                <td>Fast-WAM</td>
+                <td class="best">98</td><td>60</td><td class="second">94</td><td>84.0</td>
+              </tr>
+              <tr class="ours">
+                <td>Copper-Policy</td>
+                <td>93</td><td class="best">96</td><td class="best">100</td><td class="best">96.3</td>
+              </tr>
+              <tr>
+                <td>w/o World Input &amp; Future Expert</td>
+                <td>84</td><td>82</td><td>88</td><td>84.7</td>
+              </tr>
+              <tr>
+                <td>w/o Joint-Embedding Prediction</td>
+                <td>4</td><td>26</td><td class="best">100</td><td>43.3</td>
+              </tr>
+              <tr>
+                <td>w/o Current-Frame Visual Features</td>
+                <td>2</td><td>46</td><td>14</td><td>20.7</td>
+              </tr>
+              <tr>
+                <td>w/o JE Pred. &amp; Visual Features</td>
+                <td>0</td><td>4</td><td>0</td><td>1.3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-caption">
+          The two pathways fail in different ways. Without joint-embedding prediction the policy collapses on towel
+          folding (4) and banana placement (26) yet still stacks bowls perfectly (100) — a single task can hide a broken
+          representation. Without current-frame features the drop is broader and spares nothing: 2, 46 and 14. Removing
+          both leaves 0, 4 and 0.
+        </p>
+      </div>
+    </div>
+  </section>
+  <!-- ============ ANALYSIS ============ -->
+  <section class="section" id="analysis">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Why it works</span>
+        <h2>Representation diagnostics, not just success rates.</h2>
+        <p class="lede">The formulation is a claim about a representation, so we inspect <em>z<sub>t</sub></em> directly: recorded episodes are replayed through each variant offline, with the episode — not the frame — as the statistical unit. The same four configurations as the ablations above.</p>
+      </div>
+
+      <div class="table-block">
+        <h3>Temporal structure of the World representation</h3>
+        <p class="table-note">Cosine similarity and displacement between unit-normalized representations 16 sampled frames apart. Joint-embedding prediction keeps <em>z<sub>t</sub></em> changing slowly and coherently over an episode.</p>
+        <div class="table-scroll">
+          <table class="data">
+            <thead>
+              <tr>
+                <th rowspan="2">Configuration</th>
+                <th colspan="2">LIBERO</th><th colspan="2">RoboTwin</th><th colspan="2">Real robot</th>
+              </tr>
+              <tr>
+                <th>cos ↑</th><th>disp. ↓</th><th>cos ↑</th><th>disp. ↓</th><th>cos ↑</th><th>disp. ↓</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="ours">
+                <td>Copper-Policy</td>
+                <td class="best">0.794</td><td class="best">0.634</td>
+                <td class="best">0.913</td><td class="best">0.413</td>
+                <td class="second">0.902</td><td class="second">0.434</td>
+              </tr>
+              <tr>
+                <td>w/o Joint-Embedding Prediction</td>
+                <td>0.684</td><td>0.778</td>
+                <td>0.729</td><td>0.724</td>
+                <td>0.756</td><td>0.684</td>
+              </tr>
+              <tr>
+                <td>w/o Current-Frame Visual Features</td>
+                <td class="second">0.778</td><td class="second">0.660</td>
+                <td class="second">0.890</td><td class="second">0.463</td>
+                <td class="best">0.904</td><td class="best">0.429</td>
+              </tr>
+              <tr>
+                <td>w/o JE Pred. &amp; Visual Features</td>
+                <td>0.665</td><td>0.809</td>
+                <td>0.567</td><td>0.921</td>
+                <td>0.773</td><td>0.658</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-caption">
+          40 episodes per variant on LIBERO, 18 on the real robot, 20 on RoboTwin, all drawn with one fixed seed.
+          Removing joint-embedding prediction lowers cosine similarity in every domain (0.794→0.684, 0.913→0.729,
+          0.902→0.756) and raises displacement accordingly. The paired contrast without <em>v<sub>t</sub></em> keeps the
+          same ordering. RoboTwin samples every fourth frame, so its separation spans more time and the three domains
+          are not directly comparable.
+        </p>
+      </div>
+
+      <figure class="figure" style="margin-top:38px">
+        <img src="assets/temporal_cosine.png" alt="Cosine similarity of the unit-normalized World representation across temporal horizons on LIBERO, RoboTwin and the real robot, with 95% confidence intervals over episodes.">
+        <figcaption>Cosine similarity of unit-normalized <em>z<sub>t</sub></em> across horizon &Delta; on LIBERO, RoboTwin and the real robot, with 95% confidence intervals over episodes. With joint-embedding prediction the representation stays coherent over long horizons; without it, similarity falls off much faster.</figcaption>
+      </figure>
+
+      <h3 style="font-size:17px;margin-top:46px">Attention over one episode, with and without joint-embedding prediction</h3>
+      <p class="table-note" style="max-width:820px">
+        Each tab pairs the <em>same</em> recorded episode under two checkpoints, so the only difference is the
+        joint-embedding objective. With it, attention stays on the manipulated object; without it, maxima drift onto
+        background surfaces and no stable task-relevant centre forms.
+      </p>
+
+      <div class="mediabox mediabox--wide" data-tabs>
+        <div class="tablist" role="tablist" aria-label="Attention episodes by domain">
+          <button role="tab" data-tab="lib" aria-selected="true" id="tab-lib" aria-controls="panel-lib">LIBERO</button>
+          <button role="tab" data-tab="rtw" aria-selected="false" id="tab-rtw" aria-controls="panel-rtw" tabindex="-1">RoboTwin</button>
+          <button role="tab" data-tab="rb" aria-selected="false" id="tab-rb" aria-controls="panel-rb" tabindex="-1">Real robot</button>
+        </div>
+
+        <div class="tabpanel is-active" data-panel="lib" id="panel-lib" role="tabpanel" aria-labelledby="tab-lib">
+          <div class="vp vp--pair" data-vp>
+            <div class="vp-stage">
+              <div class="vp-clip">
+                <video muted loop playsinline preload="metadata" poster="assets/video/rep_libero_full.jpg"
+                       aria-label="World representation attention over a LIBERO episode, full Copper-Policy.">
+                  <source src="assets/video/rep_libero_full.mp4" type="video/mp4">
+                </video>
+                <span class="vp-tag is-ours">Copper-Policy</span>
+              </div>
+              <div class="vp-clip">
+                <video muted loop playsinline preload="metadata" poster="assets/video/rep_libero_nofuture.jpg"
+                       aria-label="World representation attention over the same LIBERO episode, without joint-embedding prediction.">
+                  <source src="assets/video/rep_libero_nofuture.mp4" type="video/mp4">
+                </video>
+                <span class="vp-tag">w/o Joint-Embedding Prediction</span>
+              </div>
+              <button class="vp-overlay" type="button" data-act="toggle" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.14v13.72L19 12z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></button>
+            </div>
+            <div class="vp-bar">
+              <button class="vp-btn vp-icon" type="button" data-act="toggle" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.14v13.72L19 12z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></button>
+              <div class="vp-track" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span class="vp-fill"></span><span class="vp-knob"></span>
+              </div>
+              <span class="vp-time">0:00 / 0:00</span>
+              <label class="vp-speed">
+                  <span class="vp-sr">Playback speed</span>
+                  <select data-act="speed" aria-label="Playback speed">
+                    <option value="0.25">0.25&times;</option>
+                    <option value="0.5">0.5&times;</option>
+                    <option value="1" selected>1.0&times;</option>
+                    <option value="2">2.0&times;</option>
+                  </select>
+                </label>
+              <button class="vp-btn" type="button" data-act="full" aria-label="Fullscreen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5v2H6v3H4zm11-5h5v5h-2V6h-3V4zM4 15h2v3h3v2H4v-5zm14 0h2v5h-5v-2h3v-3z"/></svg></button>
+            </div>
+          </div>
+          <p class="mediacap"><b>LIBERO</b> — &ldquo;put both moka pots on the stove&rdquo;, episode 129.</p>
+        </div>
+
+        <div class="tabpanel" data-panel="rtw" id="panel-rtw" role="tabpanel" aria-labelledby="tab-rtw">
+          <div class="vp vp--pair vp--rtw" data-vp>
+            <div class="vp-stage">
+              <div class="vp-clip">
+                <video muted loop playsinline preload="metadata" poster="assets/video/rep_robotwin_full.jpg"
+                       aria-label="World representation attention over a RoboTwin episode, full Copper-Policy.">
+                  <source src="assets/video/rep_robotwin_full.mp4" type="video/mp4">
+                </video>
+                <span class="vp-tag is-ours">Copper-Policy</span>
+              </div>
+              <div class="vp-clip">
+                <video muted loop playsinline preload="metadata" poster="assets/video/rep_robotwin_nofuture.jpg"
+                       aria-label="World representation attention over the same RoboTwin episode, without joint-embedding prediction.">
+                  <source src="assets/video/rep_robotwin_nofuture.mp4" type="video/mp4">
+                </video>
+                <span class="vp-tag">w/o Joint-Embedding Prediction</span>
+              </div>
+              <button class="vp-overlay" type="button" data-act="toggle" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.14v13.72L19 12z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></button>
+            </div>
+            <div class="vp-bar">
+              <button class="vp-btn vp-icon" type="button" data-act="toggle" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.14v13.72L19 12z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></button>
+              <div class="vp-track" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span class="vp-fill"></span><span class="vp-knob"></span>
+              </div>
+              <span class="vp-time">0:00 / 0:00</span>
+              <label class="vp-speed">
+                  <span class="vp-sr">Playback speed</span>
+                  <select data-act="speed" aria-label="Playback speed">
+                    <option value="0.25">0.25&times;</option>
+                    <option value="0.5">0.5&times;</option>
+                    <option value="1" selected>1.0&times;</option>
+                    <option value="2">2.0&times;</option>
+                  </select>
+                </label>
+              <button class="vp-btn" type="button" data-act="full" aria-label="Fullscreen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5v2H6v3H4zm11-5h5v5h-2V6h-3V4zM4 15h2v3h3v2H4v-5zm14 0h2v5h-5v-2h3v-3z"/></svg></button>
+            </div>
+          </div>
+          <p class="mediacap"><b>RoboTwin</b> — &ldquo;move the red, green and blue blocks to the centre and stack them&rdquo;, episode 27. Sampled every fourth frame.</p>
+        </div>
+
+        <div class="tabpanel" data-panel="rb" id="panel-rb" role="tabpanel" aria-labelledby="tab-rb">
+          <div class="vp vp--pair" data-vp>
+            <div class="vp-stage">
+              <div class="vp-clip">
+                <video muted loop playsinline preload="metadata" poster="assets/video/rep_realbot_full.jpg"
+                       aria-label="World representation attention over a real-robot episode, full Copper-Policy.">
+                  <source src="assets/video/rep_realbot_full.mp4" type="video/mp4">
+                </video>
+                <span class="vp-tag is-ours">Copper-Policy</span>
+              </div>
+              <div class="vp-clip">
+                <video muted loop playsinline preload="metadata" poster="assets/video/rep_realbot_nofuture.jpg"
+                       aria-label="World representation attention over the same real-robot episode, without joint-embedding prediction.">
+                  <source src="assets/video/rep_realbot_nofuture.mp4" type="video/mp4">
+                </video>
+                <span class="vp-tag">w/o Joint-Embedding Prediction</span>
+              </div>
+              <button class="vp-overlay" type="button" data-act="toggle" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.14v13.72L19 12z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></button>
+            </div>
+            <div class="vp-bar">
+              <button class="vp-btn vp-icon" type="button" data-act="toggle" aria-label="Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.14v13.72L19 12z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg></button>
+              <div class="vp-track" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span class="vp-fill"></span><span class="vp-knob"></span>
+              </div>
+              <span class="vp-time">0:00 / 0:00</span>
+              <label class="vp-speed">
+                  <span class="vp-sr">Playback speed</span>
+                  <select data-act="speed" aria-label="Playback speed">
+                    <option value="0.25">0.25&times;</option>
+                    <option value="0.5">0.5&times;</option>
+                    <option value="1" selected>1.0&times;</option>
+                    <option value="2">2.0&times;</option>
+                  </select>
+                </label>
+              <button class="vp-btn" type="button" data-act="full" aria-label="Fullscreen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5v2H6v3H4zm11-5h5v5h-2V6h-3V4zM4 15h2v3h3v2H4v-5zm14 0h2v5h-5v-2h3v-3z"/></svg></button>
+            </div>
+          </div>
+          <p class="mediacap"><b>Real robot</b> — &ldquo;fold the towel&rdquo;, episode 66.</p>
+        </div>
+      </div>
+
+      <details class="fold">
+        <summary>Perturbation geometry and channel probes</summary>
+        <div class="fold-body">
+          <figure class="figure" style="max-width:100%;margin-bottom:22px">
+            <img src="assets/representation_analysis.png" alt="Perturbation-temporal subspace overlap across rank and linear action-probe R-squared, plus attention maps across two RoboTwin episodes.">
+          </figure>
+
+          <div class="table-scroll">
+            <table class="data">
+              <thead>
+                <tr>
+                  <th rowspan="2">Representation</th>
+                  <th colspan="2">Geometry at rank 8</th><th colspan="2">Paired perturbation</th><th>Action probe</th>
+                </tr>
+                <tr>
+                  <th>overlap ↓</th><th>pert. in temp. ↓</th><th>norm. L<sub>2</sub> ↓</th><th>cosine ↑</th><th>R<sup>2</sup> ↑</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="ours">
+                  <td>Copper <em>z<sub>t</sub></em></td>
+                  <td class="best">0.187</td><td class="best">0.140</td><td class="best">0.134</td><td class="best">0.990</td><td>0.802</td>
+                </tr>
+                <tr>
+                  <td>w/o Joint-Embedding Prediction</td>
+                  <td>0.798</td><td>0.807</td><td>0.344</td><td>0.932</td><td>0.787</td>
+                </tr>
+                <tr>
+                  <td>Current-frame tokens <em>v<sub>t</sub></em></td>
+                  <td class="ctr dim">—</td><td class="ctr dim">—</td><td class="second">0.171</td><td class="second">0.969</td><td class="second">0.910</td>
+                </tr>
+                <tr>
+                  <td>Dense V-JEPA features</td>
+                  <td class="ctr dim">—</td><td class="ctr dim">—</td><td>0.428</td><td>0.904</td><td>0.831</td>
+                </tr>
+                <tr>
+                  <td>Token-matched V-JEPA features</td>
+                  <td class="ctr dim">—</td><td class="ctr dim">—</td><td>0.462</td><td>0.891</td><td>0.803</td>
+                </tr>
+                <tr>
+                  <td><em>z<sub>t</sub></em> and <em>v<sub>t</sub></em> together</td>
+                  <td class="ctr dim">—</td><td class="ctr dim">—</td><td class="ctr dim">—</td><td class="ctr dim">—</td><td class="best">0.927</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-caption" style="margin-top:14px">
+            100 RoboTwin episodes, 1,600 clean states paired with five deterministic perturbations each (8,000 pairs).
+            Geometry uses train-only subspaces evaluated on held-out episodes; random-subspace overlap is 0.021.
+            Joint-embedding prediction reorganizes rather than removes nuisance information: perturbation identity stays
+            linearly decodable from <em>z<sub>t</sub></em> (0.998 balanced accuracy), yet perturbation-change and temporal-change
+            subspaces overlap far less — 0.187 vs 0.798 without the objective. The two channels are complementary: together
+            they beat either alone on the action probe (<em>R</em><sup>2</sup> 0.927).
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+  <section class="section section--soft" id="bibtex">
+    <div class="wrap--narrow">
+      <div class="section-head section-head--center">
+        <span class="kicker">Citation</span>
+        <h2>BibTeX</h2>
+      </div>
+      <p class="bibtex-coming-soon">BibTeX citation coming soon.</p>
+      <p style="font-size:13px;color:var(--muted);margin-top:14px;text-align:center">
+        Questions and issues are welcome. Corresponding author: Xintao Yan.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap row">
+    <span>Copper-Policy — Focus on the Representation for Robust Robot Manipulation.</span>
+    <span>
+      <a href="assets/copper-policy-paper.pdf" target="_blank" rel="noopener">Paper PDF</a>
+      &nbsp;·&nbsp; <a href="#results">Results</a>
+      &nbsp;·&nbsp; <a href="#top">Back to top ↑</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* How far the clips in one box may drift apart before one is pulled back.
+     The attention strips are 10 fps, so 0.08 s is under a single frame. */
+  var SYNC_TOLERANCE = 0.08;
+  var players = [];
+  var rafId = null;
+
+  /* ============================================================
+     Custom video player
+     - play/pause, clickable + draggable progress bar, time, fullscreen
+     - no native controls: the native strip auto-hides and is unusable
+       on the wide, short attention panoramas
+     - a box may hold several video elements (the attention pair).
+       One control bar drives them all, and they are kept aligned.
+     ============================================================ */
+
+  function fmtTime(t) {
+    if (!isFinite(t) || t < 0) t = 0;
+    var m = Math.floor(t / 60), s = Math.floor(t % 60);
+    return m + ':' + (s < 10 ? '0' + s : s);
+  }
+
+  function makePlayer(box) {
+    var vids = Array.prototype.slice.call(box.querySelectorAll('video'));
+    if (!vids.length) return;
+    var v = vids[0];                       // primary: drives the time readout
+    var track = box.querySelector('.vp-track');
+    var fill = box.querySelector('.vp-fill');
+    var knob = box.querySelector('.vp-knob');
+    var timeEl = box.querySelector('.vp-time');
+    var toggles = Array.prototype.slice.call(box.querySelectorAll('[data-act="toggle"]'));
+    var drag = false;
+
+    function render() {
+      var d = v.duration;
+      var p = (d && isFinite(d)) ? (v.currentTime / d) * 100 : 0;
+      fill.style.width = p + '%';
+      knob.style.left = p + '%';
+      timeEl.textContent = fmtTime(v.currentTime) + ' / ' + fmtTime(d);
+      track.setAttribute('aria-valuenow', String(Math.round(p)));
+      track.setAttribute('aria-valuetext', fmtTime(v.currentTime));
+      box.classList.toggle('is-paused', v.paused);
+      toggles.forEach(function (b) {
+        b.classList.toggle('is-paused', v.paused);
+        b.setAttribute('aria-label', v.paused ? 'Play' : 'Pause');
+      });
+    }
+
+    function playAll() {
+      // only one player box runs at a time
+      document.querySelectorAll('[data-vp]').forEach(function (other) {
+        if (other === box) return;
+        other.querySelectorAll('video').forEach(function (o) {
+          if (!o.paused) o.pause();
+        });
+      });
+      align(true);
+      vids.forEach(function (x) {
+        var pr = x.play();
+        if (pr && pr.catch) pr.catch(function () {});
+      });
+    }
+
+    /* Keep the clips in a box on the same frame.
+
+       `timeupdate` is useless for this: it fires a few times a second and let the
+       pair drift a quarter of a second apart before correcting at all. Worse, a
+       playback-rate change re-anchors each media clock independently, so the two
+       clips land furthest apart exactly when the reader has just slowed the pair
+       down to look closely. So: align explicitly whenever anything changes, and
+       pull back to within SYNC_TOLERANCE every frame while playing. */
+    function align(force) {
+      var t = v.currentTime;
+      for (var i = 1; i < vids.length; i++) {
+        var x = vids[i];
+        if (x.seeking) continue;
+        if (x._syncHold && performance.now() - x._syncHold < 300) continue;
+        if (force || Math.abs(x.currentTime - t) > SYNC_TOLERANCE) {
+          // only hold off the loop if we actually moved the clip; a no-op forced
+          // align must not lock out corrections for the next 300 ms
+          if (Math.abs(x.currentTime - t) > 0.005) {
+            x.currentTime = t;
+            x._syncHold = performance.now();
+          }
+        }
+      }
+    }
+
+    function pauseAll() {
+      vids.forEach(function (x) { if (!x.paused) x.pause(); });
+    }
+
+    function togglePlay() {
+      if (v.paused) playAll(); else pauseAll();
+      render();
+    }
+
+    function seekTo(clientX) {
+      var r = track.getBoundingClientRect();
+      if (!r.width || !isFinite(v.duration)) return;
+      var ratio = (clientX - r.left) / r.width;
+      if (!isFinite(ratio)) return;
+      seekAll(Math.min(1, Math.max(0, ratio)) * v.duration);
+    }
+
+    /* Playback speed is page-wide: slowing one clip to inspect the attention or
+       speeding up a 38 s rollout should follow you into the next tab, not have
+       to be set again in all six players. Each pair is re-aligned afterwards,
+       because applying a new rate to a playing element re-anchors its clock. */
+    function setRate(rate) {
+      var resume = players.map(function (p) { return p.primary.currentTime; });
+
+      document.querySelectorAll('[data-vp]').forEach(function (b) {
+        b.querySelectorAll('video').forEach(function (x) {
+          x.defaultPlaybackRate = rate;
+          x.playbackRate = rate;
+        });
+        var sel = b.querySelector('[data-act="speed"]');
+        if (sel) {
+          sel.value = String(rate);
+          sel.classList.toggle('is-modified', rate !== 1);
+        }
+      });
+
+      players.forEach(function (p, i) {
+        // hold the on-screen moment still across the change
+        if (Math.abs(p.primary.currentTime - resume[i]) > 0.02) p.primary.currentTime = resume[i];
+        p.align(true);
+      });
+    }
+
+    toggles.forEach(function (b) { b.addEventListener('click', togglePlay); });
+    var speedSel = box.querySelector('[data-act="speed"]');
+    if (speedSel) {
+      speedSel.addEventListener('change', function () { setRate(parseFloat(speedSel.value)); });
+      speedSel.addEventListener('click', function (e) { e.stopPropagation(); });
+    }
+    box.querySelector('[data-act="full"]').addEventListener('click', function () {
+      if (document.fullscreenElement) { document.exitFullscreen(); }
+      else if (box.requestFullscreen) { box.requestFullscreen(); }
+    });
+
+    function seekAll(t) {
+      vids.forEach(function (x) { x.currentTime = t; });
+      render();
+    }
+
+    track.addEventListener('pointerdown', function (e) {
+      drag = true;
+      try { track.setPointerCapture(e.pointerId); } catch (err) {}
+      seekTo(e.clientX);
+    });
+    track.addEventListener('pointermove', function (e) { if (drag) seekTo(e.clientX); });
+    ['pointerup', 'pointercancel'].forEach(function (ev) {
+      track.addEventListener(ev, function (e) {
+        drag = false;
+        try { track.releasePointerCapture(e.pointerId); } catch (err) {}
+      });
+    });
+    track.addEventListener('keydown', function (e) {
+      if (!isFinite(v.duration)) return;
+      var step = e.shiftKey ? 5 : 1;
+      if (e.key === 'ArrowRight') { seekAll(Math.min(v.duration, v.currentTime + step)); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft') { seekAll(Math.max(0, v.currentTime - step)); e.preventDefault(); }
+      else if (e.key === 'Home') { seekAll(0); e.preventDefault(); }
+      else if (e.key === 'End') { seekAll(v.duration); e.preventDefault(); }
+      else if (e.key === ' ' || e.key === 'Enter') { togglePlay(); e.preventDefault(); }
+    });
+
+    // re-centre only; render() follows from the media events above.
+    // timeupdate also re-arms the sync loop, so playback can never resume
+    // without the pull-back running.
+    v.addEventListener('timeupdate', function () { render(); wakeSync(); });
+
+    // pull the pair back together whenever either clip starts
+    vids.forEach(function (x) {
+      x.addEventListener('play', function () { align(true); });
+    });
+
+    ['loadedmetadata', 'durationchange', 'seeking', 'seeked', 'play', 'pause', 'ended']
+      .forEach(function (ev) { v.addEventListener(ev, render); });
+    v.addEventListener('ratechange', function () {
+      var sel = box.querySelector('[data-act="speed"]');
+      if (sel) { sel.value = String(v.playbackRate); sel.classList.toggle('is-modified', v.playbackRate !== 1); }
+    });
+    vids.forEach(function (x) {
+      x.addEventListener('click', togglePlay);
+      // self-healing pair: whichever clip starts, the other follows
+      x.addEventListener('play', function () {
+        vids.forEach(function (y) {
+          if (y !== x && y.paused) {
+            var pr = y.play();
+            if (pr && pr.catch) pr.catch(function () {});
+          }
+        });
+        render();
+      });
+      x.addEventListener('pause', function () {
+        vids.forEach(function (y) { if (y !== x && !y.paused) y.pause(); });
+        render();
+      });
+    });
+
+    box._vpRender = render;
+    players.push({ box: box, primary: v, vids: vids, align: align });
+    render();
+  }
+
+  Array.prototype.slice.call(document.querySelectorAll('[data-vp]')).forEach(makePlayer);
+
+  // Runs only while something is playing, and stops itself when everything pauses.
+  function syncLoop() {
+    var active = false;
+    players.forEach(function (p) {
+      if (!p.primary.paused) { active = true; p.align(false); }
+    });
+    rafId = active ? requestAnimationFrame(syncLoop) : null;
+  }
+  function wakeSync() {
+    if (rafId === null) rafId = requestAnimationFrame(syncLoop);
+  }
+  players.forEach(function (p) {
+    p.vids.forEach(function (x) { x.addEventListener('play', wakeSync); });
+  });
+
+  // ---------- tabbed media boxes ----------
+
+  document.querySelectorAll('[data-tabs]').forEach(function (box) {
+    var tabs = Array.prototype.slice.call(box.querySelectorAll('.tablist button'));
+    var panels = Array.prototype.slice.call(box.querySelectorAll('.tabpanel'));
+
+    function select(tab) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function (p) {
+        var on = p.dataset.panel === tab.dataset.tab;
+        p.classList.toggle('is-active', on);
+        if (!on) {
+          p.querySelectorAll('video').forEach(function (v) { if (!v.paused) v.pause(); });
+        } else {
+          p.querySelectorAll('[data-vp]').forEach(function (b) { if (b._vpRender) b._vpRender(); });
+        }
+      });
+    }
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () { select(tab); });
+      tab.addEventListener('keydown', function (e) {
+        var i = tabs.indexOf(tab);
+        var next = e.key === 'ArrowRight' ? tabs[(i + 1) % tabs.length]
+                 : e.key === 'ArrowLeft'  ? tabs[(i - 1 + tabs.length) % tabs.length]
+                 : null;
+        if (next) { e.preventDefault(); select(next); next.focus(); }
+      });
+    });
+  });
+
+  // ---------- logo easter egg: shake + steel-pipe clang ----------
+
+  /* Rotation + uniform scale only. An earlier version also moved the mark up and
+     down by up to 7px, which on a 26px icon is 27% of its own size — that reads as
+     the mark swinging from an off-centre pivot rather than vibrating in place.
+     rotate/scale are anchored at transform-origin, so nothing else can drift. */
+  /* Click sounds. Clicks 1-3 walk through the three short hits; every click from
+     the fourth on is the long meme clang, so hammering the logo layers that one
+     on top of itself rather than cycling back.
+
+     Playback is layered, not restarted: each click gets its own element, so a new
+     hit never cuts off the previous one. Finished elements return to a per-file
+     pool, which makes reuse instant because the element is already buffered. All
+     four files are primed at load so no click ever waits on a decode.
+
+     A hard cap of MAX_VOICES keeps the mix from turning to mud: starting a fifth
+     voice retires the oldest one still sounding. Stealing the oldest rather than
+     refusing the new click keeps the logo responsive no matter how fast the
+     clicks come. */
+  var SOUNDS = [
+    'assets/sounds/1.mp3',
+    'assets/sounds/2.mp3',
+    'assets/sounds/3.mp3',
+    'assets/sounds/meme-4.mp3'
+  ];
+  var MAX_VOICES = 4;
+  var clicks = 0;
+  var idle = {};   // src -> stack of finished, still-buffered elements
+  var live = [];   // currently sounding elements, oldest first
+
+  function release(a) {
+    var i = live.indexOf(a);
+    if (i !== -1) live.splice(i, 1);
+    var pool = idle[a._src] || (idle[a._src] = []);
+    if (pool.length < 4) pool.push(a);
+  }
+
+  function newVoice(src) {
+    var a = new Audio();
+    a.preload = 'auto';
+    a.src = src;
+    a._src = src;
+    a.addEventListener('ended', function () { release(a); });
+    return a;
+  }
+
+  function takeVoice(src) {
+    var pool = idle[src] || (idle[src] = []);
+    return pool.pop() || newVoice(src);
+  }
+
+  SOUNDS.forEach(function (src) { idle[src] = [newVoice(src)]; });
+
+  function playHit() {
+    var stage = Math.min(clicks, SOUNDS.length - 1);
+    var src = SOUNDS[stage];
+    clicks++;
+
+    while (live.length >= MAX_VOICES) {
+      var oldest = live[0];
+      try { oldest.pause(); oldest.currentTime = 0; } catch (e) {}
+      release(oldest);            // pause() fires no 'ended', so reclaim it by hand
+    }
+
+    var a = takeVoice(src);
+    live.push(a);
+    try {
+      if (a.readyState > 0) a.currentTime = 0;   // throws on a not-yet-loaded element
+      var p = a.play();
+      if (p && p.catch) p.catch(function () {});
+    } catch (err) { /* audio is a flourish; never let it break the page */ }
+    return stage;
+  }
+
+  /* Metal, not jelly.
+
+     A soft body absorbs a blow and wobbles: large deformation, low frequency, one
+     or two slow swings. A stiff object barely deforms. It jolts, rings at a high
+     frequency, and stops. So three things had to go:
+
+       - the scale component on the impact stages. Deforming *is* what makes a
+         shape read as soft, so stages 1-3 are now pure rigid-body motion.
+       - the low frequency. The ring runs at 14-22 Hz instead of one swing per
+         300 ms, which is what turns a wobble into a vibration.
+       - the slow envelope. Amplitude now halves about every two cycles, so the
+         whole thing is over in a third of a second rather than swinging on.
+
+     Keyframes are sampled from a damped sinusoid rather than hand-written, so the
+     frequency and decay are actual numbers that can be tuned. The offset grid puts
+     a hard 4 ms attack on the front — a struck object reaches its peak instantly,
+     and easing that in is the single biggest source of the jelly look.
+
+     Stage 3 sums three copies of the same impulse at the measured knock times, so
+     it rings three times on the beats rather than being one long shake. */
+  var SPECS = [
+    { dur: 340,  hits: [0],            freq: 22, y: 6,  rot: 1.6, tau: 95  },  /* light tap   */
+    { dur: 480,  hits: [0],            freq: 17, y: 11, rot: 2.6, tau: 150 },  /* heavy strike */
+    { dur: 1175, hits: [45, 417, 796], freq: 20, y: 8,  rot: 2.0, tau: 100 },  /* three knocks */
+    { dur: 2100, hits: [0],            freq: 14, y: 12, rot: 3.4, tau: 420, swell: 1.30 }
+  ];
+  var ATTACK = 0.004;   /* fraction of the timeline spent reaching the peak */
+  var IDENTITY = 'translateY(0%) rotate(0deg) scale(1)';
+
+  function sample(spec, frac) {
+    var ms = frac * spec.dur, y = 0, r = 0;
+    for (var i = 0; i < spec.hits.length; i++) {
+      var dt = ms - spec.hits[i];
+      if (dt < 0) continue;
+      var env = Math.exp(-dt / spec.tau);
+      var w = 2 * Math.PI * spec.freq * dt / 1000;
+      y += env * Math.cos(w);        /* struck downward, so it starts at +1 */
+      r += env * Math.sin(w);
+    }
+    var scale = 1;
+    if (spec.swell) {
+      /* rises in ~25 ms then decays, so frame 0 is still the identity */
+      scale = 1 + (spec.swell - 1) * (1 - Math.exp(-ms / 25)) * Math.exp(-ms / spec.tau);
+    }
+    return 'translateY(' + (-spec.y * y).toFixed(3) + '%) rotate(' +
+           (spec.rot * r).toFixed(3) + 'deg) scale(' + scale.toFixed(4) + ')';
+  }
+
+  var ORIGIN = '50% 50%';
+
+  function frame(spec, frac) {
+    return { offset: frac, transform: sample(spec, frac), transformOrigin: ORIGIN };
+  }
+
+  var SHAKES = SPECS.map(function (spec) {
+    var n = Math.max(24, Math.round(spec.dur / 1000 * spec.freq * 10));  /* 10 samples/cycle */
+    var k = [];
+
+    /* A frame exactly on each impulse. The regular grid is dense enough to draw the
+       ring, but it can straddle an impulse and render that knock a few percent
+       short — which is visible as one hit landing softer than the other two. Push
+       these first so that when offsets tie, the sort below keeps the exact frame. */
+    spec.hits.forEach(function (t0) {
+      if (t0 > 0 && t0 < spec.dur) k.push(frame(spec, t0 / spec.dur));
+    });
+
+    for (var i = 0; i <= n; i++) k.push(frame(spec, ATTACK + (1 - ATTACK) * (i / n)));
+
+    k.push({ offset: 0, transform: IDENTITY, transformOrigin: ORIGIN });
+    k.sort(function (a, b) { return a.offset - b.offset; });
+
+    var out = [];
+    k.forEach(function (f) {                       /* strict ascending offsets only */
+      if (!out.length || f.offset > out[out.length - 1].offset + 1e-9) out.push(f);
+    });
+
+    out[out.length - 1].transform = IDENTITY;      /* settle dead, never snap on replay */
+    return { duration: spec.dur, easing: 'linear', k: out };
+  });
+
+  function keyframes(stage) {
+    return SHAKES[stage].k;
+  }
+
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.brand-logo, .wordmark-logo').forEach(function (el) {
+    el.addEventListener('click', function () {
+      var stage = playHit();
+      if (calm || !el.animate) return;
+      var s = SHAKES[stage];
+      el.animate(keyframes(stage), { duration: s.duration, easing: s.easing });
+    });
+  });
+
+  // ---------- BibTeX copy ----------
+
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = document.getElementById('bibtex-text').textContent;
+      var done = function () {
+        btn.textContent = 'Copied';
+        btn.classList.add('done');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, done);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta); done();
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

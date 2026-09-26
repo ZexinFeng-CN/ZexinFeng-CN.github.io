@@ -1,0 +1,631 @@
+/* Copper-Policy project page
+   Layout: single column, print-friendly academic page.
+   Rule of thumb: content first, chrome last. */
+
+:root{
+  --bg:#ffffff;
+  --bg-soft:#f6f7f9;
+  --ink:#0f1720;
+  --body:#414d59;
+  --muted:#78838f;
+  --line:#e4e8ed;
+  --line-strong:#c9d2da;
+  --accent:#b4623c;
+  --accent-soft:#fdf3ee;
+  --accent-deep:#9a5030;   /* accent dark enough for text (AA at any size) */
+  --brand:#123f3b;
+  --brand-dark:#0c2e2b;
+  --maxw:1120px;
+  --narrow:800px;
+  --radius:8px;
+  /* Material elevation scale. Every level stacks the same three shadows: a tight,
+     comparatively opaque key that cuts the edge, a mid penumbra, and a wide
+     low-opacity ambient. Blur grows and opacity falls outward, which is what makes
+     a shadow read as a raised surface rather than as a glow. Levels are assigned by
+     how far the element sits above the page — images, then cards, then the headline
+     strip. */
+  --e1: 0 1px 2px -1px rgba(15,23,42,.16), 0 2px 4px 0 rgba(15,23,42,.09), 0 1px 8px 0 rgba(15,23,42,.06);
+  --e2: 0 2px 4px -1px rgba(15,23,42,.18), 0 4px 8px 0 rgba(15,23,42,.10), 0 1px 12px 0 rgba(15,23,42,.07);
+  --e3: 0 3px 5px -1px rgba(15,23,42,.22), 0 6px 10px 0 rgba(15,23,42,.13), 0 1px 18px 0 rgba(15,23,42,.10);
+}
+
+*{box-sizing:border-box}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:72px;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--body);
+  font-family:"Inter","Helvetica Neue",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{margin:0;color:var(--ink);line-height:1.25;font-weight:650;letter-spacing:-.015em}
+p{margin:0 0 1em}
+p:last-child{margin-bottom:0}
+strong{color:var(--ink);font-weight:650}
+em{font-style:italic}
+sup{font-size:.68em;line-height:0}
+
+.wrap{width:min(var(--maxw),calc(100% - 48px));margin-inline:auto}
+.wrap--narrow{width:min(var(--narrow),calc(100% - 48px));margin-inline:auto}
+
+/* ---------- top bar ---------- */
+
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  width:min(var(--maxw),calc(100% - 48px));
+  margin-inline:auto;
+  height:58px;
+  display:flex;align-items:center;gap:24px;
+}
+.brand{
+  display:flex;flex-direction:row;align-items:center;gap:9px;
+  /* never compressed and never wrapped: as a plain inline <a> this used to
+     shrink below its content width and drop the label under the mark */
+  flex:0 0 auto;
+  font-family:"Space Grotesk",sans-serif;
+  font-weight:700;font-size:15px;letter-spacing:-.02em;
+  color:var(--ink);white-space:nowrap;
+}
+.brand-logo{display:block;width:26px;height:26px;flex:0 0 26px;object-fit:contain;cursor:pointer}
+.brand span{flex:0 0 auto}
+.topnav{display:flex;gap:22px;margin-left:auto}
+.topnav a{font-size:13.5px;color:var(--muted)}
+.topnav a:hover{color:var(--ink)}
+.topbar .pdf-link{
+  font-size:13px;font-weight:600;color:var(--brand);
+  border:1px solid var(--line-strong);border-radius:999px;
+  padding:6px 14px;white-space:nowrap;flex:0 0 auto;
+}
+.topbar .pdf-link:hover{border-color:var(--brand);background:var(--brand);color:#fff}
+
+/* Resting transform-origin for the logos. The click animation overrides this per
+   stage — impact stages anchor at `50% 100%` so the mark compresses onto its base,
+   stage 4 anchors at the centre because it swells rather than gets struck — but
+   keeping the centre here means the logos are not offset at rest, and it is the
+   pivot any non-animated transform would use. */
+.brand-logo,.wordmark-logo{transform-origin:50% 50%}
+
+/* ---------- hero ---------- */
+
+.hero{padding:64px 0 44px;text-align:center;border-bottom:1px solid var(--line)}
+.venue{
+  display:inline-block;
+  font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent);
+  background:var(--accent-soft);
+  border:1px solid #f0dbd0;
+  border-radius:999px;padding:4px 13px;margin-bottom:22px;
+}
+.wordmark{
+  display:flex;align-items:center;justify-content:center;gap:.28em;
+  flex-wrap:wrap;                 /* on a very narrow phone the mark drops above the word */
+  font-family:"Space Grotesk",sans-serif;
+  font-size:clamp(34px,5.4vw,52px);
+  font-weight:700;letter-spacing:-.045em;
+  margin-bottom:12px;
+}
+/* sized in em so it tracks the clamp() above without extra media queries. The PNG
+   carries transparent padding top and bottom, so the visible mark is ~78% of the
+   box — hence a shade over 1em rather than exactly matching the cap height. */
+.wordmark-logo{width:1.05em;height:1.05em;flex:none;object-fit:contain;cursor:pointer}
+.paper-title{
+  font-size:clamp(18px,2.5vw,25px);
+  font-weight:500;color:var(--ink);
+  line-height:1.4;letter-spacing:-.02em;
+  max-width:760px;margin:0 auto 26px;
+}
+.authors{font-size:15px;color:var(--ink);line-height:2;margin-bottom:6px}
+.authors span{white-space:nowrap;display:inline-block;margin:0 7px}
+.authors-break{display:block}
+.affiliations{font-size:13.5px;color:var(--muted);line-height:1.9;margin-bottom:28px}
+.affiliations span{display:inline-block;margin:0 8px;white-space:nowrap}
+.info-tip{position:relative;outline:none}
+.info-tip::after{
+  content:attr(data-tooltip);position:absolute;z-index:100;left:50%;bottom:calc(100% + 8px);
+  transform:translate(-50%,4px);padding:5px 9px;border-radius:5px;
+  background:#17212b;color:#fff;font:500 12px/1.35 "Inter","Helvetica Neue",Arial,sans-serif;
+  white-space:nowrap;opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .14s ease,transform .14s ease,visibility .14s;
+}
+.info-tip:hover::after,.info-tip:focus::after{
+  opacity:1;visibility:visible;transform:translate(-50%,0);
+}
+.corresponding-marker{color:var(--accent);font-size:.8em;margin-left:2px}
+
+/* The hero line. Was a left-aligned aside with the results list tacked on;
+   now it is the paper's one-sentence claim, centred and in the brand colour. */
+.punchline{
+  max-width:860px;margin:0 auto 30px;
+  padding:18px 26px;
+  border:1px solid #f0dbd0;
+  background:var(--accent-soft);
+  border-radius:8px;
+  font-family:"Space Grotesk",sans-serif;
+  font-size:clamp(16px,2.1vw,21px);
+  font-weight:700;letter-spacing:-.02em;line-height:1.45;
+  color:var(--accent-deep);
+  text-align:center;
+  box-shadow:var(--e2);
+}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:14px;font-weight:600;
+  padding:10px 18px;border-radius:999px;
+  border:1px solid var(--line-strong);
+  color:var(--ink);background:#fff;
+  transition:background .15s,border-color .15s,color .15s,box-shadow .15s;
+  box-shadow:var(--e1);
+}
+.btn:hover{border-color:var(--ink);background:var(--ink);color:#fff;box-shadow:var(--e2)}
+.btn--primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn--primary:hover{background:var(--brand-dark);border-color:var(--brand-dark);color:#fff}
+
+/* ---------- sections ---------- */
+
+.section{padding:64px 0;border-bottom:1px solid var(--line)}
+.section--soft{background:var(--bg-soft)}
+.section-head{margin-bottom:30px}
+.section-head .kicker{
+  display:block;
+  font-family:"Space Grotesk",sans-serif;
+  font-size:11.5px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);
+  margin-bottom:8px;
+}
+.section-head h2{font-size:clamp(23px,3vw,30px)}
+.section-head p.lede{margin-top:10px;max-width:760px;font-size:15.5px;color:var(--body)}
+.section-head--center{text-align:center}
+.section-head--center p.lede{margin-inline:auto}
+
+/* ---------- figures ---------- */
+
+figure{margin:0}
+.figure{margin-inline:auto;max-width:940px}
+.figure--tight{max-width:860px}
+.figure img{
+  width:100%;border:1px solid var(--line);border-radius:var(--radius);
+  background:#fff;box-shadow:var(--e1);
+}
+figcaption{
+  font-size:12.5px;line-height:1.6;color:var(--muted);
+  margin-top:12px;text-align:left;
+}
+figcaption b{color:var(--ink);font-weight:600}
+
+/* ---------- stat strip ---------- */
+
+.stats{
+  display:grid;grid-template-columns:repeat(6,1fr);
+  gap:1px;background:var(--line);
+  border:1px solid rgba(15,23,42,.10);
+  border-radius:8px;
+  overflow:hidden;margin-bottom:42px;
+  /* highest level on the page: this is the headline number row */
+  box-shadow:var(--e3);
+}
+/* Flat surface. Material does not gradient or bevel its cards — all the depth is
+   in the shadow, so the fill stays a single value. */
+.stat{background:#fff;padding:18px 12px}
+.stat .label{
+  font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px;
+}
+.stat .value{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:22px;font-weight:700;letter-spacing:-.03em;color:var(--ink);
+  line-height:1.1;
+}
+.stat .value small{font-size:.55em;font-weight:600;color:var(--muted);margin-left:2px}
+/* The pair inherits .stat .value's size so its digits land on the same line as
+   every other card, and `small` picks up the same 0.55em percent sign. Six equal
+   columns leave ~165 px of content, which two four-digit values plus their percent
+   signs fill in ~153 px — see the 22px on .stat .value below. */
+.stat .value--pair{display:flex;gap:10px}
+.stat .value--pair>span{display:flex;flex-direction:column;line-height:1.1}
+.stat .value--pair b{font-weight:700}
+.stat .value--pair i{
+  font-style:normal;font-family:"Inter",sans-serif;
+  font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-top:4px;
+}
+.stat .note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:6px}
+.stat--accent .value{color:var(--accent)}
+/* flat tint, same surface treatment — Material tints a surface rather than
+   beveling it */
+.stat--accent{background:var(--accent-soft)}
+
+/* ---------- tables ---------- */
+
+.table-block{margin-top:34px}
+.table-block:first-child{margin-top:0}
+.table-block h3{
+  font-size:17px;font-weight:650;margin-bottom:6px;
+}
+.table-block .table-note{
+  font-size:13.5px;color:var(--muted);margin-bottom:14px;max-width:820px;
+}
+/* Booktabs-style tables. Sized to their content, not stretched to the column
+   width — a table that fills the row leaves the eye to travel across empty
+   space and separates headers from the values beneath them. */
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.data{
+  border-collapse:collapse;
+  width:auto;min-width:0;
+  margin-inline:auto;          /* sit centred in the column, not jammed left */
+  font-size:13px;font-variant-numeric:tabular-nums;
+  background:transparent;
+}
+table.data th,table.data td{
+  padding:8px 13px;text-align:center;white-space:nowrap;
+  border:0;border-bottom:1px solid var(--line);
+}
+/* first column only, kept left-aligned: centring method names would make both
+   edges of the label column ragged. Scoped to `thead tr:first-child`, not plain
+   `th:first-child`, which would also hit the first cell of the second header row —
+   where a rowspan heading occupies that slot — and left-align a sub-header. */
+table.data thead tr:first-child th:first-child,
+table.data tbody td:first-child{
+  text-align:left;white-space:normal;min-width:190px;
+  padding-left:0;
+}
+/* every other column keeps symmetric padding, so centred cells sit centred */
+table.data thead th{
+  font-size:11.5px;font-weight:600;color:var(--ink);
+  letter-spacing:.02em;
+  border-top:1.5px solid var(--line-strong);
+  border-bottom:1px solid var(--line-strong);
+  padding-top:9px;padding-bottom:9px;
+}
+/* a group heading spans its columns, so centre it over them */
+table.data thead th[colspan]{text-align:center}
+/* LIBERO-Plus splits into two kinds of stress test. Camera / Robot / Light /
+   Noise are the closed-loop execution shifts the World representation is meant
+   to absorb; Language / Background / Layout test broader scene generalisation.
+   Marking the first four keeps that split readable without another rule. */
+table.data thead th.hl{
+  font-weight:700;text-decoration:underline;
+  text-underline-offset:3px;text-decoration-thickness:1px;
+}
+/* second header row must not double the rule already under the first */
+table.data thead tr + tr th{border-top:0}
+/* vertical rule splitting the LIBERO and LIBERO-Plus column groups. Marked on
+   the LIBERO-Plus group heading, its first sub-header and its first data cell,
+   so the line runs unbroken from the top of the header to the last row. */
+table.data .grp{border-left:1px solid var(--line-strong)}
+table.data tbody tr:last-child td{border-bottom:1.5px solid var(--line-strong)}
+table.data tr.ours td{background:var(--accent-soft)}
+table.data tr.ours td:first-child{font-weight:650;color:var(--ink)}
+@media (hover:hover){
+  table.data tbody tr:not(.group):hover td{background:#eef2f5;transition:background .12s ease}
+  table.data tbody tr.ours:hover td{background:#f5e3da}
+}
+table.data td.best,table.data th.best{font-weight:700;color:var(--ink)}
+table.data td.second{text-decoration:underline;text-underline-offset:3px}
+table.data .ctr,table.data th.ctr{text-align:center}
+table.data tr.group td{
+  background:transparent;font-size:11.5px;font-weight:600;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--muted);
+  text-align:left;padding:15px 0 6px;border-bottom:1px solid var(--line);
+}
+table.data tr.group:first-child td{padding-top:6px}
+table.data .mark{color:var(--accent)}
+table.data .dim{color:var(--muted)}
+
+/* thirteen-column benchmark table: tighter so it still leaves air on both sides */
+table.data--wide{font-size:12px}
+table.data--wide th,table.data--wide td{padding:7px 9px}
+table.data--wide thead tr:first-child th:first-child,
+table.data--wide tbody td:first-child{min-width:132px}
+table.data--wide thead th{padding-top:8px;padding-bottom:8px}
+
+.fold{
+  margin-top:22px;
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:#fff;
+  box-shadow:var(--e1);
+}
+.fold>summary{
+  cursor:pointer;list-style:none;
+  padding:13px 16px;font-size:13.5px;font-weight:600;color:var(--brand);
+  display:flex;align-items:center;gap:8px;
+}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary::before{
+  content:"＋";font-weight:400;color:var(--accent);font-size:15px;
+}
+.fold[open]>summary::before{content:"－"}
+.fold[open]>summary{border-bottom:1px solid var(--line)}
+.fold .fold-body{padding:16px}
+.table-caption{
+  font-size:12.5px;line-height:1.6;color:var(--muted);
+  margin-top:10px;
+}
+
+/* ---------- feature / point list ---------- */
+
+.points{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+.point{
+  border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px;background:#fff;
+  box-shadow:var(--e1);
+}
+.point .idx{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:11.5px;font-weight:700;letter-spacing:.1em;color:var(--accent);
+}
+.point h3{font-size:16px;margin:10px 0 8px;letter-spacing:-.01em}
+.point p{font-size:13.5px;line-height:1.65;color:var(--body);margin:0}
+
+
+/* ---------- tabbed media box ---------- */
+
+.mediabox{
+  border:1px solid var(--line);border-radius:var(--radius);background:#fff;
+  overflow:hidden;max-width:880px;margin-inline:auto;
+  box-shadow:var(--e2);
+}
+.mediabox--wide{max-width:980px}
+.tablist{
+  display:flex;overflow-x:auto;background:var(--bg-soft);
+  border-bottom:1px solid var(--line);scrollbar-width:none;
+}
+.tablist::-webkit-scrollbar{display:none}
+.tablist button{
+  appearance:none;border:0;background:none;cursor:pointer;
+  font:inherit;font-size:13.5px;font-weight:600;color:var(--muted);
+  padding:11px 16px;white-space:nowrap;border-right:1px solid var(--line);
+  box-shadow:inset 0 -2px 0 transparent;
+}
+.tablist button:last-child{border-right:0}
+.tablist button:hover{color:var(--ink)}
+.tablist button[aria-selected="true"]{
+  background:#fff;color:var(--ink);box-shadow:inset 0 -2px 0 var(--accent);
+}
+.tablist button .pill{
+  display:inline-block;margin-left:7px;font-size:11px;font-weight:700;
+  color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:1px 7px;
+}
+.tabpanel{display:none;padding:14px}
+.tabpanel.is-active{display:block}
+/* attention pairs stack one per row so each strip is rendered as large as possible */
+
+/* ---------- custom video player ---------- */
+
+.vp{
+  position:relative;background:#0b0f12;
+  border:1px solid var(--line);border-radius:6px;overflow:hidden;
+}
+.vp-stage{position:relative;display:block}
+.vp-clip{position:relative}
+.vp-clip + .vp-clip{border-top:3px solid #fff}
+/* RoboTwin strips are 1920x720 against the real-robot 1920x540, so capping the
+   player at 3/4 width lands both pairs on the same rendered height. */
+.vp--rtw{max-width:75%;margin-inline:auto}
+.vp video{display:block;width:100%;height:auto;background:#0b0f12;cursor:pointer}
+.vp-tag{
+  position:absolute;top:8px;left:8px;
+  font-size:11px;font-weight:600;letter-spacing:.03em;
+  color:#fff;background:rgba(10,15,20,.62);
+  border:1px solid rgba(255,255,255,.18);border-radius:4px;
+  padding:2px 7px;pointer-events:none;
+}
+.vp-tag.is-ours{color:#ffd9c6;border-color:rgba(180,98,60,.6);background:rgba(70,32,16,.72)}
+.vp-overlay{
+  position:absolute;inset:0;display:grid;place-items:center;
+  border:0;background:rgba(8,12,16,.24);color:#fff;cursor:pointer;
+  opacity:0;transition:opacity .18s ease;padding:0;
+}
+.vp-overlay svg{width:52px;height:52px;fill:#fff;filter:drop-shadow(0 2px 8px rgba(0,0,0,.45))}
+/* shown only while paused — never on hover over a playing clip */
+.vp.is-paused .vp-overlay{opacity:1}
+
+.vp-bar{
+  display:flex;align-items:center;gap:10px;
+  padding:7px 10px;background:#fff;border-top:1px solid var(--line);
+}
+.vp-btn{
+  appearance:none;border:0;background:none;padding:0;cursor:pointer;
+  width:26px;height:26px;flex:none;display:grid;place-items:center;
+  color:var(--ink);border-radius:4px;
+}
+.vp-btn:hover{background:var(--bg-soft)}
+.vp-btn svg{width:17px;height:17px;fill:currentColor}
+/* play/pause glyph swap — scoped to both the overlay and the bar button */
+.vp-icon .i-play,
+.vp-overlay .i-play{display:none}
+.vp-icon .i-pause,
+.vp-overlay .i-pause{display:block}
+.vp-icon.is-paused .i-play,
+.vp-overlay.is-paused .i-play{display:block}
+.vp-icon.is-paused .i-pause,
+.vp-overlay.is-paused .i-pause{display:none}
+
+.vp-track{
+  position:relative;flex:1;height:20px;
+  display:flex;align-items:center;cursor:pointer;
+  touch-action:none;outline-offset:3px;
+}
+.vp-track::before{
+  content:"";position:absolute;left:0;right:0;height:4px;
+  border-radius:2px;background:#dde2e7;
+}
+.vp-fill{
+  position:absolute;left:0;height:4px;width:0;
+  border-radius:2px;background:var(--accent);
+}
+.vp-knob{
+  position:absolute;left:0;width:11px;height:11px;margin-left:-5.5px;
+  border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 3px rgba(180,98,60,.16);
+}
+.vp-track:hover .vp-knob,.vp-track:focus-visible .vp-knob{
+  box-shadow:0 0 0 5px rgba(180,98,60,.2);
+}
+.vp-time{
+  font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums;
+  white-space:nowrap;flex:none;
+}
+
+/* ---------- playback speed ---------- */
+
+.vp-speed{position:relative;flex:none;display:flex;align-items:center}
+.vp-sr{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+.vp-speed select{
+  appearance:none;-webkit-appearance:none;
+  font-family:inherit;font-size:11.5px;font-weight:600;
+  font-variant-numeric:tabular-nums;
+  color:var(--body);background:transparent;
+  border:1px solid var(--line-strong);border-radius:4px;
+  padding:3px 19px 3px 7px;
+  cursor:pointer;
+}
+.vp-speed::after{
+  content:"";position:absolute;right:6px;top:50%;margin-top:-2px;
+  border-left:3.5px solid transparent;border-right:3.5px solid transparent;
+  border-top:4px solid var(--muted);
+  pointer-events:none;
+}
+.vp-speed select:hover{border-color:var(--ink);color:var(--ink)}
+.vp-speed select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* flag a non-default speed so a slowed-down clip is never a mystery */
+.vp-speed select.is-modified{color:var(--accent);border-color:var(--accent)}
+
+.mediacap{font-size:12.5px;line-height:1.55;color:var(--muted);margin-top:11px}
+
+.mediabox .meta{
+  display:flex;flex-wrap:wrap;gap:6px 20px;align-items:baseline;
+  padding:11px 16px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--muted);
+}
+.mediabox .meta b{color:var(--ink);font-weight:600}
+
+@media (max-width:700px){
+  .vp-time{font-size:11px}
+  .vp-bar{gap:7px;padding:7px 8px}
+}
+
+/* ---------- real robot ---------- */
+
+.tasks{display:grid;grid-template-columns:1fr;gap:14px;margin-top:30px}
+.task{
+  display:grid;grid-template-columns:1fr 190px;gap:18px;align-items:center;
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:#fff;padding:14px 18px 14px 14px;
+  box-shadow:var(--e1);
+}
+.task img,
+.task video{border:1px solid var(--line);border-radius:6px;width:100%;display:block;background:#0b0f12}.task .task-meta h3{font-size:16px;margin-bottom:4px}
+.task .task-meta .tag{
+  font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--accent);
+}
+.task .task-meta p{font-size:13.5px;color:var(--muted);margin:6px 0 0}
+.task .score{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:30px;font-weight:700;letter-spacing:-.03em;color:var(--ink);
+  line-height:1;
+}
+.task .score small{display:block;font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--muted);margin-top:5px;text-transform:uppercase}
+
+/* ---------- bibtex ---------- */
+
+.bibtex{
+  position:relative;
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--bg-soft);
+  box-shadow:var(--e1);
+}
+.bibtex-coming-soon{margin:0;text-align:center;color:var(--muted);font-size:15px}
+.bibtex pre{
+  margin:0;padding:20px 18px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:12.5px;line-height:1.65;color:var(--ink);
+  overflow-x:auto;
+}
+.copy-btn{
+  position:absolute;top:10px;right:10px;
+  font-size:12px;font-weight:600;color:var(--body);
+  border:1px solid var(--line-strong);border-radius:999px;
+  background:#fff;padding:4px 12px;cursor:pointer;
+}
+.copy-btn:hover{color:var(--brand);border-color:var(--brand)}
+.copy-btn.done{color:#1c7a53;border-color:#1c7a53}
+
+/* ---------- footer ---------- */
+
+.site-footer{
+  padding:34px 0 46px;font-size:13px;color:var(--muted);
+}
+.site-footer .row{
+  display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;
+}
+.site-footer a{color:var(--brand);font-weight:600}
+.site-footer a:hover{text-decoration:underline}
+
+/* ---------- responsive ---------- */
+
+/* Six equal columns need ~165 px of content per card: two four-digit RoboTwin
+   values at 22px want ~153 px, and the longest note wants ~150 px. Wider than
+   ~1160 px that holds; below it the strip breaks into two rows of three instead
+   of squeezing, so nothing wraps. */
+@media (max-width:1160px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+}
+
+@media (max-width:900px){
+  .topnav{display:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .points{grid-template-columns:1fr}
+  .task{grid-template-columns:1fr}
+  .task .score{margin-top:4px}
+  .section{padding:48px 0}
+  .hero{padding:44px 0 34px}
+}
+
+@media (max-width:560px){
+  .wrap,.wrap--narrow,.topbar-inner{width:calc(100% - 32px)}
+  .topbar-inner{gap:12px}
+  .brand{font-size:14px}
+  .brand-logo{width:22px;height:22px;flex-basis:22px}
+  .topbar .pdf-link{padding:5px 10px;font-size:12px}
+  body{font-size:15.5px}
+  .punchline{padding:14px 18px;font-size:16px}
+  .authors span{margin:0 5px}
+  .affiliations span{margin:0 5px}
+}
+
+/* Two columns of stat cards need ~153 px for the RoboTwin pair; a 375 px phone
+   leaves only ~147 px. Stack them instead of shrinking the numbers. */
+@media (max-width:420px){
+  .stats{grid-template-columns:1fr}
+}
+
+@media print{
+  .topbar,.copy-btn{display:none}
+  .section{border-bottom:none;padding:24px 0}
+  .section--soft{background:#fff}
+  .fold{border:none}
+  .fold>summary{display:none}
+  .fold .fold-body{padding:0}
+}

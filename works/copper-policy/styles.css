@@ -132,6 +132,8 @@ sup{font-size:.68em;line-height:0}
 }
 .authors{font-size:15px;color:var(--ink);line-height:2;margin-bottom:6px}
 .authors span{white-space:nowrap;display:inline-block;margin:0 7px}
+.authors a{color:inherit;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.authors a:hover{color:var(--accent);border-bottom-color:var(--accent)}
 .authors-break{display:block}
 .affiliations{font-size:13.5px;color:var(--muted);line-height:1.9;margin-bottom:28px}
 .affiliations span{display:inline-block;margin:0 8px;white-space:nowrap}

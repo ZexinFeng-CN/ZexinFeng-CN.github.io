@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=24">
+<link rel="stylesheet" href="styles.css?v=41">
 </head>
 <body>
 
@@ -37,7 +37,7 @@
   <!-- ============ HERO ============ -->
   <section class="hero">
     <div class="wrap">
-      <span class="venue">arXiv preprint · 2026</span>
+      <span class="venue">Manuscript · 2026</span>
       <h1 class="wordmark">
         <img class="wordmark-logo" src="assets/copper.png" alt="" width="54" height="54" decoding="async">
         <span>Copper-Policy</span>
@@ -66,8 +66,18 @@
       <p class="punchline">Cheap Training, Strong Control.</p>
 
       <div class="actions">
-        <a class="btn btn--primary" href="#main-result">Main result ↓</a>
-        <a class="btn" href="#bibtex">BibTeX</a>
+        <span class="btn btn--arxiv btn--pending" aria-disabled="true" title="arXiv link pending">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v6h5M9 13h6M9 17h6"/></svg>
+          <span>arXiv</span>
+        </span>
+        <a class="btn btn--github" href="https://github.com/mark4551124015/copper-policy" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.93.58.11.79-.25.79-.56 0-.27-.01-.98-.02-1.92-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.72-1.55-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.77.11 3.06.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.35.77 1.02.77 2.06 0 1.49-.01 2.69-.01 3.06 0 .31.21.68.8.56C20.21 21.4 23.5 17.09 23.5 12 23.5 5.65 18.35.5 12 .5Z"/></svg>
+          <span>GitHub</span>
+        </a>
+        <span class="btn btn--bibtex btn--pending" title="BibTeX citation coming soon" aria-disabled="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="7" width="11" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h1"/></svg>
+          <span>BibTeX &middot; Coming soon</span>
+        </span>
       </div>
     </div>
   </section>
@@ -156,7 +166,7 @@
     </div>
   </section>
 
-<section class="section section--soft" id="method">
+<section class="section section--soft method-section" id="method">
     <div class="wrap">
       <div class="section-head">
         <span class="kicker">Method</span>
@@ -164,10 +174,48 @@
         <p class="lede">At time <em>t</em> the policy observes <em>o<sub>t</sub></em>, robot state <em>q<sub>t</sub></em> and instruction <em>s</em>, and predicts an action chunk <em>a<sub>t:t+H<sub>a</sub>−1</sub></em>. A frozen V-JEPA encoder feeds a trainable compactor that writes the World representation <em>z<sub>t</sub></em>; a separate spatial encoder feeds a differentiable grid sampler that produces <em>v<sub>t</sub></em>. Two expert streams share one attention transformer.</p>
       </div>
 
-      <figure class="figure">
-        <img src="assets/method.png" alt="Copper-Policy architecture: online and EMA compactors, a Future Expert, and an Action Expert sharing a joint self-attention transformer.">
-        <figcaption><b>Implementation architecture.</b> The Future Expert operates only on the compact World representation; the Action Expert additionally reads current-frame tokens <em>v<sub>t</sub></em> and the robot state. No future is generated at deployment — the Future Expert runs once as a context encoder.</figcaption>
-      </figure>
+      <div class="method-switcher" data-method-switcher>
+        <div class="method-switcher__buttons" role="group" aria-label="Method diagram variant">
+          <button type="button" class="method-switcher__button is-active" aria-pressed="true" data-method-variant="0">Copper-Policy</button>
+          <button type="button" class="method-switcher__button" aria-pressed="false" data-method-variant="1">w/o Joint-Embedding Prediction</button>
+          <button type="button" class="method-switcher__button" aria-pressed="false" data-method-variant="3">w/o Current-Frame Visual Features</button>
+          <button type="button" class="method-switcher__button" aria-pressed="false" data-method-variant="2">w/o World Input &amp; Future Expert</button>
+          <button type="button" class="method-switcher__button" aria-pressed="false" data-method-variant="4">w/o JE Pred. &amp; Visual Features</button>
+        </div>
+        <div class="method-switcher__content">
+        <figure class="figure method-switcher__figure">
+          <div class="method-switcher__images">
+            <img class="is-active" src="assets/method-ablations/variant-1.png" width="1900" height="746" alt="Full Copper-Policy architecture and its training and inference attention masks." data-method-image="0" aria-hidden="false">
+            <img src="assets/method-ablations/variant-2.png" width="1900" height="746" alt="Ablation without joint-embedding prediction, with its training and inference attention masks." data-method-image="1" aria-hidden="true">
+            <img src="assets/method-ablations/variant-3.png" width="1900" height="746" alt="Ablation without world input and joint-embedding prediction, with its attention masks." data-method-image="2" aria-hidden="true">
+            <img src="assets/method-ablations/variant-4.png" width="1900" height="746" alt="Ablation without current-frame visual features, with its attention masks." data-method-image="3" aria-hidden="true">
+            <img src="assets/method-ablations/variant-5.png" width="1900" height="746" alt="Ablation without joint-embedding prediction or current-frame visual features, with its attention masks." data-method-image="4" aria-hidden="true">
+          </div>
+        </figure>
+        <div class="method-ablation__drawer" id="method-ablation-drawer">
+        <aside class="method-ablation" aria-label="Ablation results across four benchmarks" aria-hidden="true" inert>
+          <h3>Ablation across all four benchmarks</h3>
+          <div class="method-ablation__scroll">
+            <table class="method-ablation__table">
+              <thead><tr><th scope="col">Configuration</th><th scope="col">LIBERO ↑</th><th scope="col">LIBERO-Plus ↑</th><th scope="col">RoboTwin ↑</th><th scope="col">Real robot ↑</th></tr></thead>
+              <tbody>
+                <tr class="is-active" data-method-result="0" aria-current="true" tabindex="0"><th scope="row">Copper-Policy</th><td>97.25</td><td>80.85</td><td>41.91</td><td>96.3</td></tr>
+                <tr data-method-result="1" tabindex="0"><th scope="row">w/o Joint-Embedding Prediction</th><td>95.90</td><td>79.11</td><td>28.77</td><td>43.3</td></tr>
+                <tr data-method-result="3" tabindex="0"><th scope="row">w/o Current-Frame Visual Features</th><td>95.45</td><td>74.11</td><td>39.02</td><td>20.7</td></tr>
+                <tr data-method-result="2" tabindex="0"><th scope="row">w/o World Input &amp; Future Expert</th><td>94.80</td><td>74.56</td><td>32.74</td><td>84.7</td></tr>
+                <tr data-method-result="4" tabindex="0"><th scope="row">w/o JE Pred. &amp; Visual Features</th><td>85.00</td><td>58.81</td><td>30.54</td><td>1.3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </aside>
+        </div>
+        <button class="method-ablation__handle" type="button" aria-controls="method-ablation-drawer" aria-expanded="false" aria-label="Show ablation results">
+          <span class="method-ablation__handle-icon" aria-hidden="true">›</span>
+          <span>Ablation results</span>
+        </button>
+        </div>
+        <p class="method-switcher__caption">Select a variant to see which inputs and prediction paths are removed. The Future Expert operates on the compact World representation; the Action Expert also reads current-frame tokens <em>v<sub>t</sub></em> and the robot state. No future is generated at deployment.</p>
+      </div>
 
       <div class="points">
         <article class="point">
@@ -269,61 +317,6 @@
           </table>
         </div>
         <p class="table-caption">Success rate (%). <b>Pretrain</b>: uses an embodied-pretrained component. <b>WAM</b>: explicit future modeling; <sup>‡</sup> marks methods that generate no future at deployment. Bold and underlined mark best and second-best within the comparison block, ties included. LIBERO follows the standard protocol with 50 rollouts per task and identical closed-loop replanning for every entry; LIBERO-Plus is task-weighted.</p>
-      </div>
-
-      <div class="table-block">
-        <h3>Ablation across all four benchmarks</h3>
-        <p class="table-note">
-          Four configurations isolate the World input and Future Expert (<em>z<sub>t</sub></em>), joint-embedding
-          prediction (JE pred.) and current-frame visual features (<em>v<sub>t</sub></em>). Everything else — data,
-          optimizer, schedules, rollout protocol — is identical.
-        </p>
-        <div class="table-scroll">
-          <table class="data">
-            <thead>
-              <tr>
-                <th>Configuration</th>
-                <th class="ctr"><em>z<sub>t</sub></em></th><th class="ctr">JE pred.</th><th class="ctr"><em>v<sub>t</sub></em></th>
-                <th>LIBERO ↑</th><th>LIBERO-Plus ↑</th><th>RoboTwin ↑</th><th>Real robot ↑</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="ours">
-                <td>Copper-Policy</td>
-                <td class="ctr mark">✓</td><td class="ctr mark">✓</td><td class="ctr mark">✓</td>
-                <td class="best">97.25</td><td class="best">80.85</td><td class="best">41.91</td><td class="best">96.3</td>
-              </tr>
-              <tr>
-                <td>w/o Joint-Embedding Prediction</td>
-                <td class="ctr mark">✓</td><td class="ctr dim">×</td><td class="ctr mark">✓</td>
-                <td>95.90</td><td>79.11</td><td>28.77</td><td>43.3</td>
-              </tr>
-              <tr>
-                <td>w/o Current-Frame Visual Features</td>
-                <td class="ctr mark">✓</td><td class="ctr mark">✓</td><td class="ctr dim">×</td>
-                <td>95.45</td><td>74.11</td><td>39.02</td><td>20.7</td>
-              </tr>
-              <tr>
-                <td>w/o World Input &amp; Future Expert</td>
-                <td class="ctr dim">×</td><td class="ctr dim">×</td><td class="ctr mark">✓</td>
-                <td>94.80</td><td>74.56</td><td>32.74</td><td>84.7</td>
-              </tr>
-              <tr>
-                <td>w/o JE Pred. &amp; Visual Features</td>
-                <td class="ctr mark">✓</td><td class="ctr dim">×</td><td class="ctr dim">×</td>
-                <td>85.00</td><td>58.81</td><td>30.54</td><td>1.3</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="table-caption">
-          Removing joint-embedding prediction barely moves LIBERO-Plus but costs 13.1 points on RoboTwin and 53 points
-          on the real robot — the average drops from 96.3 to 43.3 — <em>worse than removing the World pathway entirely</em>
-          (84.7). An unshaped World input supplies the Action Expert with a signal that drifts quickly and lacks a stable
-          task-relevant focus, which is worse for control than supplying no such signal at all. Symmetrically, current-frame
-          detail matters little in simulation but is essential in contact-rich execution: removing <em>v<sub>t</sub></em>
-          costs at most 6.74 points on LIBERO-Plus yet drops the real-robot average to 20.7.
-        </p>
       </div>
 
       <div class="table-block">
@@ -863,10 +856,9 @@
         <span class="kicker">Citation</span>
         <h2>BibTeX</h2>
       </div>
-      <p class="bibtex-coming-soon">BibTeX citation coming soon.</p>
-      <p style="font-size:13px;color:var(--muted);margin-top:14px;text-align:center">
-        Questions and issues are welcome. Corresponding author: Xintao Yan.
-      </p>
+      <div class="bibtex bibtex--pending">
+        <p class="bibtex-coming-soon"><strong>BibTeX coming soon.</strong> The citation will be posted here once the manuscript is public.</p>
+      </div>
     </div>
   </section>
 
@@ -885,6 +877,131 @@
 <script>
 (function () {
   'use strict';
+
+  // Keep the diagram and attention masks in the same position while variants fade.
+  document.querySelectorAll('[data-method-switcher]').forEach(function (switcher) {
+    var buttons = Array.prototype.slice.call(switcher.querySelectorAll('[data-method-variant]'));
+    var images = Array.prototype.slice.call(switcher.querySelectorAll('[data-method-image]'));
+    var results = Array.prototype.slice.call(switcher.querySelectorAll('[data-method-result]'));
+    var diagram = switcher.querySelector('.method-switcher__images');
+    var table = switcher.querySelector('.method-ablation');
+    var content = switcher.querySelector('.method-switcher__content');
+    var handle = switcher.querySelector('.method-ablation__handle');
+    var leaderWidth = 0;
+    var dragStart = null;
+    var dragged = false;
+    var suppressClick = false;
+
+    function syncTableHeight() {
+      if (window.innerWidth <= 1150) {
+        table.style.height = '';
+        table.style.removeProperty('--method-row-height');
+        return;
+      }
+      var height = diagram.getBoundingClientRect().height;
+      table.style.height = height + 'px';
+      var heading = table.querySelector('h3');
+      var header = table.querySelector('thead');
+      var rowSpace = height - 18 - heading.getBoundingClientRect().height -
+        header.getBoundingClientRect().height - 5 - 12;
+      table.style.setProperty('--method-row-height', Math.max(30, rowSpace / 5) + 'px');
+    }
+    syncTableHeight();
+    if (window.ResizeObserver) new ResizeObserver(syncTableHeight).observe(diagram);
+    window.addEventListener('resize', syncTableHeight);
+
+    function setLeaderWidth(width) {
+      leaderWidth = Math.max(0, Math.min(450, width));
+      content.style.setProperty('--leader-width', leaderWidth + 'px');
+      var open = leaderWidth > 0;
+      content.classList.toggle('is-open', open);
+      table.setAttribute('aria-hidden', String(!open));
+      table.inert = !open;
+      handle.setAttribute('aria-expanded', String(open));
+      handle.setAttribute('aria-label', open ? 'Hide ablation results' : 'Show ablation results');
+    }
+
+    handle.addEventListener('pointerdown', function (event) {
+      if (event.button !== 0) return;
+      dragStart = { position: window.innerWidth <= 1150 ? event.clientY : event.clientX, width: leaderWidth };
+      dragged = false;
+      content.classList.add('is-dragging');
+      handle.setPointerCapture(event.pointerId);
+    });
+    handle.addEventListener('pointermove', function (event) {
+      if (!dragStart) return;
+      var position = window.innerWidth <= 1150 ? event.clientY : event.clientX;
+      var delta = position - dragStart.position;
+      if (Math.abs(delta) > 5) dragged = true;
+      if (dragged) setLeaderWidth(dragStart.width + delta);
+    });
+    function finishDrag() {
+      if (!dragStart) return;
+      dragStart = null;
+      content.classList.remove('is-dragging');
+      if (dragged) {
+        setLeaderWidth(leaderWidth >= 225 ? 450 : 0);
+        suppressClick = true;
+        setTimeout(function () { suppressClick = false; }, 0);
+      }
+    }
+    handle.addEventListener('pointerup', finishDrag);
+    handle.addEventListener('pointercancel', finishDrag);
+    handle.addEventListener('click', function () {
+      if (suppressClick) { suppressClick = false; return; }
+      setLeaderWidth(leaderWidth ? 0 : 450);
+    });
+    handle.addEventListener('keydown', function (event) {
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+        event.preventDefault(); setLeaderWidth(450);
+      } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        event.preventDefault(); setLeaderWidth(0);
+      }
+    });
+    var cleanupTimer;
+    function selectVariant(selected) {
+      var current = switcher.querySelector('[data-method-image].is-active');
+      if (current && current.getAttribute('data-method-image') === selected) return;
+      clearTimeout(cleanupTimer);
+      images.forEach(function (item) { item.classList.remove('is-outgoing'); });
+      if (current) current.classList.add('is-outgoing');
+      buttons.forEach(function (item) {
+        var active = item.getAttribute('data-method-variant') === selected;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-pressed', String(active));
+      });
+      images.forEach(function (item) {
+        var active = item.getAttribute('data-method-image') === selected;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-hidden', String(!active));
+      });
+      results.forEach(function (item) {
+        var active = item.getAttribute('data-method-result') === selected;
+        item.classList.toggle('is-active', active);
+        if (active) item.setAttribute('aria-current', 'true');
+        else item.removeAttribute('aria-current');
+      });
+      cleanupTimer = setTimeout(function () {
+        images.forEach(function (item) { item.classList.remove('is-outgoing'); });
+      }, 350);
+    }
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        selectVariant(button.getAttribute('data-method-variant'));
+      });
+    });
+    results.forEach(function (row) {
+      row.addEventListener('click', function () {
+        selectVariant(row.getAttribute('data-method-result'));
+      });
+      row.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          selectVariant(row.getAttribute('data-method-result'));
+        }
+      });
+    });
+  });
 
   /* How far the clips in one box may drift apart before one is pulled back.
      The attention strips are 10 fps, so 0.08 s is under a single frame. */
@@ -1185,9 +1302,12 @@
   function newVoice(src) {
     var a = new Audio();
     a.preload = 'auto';
-    a.src = src;
+    a.src = new URL(src, document.baseURI).href;
     a._src = src;
     a.addEventListener('ended', function () { release(a); });
+    a.addEventListener('error', function () {
+      console.warn('Logo easter egg audio failed to load:', a.currentSrc || a.src);
+    });
     return a;
   }
 
@@ -1214,10 +1334,27 @@
     try {
       if (a.readyState > 0) a.currentTime = 0;   // throws on a not-yet-loaded element
       var p = a.play();
-      if (p && p.catch) p.catch(function () {});
+      if (p && p.catch) p.catch(function (err) {
+        console.warn('Logo easter egg audio could not play:', a.currentSrc || a.src, err);
+        release(a);
+      });
     } catch (err) { /* audio is a flourish; never let it break the page */ }
     return stage;
   }
+
+  // A normal reload creates fresh state. This also handles browsers restoring
+  // this document from the back-forward cache, which otherwise preserves clicks
+  // and Web Animations exactly where they were before navigating away.
+  window.addEventListener('pageshow', function () {
+    clicks = 0;
+    live.slice().forEach(function (a) {
+      try { a.pause(); a.currentTime = 0; } catch (e) {}
+      release(a);
+    });
+    document.querySelectorAll('.brand-logo, .wordmark-logo').forEach(function (el) {
+      if (el.getAnimations) el.getAnimations().forEach(function (animation) { animation.cancel(); });
+    });
+  });
 
   /* Metal, not jelly.
 
@@ -1318,18 +1455,30 @@
   document.querySelectorAll('[data-copy]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var text = document.getElementById('bibtex-text').textContent;
+      var label = btn.querySelector('[data-copy-label]');
       var done = function () {
-        btn.textContent = 'Copied';
-        btn.classList.add('done');
-        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+        btn.classList.add('is-copied');
+        label.textContent = 'Copied';
+        btn.setAttribute('aria-label', 'BibTeX copied');
+        clearTimeout(btn._copyResetTimer);
+        btn._copyResetTimer = setTimeout(function () {
+          btn.classList.remove('is-copied');
+          label.textContent = 'BibTeX';
+          btn.setAttribute('aria-label', 'Copy BibTeX citation');
+        }, 1800);
       };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done, done);
-      } else {
+      var fallback = function () {
         var ta = document.createElement('textarea');
         ta.value = text; document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); } catch (e) {}
-        document.body.removeChild(ta); done();
+        var copied = false;
+        try { copied = document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        if (copied) done();
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else {
+        fallback();
       }
     });
   });

@@ -3,6 +3,7 @@
    Rule of thumb: content first, chrome last. */
 
 :root{
+  color-scheme:light;
   --bg:#ffffff;
   --bg-soft:#f6f7f9;
   --ink:#0f1720;
@@ -101,6 +102,24 @@ sup{font-size:.68em;line-height:0}
   padding:6px 14px;white-space:nowrap;flex:0 0 auto;
 }
 .topbar .pdf-link:hover{border-color:var(--brand);background:var(--brand);color:#fff}
+
+/* Dark mode lives in one override block at the foot of this file; the toggle
+   only carries its own structural styles here. The moon shows in the light
+   theme (the action is "go dark") and the sun in the dark theme. */
+.theme-toggle{
+  display:grid;place-items:center;flex:0 0 auto;
+  width:34px;height:34px;
+  border:1px solid var(--line-strong);border-radius:999px;
+  background:#fff;color:var(--ink);cursor:pointer;
+  transition:background .2s,border-color .2s,color .2s,transform .2s;
+}
+.theme-toggle svg{width:17px;height:17px;display:block}
+/* the `.theme-toggle svg` rule above outranks a bare `.theme-toggle__sun`, so the
+   hide rule has to match its specificity or the sun shows up next to the moon */
+.theme-toggle .theme-toggle__sun{display:none}
+.theme-toggle:hover{border-color:var(--brand);color:var(--brand);transform:translateY(-1px)}
+.theme-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.theme-toggle{transition:none}.theme-toggle:hover{transform:none}}
 
 /* Resting transform-origin for the logos. The click animation overrides this per
    stage — impact stages anchor at `50% 100%` so the mark compresses onto its base,
@@ -242,6 +261,12 @@ figcaption{
   max-width:72ch;margin:12px auto 0;text-align:left;
 }
 figcaption b{color:var(--ink);font-weight:600}
+
+/* Line-art figures (charts, architecture diagrams) are detected at runtime and
+   tagged; they invert in dark mode. Photos keep their own colours. The
+   transition is declared here so both the light→dark and dark→light flip ease. */
+img[data-theme-invert="true"]{transition:filter .25s ease}
+@media (prefers-reduced-motion:reduce){img[data-theme-invert="true"]{transition:none}}
 
 /* Method variants share one PDF crop, so every diagram and mask stays aligned. */
 .method-switcher__buttons{
@@ -853,8 +878,131 @@ table.data--wide thead th{padding-top:8px;padding-bottom:8px}
   .stats{grid-template-columns:1fr}
 }
 
+/* ---------- dark theme ----------
+   One override block. Palette tokens flip here; the selectors below only exist
+   because a handful of surfaces are painted with literal colours (white cards,
+   button variants, table zebras) rather than tokens. Figure images keep their
+   white plate on purpose — the SVGs and screenshots are drawn for a light page,
+   and a printed-figure panel reads better than a re-coloured chart. */
+
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0f1216;
+  --bg-soft:#161a20;
+  --ink:#e9eef3;
+  --body:#aeb8c4;
+  --muted:#818c9b;
+  --line:#242a33;
+  --line-strong:#3a434f;
+  --accent:#e0895d;
+  --accent-soft:#2b1d15;
+  --accent-deep:#f0aa84;
+  --brand:#409e93;
+  --brand-dark:#57b3a7;
+  /* Shadows do more work on a dark page: the same geometry at higher opacity
+     so a raised card still separates from a near-black surround. */
+  --e1: 0 1px 2px -1px rgba(0,0,0,.7), 0 2px 4px 0 rgba(0,0,0,.5), 0 1px 8px 0 rgba(0,0,0,.4);
+  --e2: 0 2px 4px -1px rgba(0,0,0,.75), 0 4px 8px 0 rgba(0,0,0,.55), 0 1px 12px 0 rgba(0,0,0,.45);
+  --e3: 0 3px 5px -1px rgba(0,0,0,.8), 0 6px 10px 0 rgba(0,0,0,.6), 0 1px 18px 0 rgba(0,0,0,.5);
+}
+
+/* top bar / chrome */
+html[data-theme="dark"] .topbar{background:rgba(15,18,22,.88)}
+html[data-theme="dark"] .theme-toggle{background:#1b2027}
+html[data-theme="dark"] .theme-toggle__moon{display:none}
+html[data-theme="dark"] .theme-toggle__sun{display:block}
+
+/* buttons */
+html[data-theme="dark"] .btn{background:#1b2027}
+html[data-theme="dark"] .btn:hover{color:#0d1116}
+html[data-theme="dark"] .btn--primary,
+html[data-theme="dark"] .btn--primary:hover{color:#0d1116}
+html[data-theme="dark"] .btn--arxiv{color:#ff9a90;background:#2a1a18;border-color:#5a2f2b}
+html[data-theme="dark"] .btn--github{color:#dfe4ea;background:#1c2229;border-color:#3a434f}
+html[data-theme="dark"] .btn--bibtex{color:#e8c46a;background:#2a2313;border-color:#5a4a1f}
+html[data-theme="dark"] .btn--arxiv:hover{color:#fff;background:#b31b1b;border-color:#b31b1b}
+html[data-theme="dark"] .btn--github:hover{color:#fff;background:#2f363d;border-color:#2f363d}
+html[data-theme="dark"] .btn--bibtex:hover{color:#3d2c00;background:#f7d774;border-color:#e5bc3f}
+html[data-theme="dark"] .btn--copy.is-copied{color:#fff}
+
+/* soft accent containers */
+html[data-theme="dark"] .venue,
+html[data-theme="dark"] .punchline{border-color:#3a271d}
+
+/* cards, panels, tables */
+html[data-theme="dark"] .stats{border-color:rgba(255,255,255,.08)}
+html[data-theme="dark"] .stat{background:#12161b}
+html[data-theme="dark"] .point{background:#12161b}
+html[data-theme="dark"] .mediabox{background:#12161b}
+html[data-theme="dark"] .fold{background:#12161b}
+html[data-theme="dark"] .task{background:#12161b}
+html[data-theme="dark"] .table-block .table-note{color:var(--muted)}
+html[data-theme="dark"] table.data tbody tr:not(.group):hover td{background:#1c2229}
+html[data-theme="dark"] table.data tbody tr.ours:hover td{background:#33231a}
+
+/* tabs and media player */
+html[data-theme="dark"] .tablist button[aria-selected="true"]{background:#12161b}
+html[data-theme="dark"] .vp-bar{background:#12161b}
+html[data-theme="dark"] .vp-track::before{background:#2a323c}
+
+/* method switcher + ablation drawer */
+html[data-theme="dark"] .method-switcher__button{background:#1b2027}
+html[data-theme="dark"] .method-switcher__button.is-active{color:#0d1116;background:var(--brand);border-color:var(--brand)}
+html[data-theme="dark"] .method-switcher__button[data-method-variant="0"].is-active{color:#0d1116;background:var(--accent);border-color:var(--accent)}
+html[data-theme="dark"] .method-ablation{background:#12161b}
+html[data-theme="dark"] .method-ablation__handle{background:#1b2027}
+html[data-theme="dark"] .method-ablation__table tbody th,
+html[data-theme="dark"] .method-ablation__table tbody td{background:#171c22}
+html[data-theme="dark"] .method-ablation__table tbody tr:not(.is-active):hover th,
+html[data-theme="dark"] .method-ablation__table tbody tr:not(.is-active):hover td{background:#1e242c}
+html[data-theme="dark"] .method-ablation__table tbody tr.is-active th,
+html[data-theme="dark"] .method-ablation__table tbody tr.is-active td{border-top-color:#5a3a28;border-bottom-color:#5a3a28}
+html[data-theme="dark"] .method-ablation__table tbody tr.is-active th{border-left-color:#5a3a28}
+html[data-theme="dark"] .method-ablation__table tbody tr.is-active td:last-child{border-right-color:#5a3a28}
+
+/* bibtex */
+html[data-theme="dark"] .copy-btn{background:#1b2027}
+html[data-theme="dark"] .bibtex--pending{border-color:#5a4a1f;background:#2a2313}
+html[data-theme="dark"] .bibtex-coming-soon,
+html[data-theme="dark"] .bibtex-coming-soon strong{color:#e8c46a}
+
+/* tooltips invert against the page, so they stay light-on-dark only in light mode */
+html[data-theme="dark"] .info-tip::after{background:#2b333d;color:#f2f5f8}
+
+/* Figures flagged as light line art are flipped. Inverting the lightness and
+   rotating the hue back keeps the chart's own colour coding intact while the
+   white plate turns near-black. The element's own background/border invert with
+   it, so no separate plate override is needed. */
+html[data-theme="dark"] img[data-theme-invert="true"]{filter:invert(1) hue-rotate(180deg)}
+
 @media print{
-  .topbar,.copy-btn{display:none}
+  /* A dark screen should still print as a light page. Reset the tokens and
+     neutralise the literal-colour surfaces the dark block introduced. */
+  html[data-theme="dark"]{
+    --bg:#fff;--bg-soft:#fff;--ink:#0f1720;--body:#414d59;--muted:#78838f;
+    --line:#e4e8ed;--line-strong:#c9d2da;
+    --e1:none;--e2:none;--e3:none;
+  }
+  html[data-theme="dark"] .topbar,
+  html[data-theme="dark"] .btn,
+  html[data-theme="dark"] .theme-toggle,
+  html[data-theme="dark"] .stat,
+  html[data-theme="dark"] .point,
+  html[data-theme="dark"] .mediabox,
+  html[data-theme="dark"] .fold,
+  html[data-theme="dark"] .task,
+  html[data-theme="dark"] .vp-bar,
+  html[data-theme="dark"] .method-ablation,
+  html[data-theme="dark"] .method-ablation__handle,
+  html[data-theme="dark"] .method-switcher__button,
+  html[data-theme="dark"] .copy-btn{background:#fff}
+  html[data-theme="dark"] .tablist button[aria-selected="true"]{background:#fff}
+  html[data-theme="dark"] .method-ablation__table tbody th,
+  html[data-theme="dark"] .method-ablation__table tbody td{background:#fff}
+  html[data-theme="dark"] .bibtex--pending{background:#fff;border-color:#f0d98a}
+  html[data-theme="dark"] .bibtex-coming-soon,
+  html[data-theme="dark"] .bibtex-coming-soon strong{color:#8a6100}
+  .topbar,.copy-btn,.theme-toggle{display:none}
   .section{border-bottom:none;padding:24px 0}
   .section--soft{background:#fff}
   .fold{border:none}

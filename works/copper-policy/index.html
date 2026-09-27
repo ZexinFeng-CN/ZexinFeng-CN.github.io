@@ -4,6 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#ffffff">
+<script>
+  // Resolve the colour scheme before first paint so a dark-theme visitor never
+  // sees a white flash. Stored choice wins; otherwise follow the OS setting.
+  (function () {
+    var theme = 'light';
+    try {
+      var stored = localStorage.getItem('copper-theme');
+      theme = stored ? stored : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    } catch (e) {}
+    document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+  })();
+</script>
 <meta name="description" content="Copper-Policy learns a compact World representation jointly with the policy for robust robot manipulation. 97.25% on LIBERO, 41.91% on RoboTwin, 96.3% on three real-robot tasks.">
 <title>Copper-Policy — Focus on the Representation for Robust Robot Manipulation</title>
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png?v=22">
@@ -11,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=69">
+<link rel="stylesheet" href="styles.css?v=73">
 </head>
 <body>
 
@@ -22,14 +34,16 @@
       <span>Copper-Policy</span>
     </a>
     <nav class="topnav" aria-label="Sections">
-      <a href="#demos">Demos</a>
-      <a href="#main-result">Main result</a>
       <a href="#method">Method</a>
       <a href="#results">Results</a>
       <a href="#real">Real robot</a>
       <a href="#analysis">Analysis</a>
       <a href="#bibtex">BibTeX</a>
     </nav>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Switch to dark theme">
+      <svg class="theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.2 6.2 0 0 0 10.5 10.5Z"/></svg>
+      <svg class="theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg>
+    </button>
   </div>
 </header>
 
@@ -161,7 +175,7 @@
   <section class="section" id="overview">
     <div class="wrap">
       <figure class="figure figure--tight">
-        <img src="assets/teaser.png" alt="Core idea: a compact World representation evolves under task intention and stays decodable into actions.">
+        <img src="assets/teaser.png" data-theme-light-src="assets/teaser.png" data-theme-dark-src="assets/teaser-dark.png" data-theme-invert="off" alt="Core idea: a compact World representation evolves under task intention and stays decodable into actions.">
       </figure>
     </div>
   </section>
@@ -871,6 +885,118 @@
 <script>
 (function () {
   'use strict';
+
+  // ---------- colour scheme ----------
+
+  // The <head> snippet already set data-theme before paint; here we keep the
+  // toggle, the address-bar colour, and the OS preference in sync with it.
+  var rootEl = document.documentElement;
+  var themeToggle = document.querySelector('.theme-toggle');
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  var themeQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+  // Images that ship a hand-made dark counterpart (the teaser, whose embedded
+  // real-robot photos must not be inverted). Preload the dark file now so the
+  // swap is instant, and exchange src whenever the theme changes.
+  var themeImages = Array.prototype.slice.call(document.querySelectorAll('img[data-theme-dark-src]'));
+  themeImages.forEach(function (img) {
+    var preload = new Image();
+    preload.src = img.getAttribute('data-theme-dark-src');
+  });
+  function syncThemeImages(dark) {
+    themeImages.forEach(function (img) {
+      var next = dark ? img.getAttribute('data-theme-dark-src') : img.getAttribute('data-theme-light-src');
+      if (next && img.getAttribute('src') !== next) img.setAttribute('src', next);
+    });
+  }
+
+  function storedTheme() {
+    try { return localStorage.getItem('copper-theme'); } catch (e) { return null; }
+  }
+
+  function applyTheme(theme, persist) {
+    var dark = theme === 'dark';
+    rootEl.setAttribute('data-theme', dark ? 'dark' : 'light');
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+      themeToggle.setAttribute('title', dark ? 'Switch to light theme' : 'Switch to dark theme');
+      themeToggle.setAttribute('aria-pressed', String(dark));
+    }
+    if (themeMeta) themeMeta.setAttribute('content', dark ? '#0f1216' : '#ffffff');
+    syncThemeImages(dark);
+    if (persist) { try { localStorage.setItem('copper-theme', dark ? 'dark' : 'light'); } catch (e) {} }
+  }
+
+  applyTheme(rootEl.getAttribute('data-theme') === 'dark' ? 'dark' : 'light', false);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+      applyTheme(rootEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
+    });
+  }
+
+  // Only follow the OS while the visitor has not made an explicit choice.
+  if (themeQuery) {
+    var onSystemChange = function (event) {
+      if (!storedTheme()) applyTheme(event.matches ? 'dark' : 'light', false);
+    };
+    if (themeQuery.addEventListener) themeQuery.addEventListener('change', onSystemChange);
+    else if (themeQuery.addListener) themeQuery.addListener(onSystemChange);
+  }
+
+  // ---------- auto dark images ----------
+
+  // Charts and architecture figures are drawn on white plates, so in dark mode
+  // they glare. Decide per image from its own pixels — composited over the white
+  // plate the page paints behind it — and flip the light line-art ones. The
+  // saturation and coverage gates keep photos (real-robot frames, the teaser)
+  // untouched: a picture has colour and little pure white, a diagram is the
+  // other way round. Any image can opt out with data-theme-invert="off".
+  (function () {
+    var EXCLUDE = '.brand-logo,.wordmark-logo';
+
+    function classify(img) {
+      if (!img.naturalWidth || !img.naturalHeight) return;
+      if (img.getAttribute('data-theme-invert') === 'off') return;
+      if (img.matches && img.matches(EXCLUDE)) return;
+
+      var w = 96;
+      var h = Math.max(1, Math.round(w * img.naturalHeight / img.naturalWidth));
+      var canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      var ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      ctx.fillStyle = '#fff';               // the plate behind the figure
+      ctx.fillRect(0, 0, w, h);
+      ctx.drawImage(img, 0, 0, w, h);
+
+      var data;
+      try { data = ctx.getImageData(0, 0, w, h).data; } catch (e) { return; }
+
+      var n = 0, white = 0, lum = 0, sat = 0;
+      for (var i = 0; i < data.length; i += 4) {
+        var r = data[i], g = data[i + 1], b = data[i + 2];
+        var max = Math.max(r, g, b), min = Math.min(r, g, b);
+        n++;
+        lum += (r + g + b) / 3;
+        sat += max ? (max - min) / max : 0;
+        if (min > 230) white++;
+      }
+      if (!n) return;
+
+      var whiteFrac = white / n, meanLum = lum / n, meanSat = sat / n;
+      if (whiteFrac >= 0.55 && meanLum >= 205 && meanSat <= 0.12) {
+        img.setAttribute('data-theme-invert', 'true');
+      }
+    }
+
+    Array.prototype.forEach.call(document.querySelectorAll('img'), function (img) {
+      if (img.complete) classify(img);
+      else img.addEventListener('load', function () { classify(img); }, { once: true });
+    });
+  })();
 
   document.querySelectorAll('.representation-detail').forEach(function (layout) {
     var figure = layout.querySelector('.representation-detail__figure');

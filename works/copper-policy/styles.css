@@ -16,7 +16,7 @@
   --brand:#123f3b;
   --brand-dark:#0c2e2b;
   --maxw:1120px;
-  --narrow:800px;
+  --narrow:680px;
   --radius:8px;
   /* Material elevation scale. Every level stacks the same three shadows: a tight,
      comparatively opaque key that cuts the edge, a mid penumbra, and a wide
@@ -213,7 +213,7 @@ sup{font-size:.68em;line-height:0}
 
 .section{padding:64px 0;border-bottom:1px solid var(--line)}
 .section--soft{background:var(--bg-soft)}
-.section-head{margin-bottom:30px}
+.section-head{max-width:700px;margin:0 auto 30px;text-align:center}
 .section-head .kicker{
   display:block;
   font-family:"Space Grotesk",sans-serif;
@@ -222,9 +222,11 @@ sup{font-size:.68em;line-height:0}
   margin-bottom:8px;
 }
 .section-head h2{font-size:clamp(23px,3vw,30px)}
-.section-head p.lede{margin-top:10px;max-width:760px;font-size:15.5px;color:var(--body)}
-.section-head--center{text-align:center}
+.section-head p.lede{margin:10px auto 0;max-width:640px;font-size:15.5px;color:var(--body)}
+.section-head--center{text-align:center;margin-inline:auto}
 .section-head--center p.lede{margin-inline:auto}
+#analysis .section-head{max-width:100%}
+@media(min-width:900px){#analysis .section-head h2{white-space:nowrap}}
 
 /* ---------- figures ---------- */
 
@@ -237,7 +239,7 @@ figure{margin:0}
 }
 figcaption{
   font-size:12.5px;line-height:1.6;color:var(--muted);
-  margin-top:12px;text-align:left;
+  max-width:72ch;margin:12px auto 0;text-align:left;
 }
 figcaption b{color:var(--ink);font-weight:600}
 
@@ -285,8 +287,10 @@ figcaption b{color:var(--ink);font-weight:600}
 .method-switcher__images img.is-outgoing{opacity:1;z-index:1}
 .method-switcher__images img.is-active{opacity:1;z-index:2}
 .method-switcher__caption{
-  max-width:1000px;margin:17px auto 0;font-size:12.5px;line-height:1.6;color:var(--muted);
+  max-width:100%;margin:17px auto 0;font-size:12.5px;line-height:1.6;color:var(--muted);
+  text-align:center;white-space:nowrap;
 }
+@media(max-width:850px){.method-switcher__caption{white-space:normal}}
 .method-ablation__drawer{grid-column:1;grid-row:1;width:100%;min-width:0;overflow:hidden}
 .method-ablation{
   width:450px;min-width:450px;padding:9px 10px 7px;border:1px solid var(--line);
@@ -391,7 +395,7 @@ figcaption b{color:var(--ink);font-weight:600}
 }
 /* Flat surface. Material does not gradient or bevel its cards — all the depth is
    in the shadow, so the fill stays a single value. */
-.stat{background:#fff;padding:18px 12px}
+.stat{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff;padding:20px 12px;text-align:center}
 .stat .label{
   font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
   color:var(--muted);margin-bottom:8px;
@@ -406,7 +410,7 @@ figcaption b{color:var(--ink);font-weight:600}
    every other card, and `small` picks up the same 0.55em percent sign. Six equal
    columns leave ~165 px of content, which two four-digit values plus their percent
    signs fill in ~153 px — see the 22px on .stat .value below. */
-.stat .value--pair{display:flex;gap:10px}
+.stat .value--pair{display:flex;justify-content:center;gap:10px}
 .stat .value--pair>span{display:flex;flex-direction:column;line-height:1.1}
 .stat .value--pair b{font-weight:700}
 .stat .value--pair i{
@@ -425,10 +429,10 @@ figcaption b{color:var(--ink);font-weight:600}
 .table-block{margin-top:34px}
 .table-block:first-child{margin-top:0}
 .table-block h3{
-  font-size:17px;font-weight:650;margin-bottom:6px;
+  font-size:17px;font-weight:650;max-width:70ch;margin:0 auto 6px;text-align:center;
 }
 .table-block .table-note{
-  font-size:13.5px;color:var(--muted);margin-bottom:14px;max-width:820px;
+  font-size:13.5px;color:var(--muted);margin:0 auto 14px;max-width:70ch;text-align:center;
 }
 /* Booktabs-style tables. Sized to their content, not stretched to the column
    width — a table that fills the row leaves the eye to travel across empty
@@ -522,25 +526,51 @@ table.data--wide thead th{padding-top:8px;padding-bottom:8px}
 .fold[open]>summary::before{content:"－"}
 .fold[open]>summary{border-bottom:1px solid var(--line)}
 .fold .fold-body{padding:16px}
+.representation-detail{display:grid;grid-template-columns:minmax(300px,38%) minmax(0,1fr);gap:10px;align-items:start}
+.representation-detail__figure{display:flex;align-items:center;justify-content:flex-end;min-width:0;margin:0}
+.representation-detail__figure img{width:auto;height:100%;max-width:100%;object-fit:contain}
+.representation-detail__table{width:100%}
+.representation-detail__table table.data{font-size:11px}
+.representation-detail__table table.data th,.representation-detail__table table.data td{padding:7px 6px}
+.representation-detail__table table.data thead tr:first-child th:first-child,
+.representation-detail__table table.data tbody td:first-child{min-width:155px}
+@media(max-width:850px){.representation-detail{grid-template-columns:1fr}.representation-detail__figure{width:min(370px,100%);margin-inline:auto;justify-content:center}.representation-detail__figure img{width:100%;height:auto}}
+.analysis-findings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 16px}
+.analysis-findings p{margin:0;padding:13px 16px;border:1px solid var(--line);border-radius:6px;background:var(--bg-soft);font-size:13px;line-height:1.55}
+.analysis-findings strong{display:block;margin-bottom:6px;color:var(--accent-deep);font-size:16px;line-height:1.35}
+.analysis-temporal{max-width:920px;margin:28px auto 0;padding-inline:24px}
+.analysis-temporal img{width:100%;height:auto}
+@media(max-width:850px){.analysis-findings{grid-template-columns:1fr}}
+@media(max-width:700px){.analysis-temporal{overflow-x:auto;padding-inline:8px}.analysis-temporal img{min-width:800px}}
 .table-caption{
   font-size:12.5px;line-height:1.6;color:var(--muted);
-  margin-top:10px;
+  max-width:78ch;margin:10px auto 0;
 }
 
 /* ---------- feature / point list ---------- */
 
 .points{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
 .point{
+  display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:10px;align-content:start;
   border:1px solid var(--line);border-radius:var(--radius);
   padding:20px;background:#fff;
   box-shadow:var(--e1);
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,background-color .2s ease;
+}
+.point:hover{
+  transform:translateY(-5px);
+  border-color:var(--accent);
+  background:var(--accent-soft);
+  box-shadow:var(--e2);
 }
 .point .idx{
+  grid-column:1;grid-row:1;
   font-family:"Space Grotesk",sans-serif;
   font-size:11.5px;font-weight:700;letter-spacing:.1em;color:var(--accent);
 }
-.point h3{font-size:16px;margin:10px 0 8px;letter-spacing:-.01em}
-.point p{font-size:13.5px;line-height:1.65;color:var(--body);margin:0}
+.point h3{grid-column:2;grid-row:1;font-size:16px;margin:0;letter-spacing:-.01em}
+.point p{grid-column:2;grid-row:2;font-size:13.5px;line-height:1.65;color:var(--body);margin:8px 0 0}
+@media (prefers-reduced-motion:reduce){.point{transition:none}.point:hover{transform:none}}
 
 
 /* ---------- tabbed media box ---------- */
@@ -551,6 +581,23 @@ table.data--wide thead th{padding-top:8px;padding-bottom:8px}
   box-shadow:var(--e2);
 }
 .mediabox--wide{max-width:980px}
+.showcase{border-bottom:1px solid var(--line)}
+.showcase .section{border-bottom:0}
+.demo-section{padding-top:36px;padding-bottom:22px}
+.demo-section .mediabox--wide{max-width:780px}
+.demo-section .tabpanel video{display:block;width:100%;height:auto;max-height:570px;aspect-ratio:16/9;object-fit:contain;background:#111}
+.demo-section .vp-overlay{display:none}
+.demo-section .tabpanel .mediacap{margin:0;padding:10px 14px}
+#real .vp-overlay{display:none}
+#real .mediacap{text-align:center}
+#overview{padding-top:18px;padding-bottom:8px}
+#overview .figure--tight{max-width:1040px}
+#main-result{padding-top:10px;padding-bottom:50px}
+#main-result .wrap{max-width:1040px}
+#main-result .stats{margin-bottom:0}
+#abstract{padding-top:48px;padding-bottom:48px}
+#abstract .section-head{max-width:64ch;margin-bottom:18px;text-align:left}
+.key-idea__summary{max-width:64ch;margin:0 auto 1em;text-align:left;text-wrap:pretty}
 .tablist{
   display:flex;overflow-x:auto;background:var(--bg-soft);
   border-bottom:1px solid var(--line);scrollbar-width:none;
@@ -680,6 +727,8 @@ table.data--wide thead th{padding-top:8px;padding-bottom:8px}
 .vp-speed select.is-modified{color:var(--accent);border-color:var(--accent)}
 
 .mediacap{font-size:12.5px;line-height:1.55;color:var(--muted);margin-top:11px}
+.mediacap--center{text-align:center}
+#analysis .mediacap{text-align:center}
 
 .mediabox .meta{
   display:flex;flex-wrap:wrap;gap:6px 20px;align-items:baseline;

@@ -34,8 +34,9 @@ If you are interested in my work, please contact me at [zexinfeng@connect.hku.hk
 - Autonomous Vehicles, Embodied AI, Computer Vision. 
 # 🔥 News
 - *2025.09*: &nbsp;🎉🎉 Started my PhD journey at **Mobility Transformation Lab @ HKU**,  Hong Kong SAR, China🇨🇳.
-- *2024.07*: &nbsp;🎉🎉 Received **Best Undergraduate Thesis Award**.
-<!-- - *2024.07*: &nbsp;🎉🎉 Received **Best Graduate Student Award**. -->
+- *2025.07*: &nbsp;🎉🎉 Received **Best Undergraduate Thesis Award**.
+- *2025.07*: &nbsp;🎉🎉 Received **Best Graduate Student Award**.
+- *2024.11*: &nbsp;🎉🎉 Received the **BYD Scholarship**.
 - *2024.11*: &nbsp;🎉🎉 Received the **China National Scholarship**, awarded to the top 0.2% of students.  
 - *2024.10*: &nbsp;🎉🎉 Received the **School Motto Scholarship "Truth" Special Award**.
 - *2024.09*: &nbsp;🎉 Joined **Xiaohui Xie's Lab**, UC Irvine, USA🇺🇸.

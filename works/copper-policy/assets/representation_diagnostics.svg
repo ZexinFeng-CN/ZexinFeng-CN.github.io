@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="370" height="308" viewBox="0 0 370 308" role="img" aria-labelledby="title desc">
-  <title id="title">(a) Representation diagnostics</title>
+  <title id="title">Representation diagnostics</title>
   <desc id="desc">Subspace overlap across ranks 1, 2, 4, 8, 16, 32, and 64 for Copper World tokens and the variant without joint-embedding prediction, with a random-expectation baseline. Below, action probe R-squared is 0.787 without prediction, 0.802 for World tokens, 0.910 for current-frame tokens, and 0.927 for both channels together.</desc>
   <!-- The seven curve vertices trace the original raster panel; the probe values are from the adjoining results table. -->
   <rect width="370" height="308" fill="#fff"/>
   <g font-family="Georgia, 'Times New Roman', serif" fill="#111">
-    <text x="185" y="20" text-anchor="middle" font-size="16">(a) Representation diagnostics</text>
+    <text x="185" y="20" text-anchor="middle" font-size="16">Representation diagnostics</text>
     <g stroke="#d7d7d7" stroke-width=".8">
       <line x1="55" y1="46" x2="340" y2="46"/>
       <line x1="55" y1="98" x2="340" y2="98"/>

@@ -1,7 +1,7 @@
 ---
 permalink: /
 title: "Zexin Feng"
-excerpt: "Research Assistant and Enthusiast in Medical AI and Computer Vision"
+excerpt: "Research in Physical AI and Machine Learning"
 author_profile: true
 redirect_from: 
   - /about/
@@ -18,7 +18,7 @@ redirect_from:
 <!-- <span class='anchor' id='about-me'></span> -->
 
 # 👋 About Me
-I am **Zexin Feng**, a **Ph.D. student** at the **Mobility Transformation Lab, The University of Hong Kong (HKU), Hong Kong SAR, China**, supervised by **Prof. Xintao Yan**. My research focuses on **city-scale traffic simulation, autonomous driving, computer vision, and machine learning**.
+I am **Zexin Feng**, a **Ph.D. student** at the **Mobility Transformation Lab, The University of Hong Kong (HKU), Hong Kong SAR, China**, supervised by **Prof. Xintao Yan**. My research focuses on **Physical AI and Machine Learning**.
 
 Previously, I earned my **B.Eng. in Computer Science** from the **Southern University of Science and Technology (SUSTech), Shenzhen, China** (expected June 2025). During my undergraduate studies, I was a long-term member of the **iMED Intelligent Medical Imaging Lab** led by **Prof. Jiang Liu**, and I also worked with **Prof. Xiaohui Xie** at the **University of California, Irvine** on AI for healthcare.
 
@@ -31,7 +31,7 @@ If you are interested in my work, please contact me at [zexinfeng@connect.hku.hk
   * PhD Student, 09/2025 - Present
 
 # 📚 Research Interests
-- Autonomous Vehicles, Embodied AI, Computer Vision. 
+- Physical AI and Machine Learning.
 # 🔥 News
 - *2025.09*: &nbsp;🎉🎉 Started my PhD journey at **Mobility Transformation Lab @ HKU**,  Hong Kong SAR, China🇨🇳.
 - *2025.07*: &nbsp;🎉🎉 Received **Best Undergraduate Thesis Award**.

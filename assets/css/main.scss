@@ -55,10 +55,17 @@
         display: flex;
         width: 100%;
         order: 2;
-        img {
-            max-width: 400px;
-            box-shadow: 3px 3px 6px #888;
-            object-fit: cover;
+        > div {
+            width: 100%;
+        }
+        img, video {
+            display: block;
+            width: 100%;
+            max-width: none;
+            height: 200px;
+            object-fit: contain;
+            object-position: center;
+            background-color: #f5f5f5;
         }
     }
     
@@ -70,8 +77,7 @@
     @include breakpoint($medium) {
         .paper-box-image{
             justify-content: left;
-            min-width: 200px;
-            max-width: 40%;
+            width: 40%;
             order: 1;
         }
         

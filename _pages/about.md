@@ -30,11 +30,12 @@ If you are interested in my work, please contact me at [zexinfeng@connect.hku.hk
 - **The University of Hong Kong (HKU)**  
   * PhD Student, 09/2025 - Present
 
-# 📚 Research Interests
+# 🔬 Research
+## Research Interests
 - Physical AI and Machine Learning.
 
-# 🔬 Research
-<div class='paper-box'><div class='paper-box-image'><div><img src='works/copper-policy/assets/copper.png' alt="Copper-Policy" width="100%"></div></div>
+## Research Projects
+<div class='paper-box'><div class='paper-box-image research-project-image'><div><img src='works/copper-policy/assets/copper.png' alt="Copper-Policy"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [**Copper-Policy: Focus on the Representation for Robust Robot Manipulation**](/works/copper-policy/)
@@ -43,6 +44,19 @@ If you are interested in my work, please contact me at [zexinfeng@connect.hku.hk
 
 [**Project Page**](/works/copper-policy/) · [**GitHub**](https://github.com/mark4551124015/copper-policy)
 - A compact world representation learned jointly with the policy for robust robot manipulation.
+</div>
+</div>
+
+## Publications
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICASSP 2024</div><img src='images/SFConv.png' alt="ICASSP 2024" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[Flattening Singular Values of Factorized Convolution for Medical Images](https://doi.org/10.1109/ICASSP48485.2024.10446894)
+
+**Zexin Feng**, N. Zeng, J. Fang, X. Wang, X. Lu, H. Meng, J. Liu  
+
+[**Conference**](https://scholar.google.com/citations?user=iY22x5EAAAAJ&hl=zh-CN) 
+- Proposed **SFConv** for efficient CNN optimization, achieving 98% parameter compression while maintaining performance on public datasets.
 </div>
 </div>
 
@@ -57,20 +71,6 @@ If you are interested in my work, please contact me at [zexinfeng@connect.hku.hk
 - *2024.04*: &nbsp;🎉 Published a paper on **Flattening Singular Values of Factorized Convolution for Medical Images** at **ICASSP 2024**.  
 - *2023.09*: &nbsp;🎉 Visited **NUS School of Computing**, Singapore🇸🇬.
 - *2022.09*: &nbsp;🎉 Joined **iMED Lab**, Shenzhen, China🇨🇳.
-
-# 📝 Publications 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICASSP 2024</div><img src='images/SFConv.png' alt="ICASSP 2024" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
-
-[Flattening Singular Values of Factorized Convolution for Medical Images](https://doi.org/10.1109/ICASSP48485.2024.10446894)
-
-**Zexin Feng**, N. Zeng, J. Fang, X. Wang, X. Lu, H. Meng, J. Liu  
-
-[**Conference**](https://scholar.google.com/citations?user=iY22x5EAAAAJ&hl=zh-CN) 
-- Proposed **SFConv** for efficient CNN optimization, achieving 98% parameter compression while maintaining performance on public datasets.
-</div>
-</div>
-
 
 # 🎖 Honors and Awards
 - **Best Undergraduate Thesis Award (2025)**, for outstanding research performance.

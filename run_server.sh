@@ -1,1 +1,1 @@
-bundle exec jekyll liveserve
+bundle _2.2.19_ exec jekyll serve --livereload

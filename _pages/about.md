@@ -32,6 +32,20 @@ If you are interested in my work, please contact me at [zexinfeng@connect.hku.hk
 
 # 📚 Research Interests
 - Physical AI and Machine Learning.
+
+# 🔬 Research
+<div class='paper-box'><div class='paper-box-image'><div><img src='works/copper-policy/assets/copper.png' alt="Copper-Policy" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[**Copper-Policy: Focus on the Representation for Robust Robot Manipulation**](/works/copper-policy/)
+
+**Zexin Feng**, Y. Feng, L. Xiao, S. Su, K. Zheng, C. Xu, M. Shi, S. Feng, X. Yan
+
+[**Project Page**](/works/copper-policy/) · [**GitHub**](https://github.com/mark4551124015/copper-policy)
+- A compact world representation learned jointly with the policy for robust robot manipulation.
+</div>
+</div>
+
 # 🔥 News
 - *2025.09*: &nbsp;🎉🎉 Started my PhD journey at **Mobility Transformation Lab @ HKU**,  Hong Kong SAR, China🇨🇳.
 - *2025.07*: &nbsp;🎉🎉 Received **Best Undergraduate Thesis Award**.
@@ -97,13 +111,6 @@ If you are interested in my work, please contact me at [zexinfeng@connect.hku.hk
 
 - **Xiaohui Xie's Lab**, UC Irvine, USA  
   *Undergraduate Research Assistant, supervised by Prof. Xiaohui Xie (09/2024-Present)*  
-
-# 🎓 Fundings
-- **Guangdong Provincial Science and Technology Innovation Fund** (2024)  
-  Funded the "Climbing Plan" for advancing diabetic retinopathy diagnosis algorithms.  
-
-- **National College Students' Innovation and Entrepreneurship Training Program** (2024)  
-  Supported the "Ophthalmology Diagnosing Platform" development project.  
 
 <!-- # 💻 Internships
 - *2022.05 - 2024.09*, **iMED Lab**, Shenzhen, China  

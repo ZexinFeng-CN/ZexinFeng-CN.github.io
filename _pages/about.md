@@ -35,14 +35,14 @@ If you are interested in my work, please contact me at [zexinfeng@connect.hku.hk
 - Physical AI and Machine Learning.
 
 ## Research Projects
-<div class='paper-box'><div class='paper-box-image research-project-image'><div><img src='works/copper-policy/assets/copper.png' alt="Copper-Policy"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><img src='works/copper-policy/assets/teaser.png' alt="Copper-Policy teaser"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [**Copper-Policy: Focus on the Representation for Robust Robot Manipulation**](/works/copper-policy/)
 
 **Zexin Feng**, Y. Feng, L. Xiao, S. Su, K. Zheng, C. Xu, M. Shi, S. Feng, X. Yan
 
-[**Project Page**](/works/copper-policy/) · [**GitHub**](https://github.com/mark4551124015/copper-policy)
+[**arXiv**](https://arxiv.org/abs/2609.32779) · [**Project Page**](/works/copper-policy/) · [**GitHub**](https://github.com/mark4551124015/copper-policy)
 - A compact world representation learned jointly with the policy for robust robot manipulation.
 </div>
 </div>

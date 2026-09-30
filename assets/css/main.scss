@@ -87,16 +87,6 @@
 
 }
 
-.research-project-image {
-    justify-content: center !important;
-
-    img {
-        max-width: 120px !important;
-        box-shadow: none !important;
-        object-fit: contain !important;
-    }
-}
-
 $scroll_offset : 2em;
 h1:before, .anchor:before { 
     content: ''; 

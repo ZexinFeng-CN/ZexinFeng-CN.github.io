@@ -5,7 +5,9 @@
 <title>Beyond Binary Metrics — Autonomous Driving Simulation</title>
 <meta name="description" content="Beyond Binary Metrics: Unveiling the Safety Illusion in Autonomous Driving Simulation. Composite Collision Metric measures collision consequences and tail risk.">
 <link rel="icon" href="../../images/sustech.ico?v=1" type="image/x-icon">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=equation-cards-6">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body>
 <header><a href="../../">Zexin Feng</a><nav aria-label="Project sections"><a href="#idea">Overview</a><a href="#method">CCM</a><a href="#results">Results</a><a href="#examples">Examples</a><a href="#poster">Poster</a></nav></header>
@@ -26,11 +28,27 @@
 </section>
 <section id="method" class="method">
 <p class="eyebrow">02 / Composite Collision Metric</p><h2>From an event to its consequences.</h2>
-<div class="factors"><article><span>01</span><h3>Relative velocity</h3><p>Higher relative impact speed increases event severity.</p></article><article><span>02</span><h3>Penetration depth</h3><p>Greater vehicle overlap increases event severity.</p></article><article><span>03</span><h3>Contact duration</h3><p>A longer interaction increases event severity.</p></article></div>
+<div class="factors"><article><span>01</span><h3>Relative velocity</h3><p>A bounded linear multiplier captures relative impact speed.</p></article><article><span>02</span><h3>Penetration depth</h3><p>A quadratic penalty emphasizes structural penetration.</p></article><article><span>03</span><h3>Contact duration</h3><p>A temporal gate filters brief contact noise and saturates for sustained contact.</p></article></div>
 <div class="formula" aria-label="Event severity is the product of relative velocity, depth and duration factors">S(event) = m(v<sub>rel</sub>) × δ(d) × g(Δt)</div>
 <div class="equation-notes"><p>For each collision event, v<sub>rel</sub> is relative impact velocity, d is penetration depth, and Δt is contact duration. The functions m, δ, and g convert these quantities into severity factors.</p></div>
-<div class="tail"><div><p class="eyebrow">Tail aggregation</p><h3>CCM = CVaR<sub>95</sub>(S(event))</h3><p>Average the worst 5% of event severities. Lower CCM indicates lower severity in the tail.</p></div><div class="distribution" aria-label="Illustration of the worst five percent tail"><span>Event severity</span><div class="bar"><i></i></div><p>95% of events <b>Worst 5%</b></p></div></div>
-<div class="equation-details"><h3>Computing the tail average</h3><p>Let S be the event-severity distribution. The standard CVaR definition makes the worst-5% aggregation explicit:</p><div class="formula formula-detail">CCM = min<sub>η</sub> { η + (1 / 0.05) E[(S − η)<sub>+</sub>] }</div><p>Here (x)<sub>+</sub> = max(x, 0), and η is a severity threshold. For a continuous distribution, this is the mean severity above its 95th percentile.</p><p>For N observed event severities S<sub>1</sub>, …, S<sub>N</sub>, the corresponding empirical expression is:</p><div class="formula formula-detail">CCM = min<sub>η</sub> { η + (1 / (0.05N)) ∑<sub>i=1</sub><sup>N</sup> max(S<sub>i</sub> − η, 0) }</div><p>When 0.05N is an integer, this equals the arithmetic mean of the largest 0.05N severity values.</p></div>
+<div class="equation-details severity-details"><h3>Event severity</h3>
+<div class="equation-cards">
+<article class="equation-card"><h4>Relative velocity</h4>
+<div class="formula-detail">\[v_{\mathrm{rel}}=\|\vec v_1-\vec v_2\|\]</div>
+<div class="formula-detail">\[m(v_{\mathrm{rel}})=\frac{\min(\max(v_{\mathrm{rel}},v_{\min}),v_{\max})}{v_{\mathrm{ref}}}\]</div></article>
+<article class="equation-card equation-card--depth"><h4>Penetration depth</h4>
+<div class="formula-detail">\[\delta(d)=\left(\frac{\max(d-\epsilon,0)}{d_{\mathrm{ref}}}\right)^2\]</div>
+ </article><article class="equation-card"><h4>Contact duration</h4>
+<div class="formula-detail">\[g(\Delta t)=\begin{cases}0,&\Delta t\le t_{\mathrm{res}},\\[4pt]\left(\frac{\Delta t-t_{\mathrm{res}}}{t_{\mathrm{noise}}-t_{\mathrm{res}}}\right)^2,&t_{\mathrm{res}}<\Delta t\le t_{\mathrm{noise}},\\[4pt]1,&\Delta t>t_{\mathrm{noise}}.\end{cases}\]</div>
+</article></div>
+<p>Default parameters: v<sub>ref</sub> = 5.0 m/s, d<sub>ref</sub> = 0.5 m, v<sub>min</sub> = 1.0 m/s, v<sub>max</sub> = 40.0 m/s, t<sub>res</sub> = 0.1 s, t<sub>noise</sub> = 0.2 s, and ε = 10<sup>−4</sup>.</p>
+<p>Events are filtered before severity scoring: pedestrian–pedestrian contacts and pedestrian–vehicle contacts where the pedestrian's impact speed exceeds the vehicle's are excluded.</p></div>
+<div class="tail"><div><p class="eyebrow">Unconditional tail risk</p><h3>CCM = CVaR<sub>95</sub>(S)</h3><p>Collision-free instances receive S = 0. CCM evaluates the worst 5% of the global severity distribution, capturing both collision frequency and consequence severity.</p></div><div class="distribution" aria-label="Illustration of the worst five percent of the global severity distribution"><span>Global severity, including collision-free instances</span><div class="bar"><i></i></div><p>95% of instances <b>Worst 5%</b></p></div></div>
+<div class="equation-details"><h3>CCM · Equations (12–13)</h3>
+<div class="formula-detail">\[\operatorname{VaR}_{\alpha}(S)=\inf\{s\in\mathbb R:\Pr(S\le s)\ge\alpha\}\]</div>
+<div class="formula-detail">\[\mathrm{CCM}=\operatorname{CVaR}_{0.95}(S)=\mathbb E[S\mid S\ge\operatorname{VaR}_{0.95}(S)]\]</div>
+<p>The paper separately reports conditional CVaR<sub>95</sub> over meaningful collisions (C = 1), which describes severity within the collision subset:</p>
+<div class="formula-detail">\[\operatorname{CVaR}_{\alpha}(S\mid C=1)=\mathbb E[S\mid S\ge\operatorname{VaR}_{\alpha}(S\mid C=1),\ C=1]\]</div></div>
 </section>
 <section id="results">
 <p class="eyebrow">03 / Results on WOSAC</p><h2>Similar benchmark scores.<br>Different tail risks.</h2>

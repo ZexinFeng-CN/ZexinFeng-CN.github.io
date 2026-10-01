@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beyond Binary Metrics — Autonomous Driving Simulation</title>
+<meta name="description" content="Beyond Binary Metrics: Unveiling the Safety Illusion in Autonomous Driving Simulation. Composite Collision Metric measures collision consequences and tail risk.">
+<link rel="icon" href="../../images/sustech.ico?v=1" type="image/x-icon">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header><a href="../../">Zexin Feng</a><nav aria-label="Project sections"><a href="#idea">Overview</a><a href="#method">CCM</a><a href="#results">Results</a><a href="#examples">Examples</a><a href="#poster">Poster</a></nav></header>
+<main>
+<section class="hero">
+<p class="eyebrow">CVPR 2026 · Simulation for Autonomous Driving Workshop</p>
+<h1>Beyond Binary Metrics</h1>
+<p class="subtitle">Unveiling the Safety Illusion in<br>Autonomous Driving Simulation</p>
+<p class="authors"><a href="../../">Zexin Feng</a> · <a href="https://sephirex-x.github.io/">Lingyu Xiao</a> · <a href="https://yougeyxt.github.io/">Xintao Yan</a></p>
+<p class="affiliation">The University of Hong Kong</p>
+<div class="actions"><a class="button primary" href="https://openreview.net/pdf?id=agV9SBQcRk">Read the paper ↗</a><a class="button" href="assets/poster.pdf">Download poster ↗</a></div>
+<div class="statement"><span>Binary metrics count collisions.</span><strong>CCM measures consequences.</strong></div>
+</section>
+<section id="idea">
+<p class="eyebrow">01 / The safety illusion</p><h2>A graze and a severe crash<br>should not count the same.</h2>
+<div class="intro"><p>Binary collision labels collapse very different events into the same outcome. Bounding-box jitter, a brief contact, and a high-speed collision can all be recorded as a collision. A similar collision rate can therefore conceal very different severity distributions.</p><p>We study the gap between benchmark-facing realism and physical risk in autonomous driving simulation. Composite Severity Analysis represents collisions through impact velocity, penetration depth, and contact duration. The Composite Collision Metric (CCM) then summarizes severe outcomes in the tail of the distribution.</p></div>
+<figure class="severity-figure"><a href="assets/final_severity_spectrum_2x4.png?v=2" target="_blank" rel="noopener"><img src="assets/final_severity_spectrum_2x4.png?v=2" alt="Eight collision events labeled a through h, arranged in two rows of four, with severity increasing from 0.05 to 453.34" width="6000" height="2624" loading="lazy"></a><figcaption>Eight representative events (a–h) spanning low to high collision severity. Click to inspect the full-resolution figure.</figcaption></figure>
+</section>
+<section id="method" class="method">
+<p class="eyebrow">02 / Composite Collision Metric</p><h2>From an event to its consequences.</h2>
+<div class="factors"><article><span>01</span><h3>Relative velocity</h3><p>Higher relative impact speed increases event severity.</p></article><article><span>02</span><h3>Penetration depth</h3><p>Greater vehicle overlap increases event severity.</p></article><article><span>03</span><h3>Contact duration</h3><p>A longer interaction increases event severity.</p></article></div>
+<div class="formula" aria-label="Event severity is the product of relative velocity, depth and duration factors">S(event) = m(v<sub>rel</sub>) × δ(d) × g(Δt)</div>
+<div class="equation-notes"><p>For each collision event, v<sub>rel</sub> is relative impact velocity, d is penetration depth, and Δt is contact duration. The functions m, δ, and g convert these quantities into severity factors.</p></div>
+<div class="tail"><div><p class="eyebrow">Tail aggregation</p><h3>CCM = CVaR<sub>95</sub>(S(event))</h3><p>Average the worst 5% of event severities. Lower CCM indicates lower severity in the tail.</p></div><div class="distribution" aria-label="Illustration of the worst five percent tail"><span>Event severity</span><div class="bar"><i></i></div><p>95% of events <b>Worst 5%</b></p></div></div>
+<div class="equation-details"><h3>Computing the tail average</h3><p>Let S be the event-severity distribution. The standard CVaR definition makes the worst-5% aggregation explicit:</p><div class="formula formula-detail">CCM = min<sub>η</sub> { η + (1 / 0.05) E[(S − η)<sub>+</sub>] }</div><p>Here (x)<sub>+</sub> = max(x, 0), and η is a severity threshold. For a continuous distribution, this is the mean severity above its 95th percentile.</p><p>For N observed event severities S<sub>1</sub>, …, S<sub>N</sub>, the corresponding empirical expression is:</p><div class="formula formula-detail">CCM = min<sub>η</sub> { η + (1 / (0.05N)) ∑<sub>i=1</sub><sup>N</sup> max(S<sub>i</sub> − η, 0) }</div><p>When 0.05N is an integer, this equals the arithmetic mean of the largest 0.05N severity values.</p></div>
+</section>
+<section id="results">
+<p class="eyebrow">03 / Results on WOSAC</p><h2>Similar benchmark scores.<br>Different tail risks.</h2>
+<p class="lead">Safety-oriented rejection sampling in Safe CAT-K reduces CCM from 2.792 to 1.611, while collision likelihood changes only slightly.</p>
+<div class="table-wrap"><table><caption>Results reported in the supplied poster.</caption><thead><tr><th scope="col">Model</th><th scope="col">Collision likelihood ↑</th><th scope="col">Original collision rate (%) ↓</th><th scope="col">Inter-vehicle collision rate (%) ↓</th><th scope="col">CCM ↓</th></tr></thead><tbody><tr><th scope="row">Log Replay</th><td>—</td><td>4.69</td><td>0.72</td><td>0.028</td></tr><tr><th scope="row">SMART</th><td>0.9643</td><td>6.75</td><td>2.36</td><td>5.557</td></tr><tr><th scope="row">CAT-K</th><td>0.9672</td><td>6.16</td><td>1.62</td><td>2.792</td></tr><tr class="highlight"><th scope="row">Safe CAT-K</th><td>0.9637</td><td>6.23</td><td>1.51</td><td><strong>1.611</strong></td></tr></tbody></table></div>
+<figure class="landscape-figure"><a href="assets/joint_landscape_1x4.png" target="_blank" rel="noopener"><img src="assets/joint_landscape_1x4.png" alt="Joint distribution of relative velocity and penetration depth for four models" loading="lazy"></a><figcaption>Relative velocity and penetration depth across models. Click to inspect the full-resolution figure.</figcaption></figure>
+</section>
+<section id="examples">
+<p class="eyebrow">04 / Qualitative examples</p><h2>Inspect collision behavior.</h2><p class="lead">Selected collision scenarios illustrating vehicle interactions and contact dynamics.</p>
+<div class="controls"><button id="motion" type="button" aria-pressed="true">Pause animations</button></div>
+<div class="examples">
+<figure><img data-motion src="assets/log-replay_L5_top01_1462e587e7439712.gif" alt="Collision scenario 01 animation" loading="lazy"><figcaption><strong>Scenario 01</strong></figcaption></figure>
+<figure><img data-motion src="assets/smart_L5_top01_12c085d117c4fc3d.gif" alt="Collision scenario 02 animation" loading="lazy"><figcaption><strong>Scenario 02</strong></figcaption></figure>
+<figure><img data-motion src="assets/catk_L5_top01_100d033b60683a9f.gif" alt="Collision scenario 03 animation" loading="lazy"><figcaption><strong>Scenario 03</strong></figcaption></figure>
+<figure><img data-motion src="assets/safety_L5_top01_12d3b08283f93c5e.gif" alt="Collision scenario 04 animation" loading="lazy"><figcaption><strong>Scenario 04</strong></figcaption></figure>
+</div>
+</section>
+<section id="poster"><p class="eyebrow">05 / Poster</p><h2>The full picture.</h2><a class="poster" href="assets/poster.pdf"><img src="assets/poster-preview.png" alt="Full poster for Beyond Binary Metrics" loading="lazy"></a><p><a href="assets/poster.pdf">Open full-resolution poster ↗</a></p></section>
+<section class="closing"><h2>High realism scores do not<br>guarantee physical safety.</h2><p>Severity-aware evaluation reveals rare, consequential failures that binary collision rates can hide.</p><a class="button primary" href="https://openreview.net/pdf?id=agV9SBQcRk">Read the paper ↗</a></section>
+</main><footer>Beyond Binary Metrics · Zexin Feng, Lingyu Xiao, Xintao Yan · HKU · 2026</footer>
+<script>
+const button=document.getElementById('motion');let playing=true;
+button.addEventListener('click',()=>{playing=!playing;document.querySelectorAll('[data-motion]').forEach(img=>{if(!img.complete)return;if(!playing){const canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;canvas.getContext('2d').drawImage(img,0,0);img.dataset.original=img.src;img.src=canvas.toDataURL();}else if(img.dataset.original){img.src=img.dataset.original;}});button.textContent=playing?'Pause animations':'Play animations';button.setAttribute('aria-pressed',String(playing));});
+</script>
+</body></html>

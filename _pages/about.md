@@ -32,7 +32,7 @@ If you are interested in my work, please contact me at [zexinfeng@connect.hku.hk
 
 # 🔬 Research
 ## Physical AI & Robot Manipulation
-<div class='paper-box'><div class='paper-box-image'><div><img src='works/copper-policy/assets/teaser.png' alt="Copper-Policy teaser"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><video width="100%" muted autoplay loop playsinline preload="metadata" poster="works/copper-policy/assets/video/rep_robotwin_full.jpg" aria-label="Copper-Policy attention over a RoboTwin block-stacking episode"><source src="works/copper-policy/assets/video/rep_robotwin_full.mp4" type="video/mp4"></video></div></div>
 <div class='paper-box-text' markdown="1">
 
 [**Copper-Policy: Focus on the Representation for Robust Robot Manipulation**](/works/copper-policy/)
@@ -141,8 +141,8 @@ Lingyu Xiao, **Zexin Feng**, Xintao Yan. *ECCV 2026.*
   *Undergraduate Research Assistant, supervised by Prof. Jimmy Liu (05/2023-09/2023)*  
 
 - **Xiaohui Xie's Lab**, UC Irvine, USA  
-  *Undergraduate Research Assistant, supervised by Prof. Xiaohui Xie (09/2024-Present)*  
+  *Undergraduate Research Assistant, supervised by Prof. Xiaohui Xie (09/2024-01/2025)*
 
 <!-- # 💻 Internships
 - *2022.05 - 2024.09*, **iMED Lab**, Shenzhen, China  
-- *2024.09 - Present*, **Xiaohui Xie's Lab**, UC Irvine, USA   -->
+- *2024.09 - 2025.01*, **Xiaohui Xie's Lab**, UC Irvine, USA   -->

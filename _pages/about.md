@@ -18,7 +18,7 @@ redirect_from:
 <!-- <span class='anchor' id='about-me'></span> -->
 
 # 👋 About Me
-I am **Zexin Feng**, a **Ph.D. student** at the **Mobility Transformation Lab, The University of Hong Kong (HKU), Hong Kong SAR, China**, supervised by **Prof. Xintao Yan**. My research focuses on **Physical AI, Autonomous Driving, and Machine Learning**, with interests in robot manipulation, generative simulation, and medical imaging.
+I am **Zexin Feng**, a **Ph.D. student** at the **Mobility Transformation Lab, The University of Hong Kong (HKU), Hong Kong SAR, China**, supervised by **Prof. Xintao Yan**. My research interests include **Physical AI, Autonomous Driving, and Machine Learning**.
 
 Previously, I earned my **B.Eng. in Computer Science** from the **Southern University of Science and Technology (SUSTech), Shenzhen, China** (expected June 2025). During my undergraduate studies, I was a long-term member of the **iMED Intelligent Medical Imaging Lab** led by **Prof. Jiang Liu**, and I also worked with **Prof. Xiaohui Xie** at the **University of California, Irvine** on AI for healthcare.
 
@@ -45,18 +45,6 @@ If you are interested in my work, please contact me at [zexinfeng@connect.hku.hk
 </div>
 
 ## Generative Simulation & Autonomous Driving
-<div class='paper-box'><div class='paper-box-image'><div><img src='works/beyond-binary-metrics/assets/final_severity_spectrum_2x4.png?v=2' alt="Eight collision events spanning low to high severity" loading="lazy"></div></div>
-<div class='paper-box-text' markdown="1">
-
-[**Beyond Binary Metrics: Unveiling the Safety Illusion in Autonomous Driving Simulation**](/works/beyond-binary-metrics/)
-
-**Zexin Feng**, Lingyu Xiao, Xintao Yan. *CVPR 2026 Workshop on Simulation for Autonomous Driving (SAD).*
-
-[**Paper**](https://openreview.net/pdf?id=agV9SBQcRk) · [**Project Page**](/works/beyond-binary-metrics/)
-- Composite Collision Metric (CCM) measures collision severity and tail risk beyond binary collision indicators.
-</div>
-</div>
-
 <div class='paper-box'><div class='paper-box-image'><div><video width="100%" muted autoplay loop playsinline preload="metadata" poster="images/pih-preview.png" aria-label="PIH dynamic preview"><source src="images/pih-preview.mp4" type="video/mp4"></video></div></div>
 <div class='paper-box-text' markdown="1">
 
@@ -69,7 +57,7 @@ Lingyu Xiao, Haowei Sun, Lingxuan Zhou, Jiawei Wang, **Zexin Feng**, Jun Gao, Xi
 </div>
 </div>
 
-<div class='paper-box'><div class='paper-box-image'><div><video width="100%" muted autoplay loop playsinline preload="metadata" poster="images/rosettasim-preview.png" aria-label="RosettaSim dynamic preview"><source src="images/rosettasim-preview.mp4" type="video/mp4"></video></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ECCV 2026</div><video width="100%" muted autoplay loop playsinline preload="metadata" poster="images/rosettasim-preview.png" aria-label="RosettaSim dynamic preview"><source src="images/rosettasim-preview.mp4" type="video/mp4"></video></div></div>
 <div class='paper-box-text' markdown="1">
 
 [**Long-term Traffic Simulation via Structured Autoregressive Modeling**](https://sephirex-x.github.io/rosettasim/)
@@ -77,6 +65,18 @@ Lingyu Xiao, **Zexin Feng**, Xintao Yan. *ECCV 2026.*
 
 [**arXiv**](https://arxiv.org/abs/2606.31209) · [**Project Page**](https://sephirex-x.github.io/rosettasim/) · [**GitHub**](https://github.com/Sephirex-X/RosettaSim)
 - A structured autoregressive simulator for long-term traffic rollouts with joint motion and agent generation, together with retrieval-based traffic evaluation.
+</div>
+</div>
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2026 · SAD Workshop</div><img src='works/beyond-binary-metrics/assets/final_severity_spectrum_2x4.png?v=2' alt="Eight collision events spanning low to high severity" loading="lazy"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[**Beyond Binary Metrics: Unveiling the Safety Illusion in Autonomous Driving Simulation**](/works/beyond-binary-metrics/)
+
+**Zexin Feng**, Lingyu Xiao, Xintao Yan. *CVPR 2026 Workshop on Simulation for Autonomous Driving (SAD).*
+
+[**Paper**](https://openreview.net/pdf?id=agV9SBQcRk) · [**Project Page**](/works/beyond-binary-metrics/)
+- Composite Collision Metric (CCM) measures collision severity and tail risk beyond binary collision indicators.
 </div>
 </div>
 
@@ -94,7 +94,8 @@ Lingyu Xiao, **Zexin Feng**, Xintao Yan. *ECCV 2026.*
 </div>
 
 # 🔥 News
-- *2026*: &nbsp;🎉 **Beyond Binary Metrics: Unveiling the Safety Illusion in Autonomous Driving Simulation** was accepted to the **CVPR 2026 Workshop on Simulation for Autonomous Driving (SAD)**. [Project Page](/works/beyond-binary-metrics/)
+- *2026.06*: &nbsp;🎉 **Long-term Traffic Simulation via Structured Autoregressive Modeling** was accepted to **ECCV 2026**. [Project Page](https://sephirex-x.github.io/rosettasim/)
+- *2026.03*: &nbsp;🎉 **Beyond Binary Metrics: Unveiling the Safety Illusion in Autonomous Driving Simulation** was accepted to the **CVPR 2026 Workshop on Simulation for Autonomous Driving (SAD)**. [Project Page](/works/beyond-binary-metrics/)
 <!-- - *2025.09*: &nbsp;🎉🎉 Started my PhD journey at **Mobility Transformation Lab @ HKU**,  Hong Kong SAR, China🇨🇳. -->
 <!-- - *2024.09*: &nbsp;🎉 Joined **Xiaohui Xie's Lab**, UC Irvine, USA🇺🇸. -->
 - *2024.04*: &nbsp;🎉 **Flattening Singular Values of Factorized Convolution for Medical Images** was accepted to **ICASSP 2024**.
@@ -112,6 +113,7 @@ Lingyu Xiao, **Zexin Feng**, Xintao Yan. *ECCV 2026.*
 
 
 # 🛠️ PROJECTS
+{: #projects }
 - ``CS205 Cpp Program Design`` <a href='https://github.com/YupengSu/CppProject-libtensor'> Libtensor Designed with C/C++ and CUDA</a>, **Zexin Feng**, Yupeng Su, Xiaoqun Liu.
 
 - ``CS301 Embedded System`` <a href='https://github.com/Mark4551124015/SUSTech_CS301_Project'>Touchscreen Framework STM32F103</a>, **Zexin Feng**, Zongqi Yang, Chunhui Xu, Haoxian Liu.

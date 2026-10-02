@@ -421,7 +421,7 @@ img[data-theme-invert="true"]{transition:filter .25s ease}
 }
 /* Flat surface. Material does not gradient or bevel its cards — all the depth is
    in the shadow, so the fill stays a single value. */
-.stat{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff;padding:20px 12px;text-align:center}
+.stat{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;background:#fff;padding:20px 12px;text-align:center}
 .stat .label{
   font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
   color:var(--muted);margin-bottom:8px;
@@ -441,8 +441,11 @@ img[data-theme-invert="true"]{transition:filter .25s ease}
 .stat .value--pair b{font-weight:700}
 .stat .value--pair i{
   font-style:normal;font-family:"Inter",sans-serif;
-  font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--muted);margin-top:4px;
+  /* Same size / line box as the .note description in the neighbouring cards so
+     the sub-label reads as the same line of text (it used to be 10.5px). */
+  font-size:12px;line-height:1.5;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);
+  margin-top:6px;
 }
 .stat .note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:6px}
 .stat--accent .value{color:var(--accent)}

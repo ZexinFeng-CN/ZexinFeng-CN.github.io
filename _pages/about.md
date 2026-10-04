@@ -39,7 +39,7 @@ If you are interested in my work, please contact me at [zexinfeng@connect.hku.hk
 
 **Zexin Feng**, Y. Feng, L. Xiao, S. Su, K. Zheng, C. Xu, M. Shi, S. Feng, X. Yan
 
-[**arXiv**](https://arxiv.org/abs/2609.32779) · [**Project Page**](/works/copper-policy/) · [**GitHub**](https://github.com/mark4551124015/copper-policy)
+[**arXiv**](https://arxiv.org/abs/2609.32779) · [**Project Page**](/works/copper-policy/) · [**GitHub**](https://github.com/mark4551124015/copper-policy) · [**Hugging Face**](https://huggingface.co/Mark455/Copper-Policy)
 - A compact world representation learned jointly with the policy for robust robot manipulation.
 </div>
 </div>
